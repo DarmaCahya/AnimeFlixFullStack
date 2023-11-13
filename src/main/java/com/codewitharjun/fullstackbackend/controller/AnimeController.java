@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 //import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -56,7 +57,15 @@ public class AnimeController {
     private LikeRepository likeRepository;
 
 
+    // @GetMapping("/all")
+    // public ResponseEntity<List<Anime>> getAllAnime() {
+    //     List<Anime> animeList = animeRepository.findAll();
+    //     return ResponseEntity.ok(animeList);
+    // }
+
+
     @GetMapping("/all")
+    @ResponseBody
     public ResponseEntity<List<Anime>> getAllAnime() {
         List<Anime> animeList = animeRepository.findAll();
         return ResponseEntity.ok(animeList);

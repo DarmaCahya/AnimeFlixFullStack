@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0d0c0c;
+            color: #fff;
+        }
+
+        header {
+            background-color: #0d0c0c;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .logo {
+            
+            display: inline-block;
+            margin-right: 20px;
+            color: #ff0000;
+            text-decoration: none;
+            
+        }
+
+        .logo:hover {
+            color: #e5e5e5;
+        }
+
+        nav {
+            display: inline-block;
+            
+            
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 15px;
+            
+            
+        }
+
+        .search-box {
+            display: inline-block;
+            position: absolute;
+            left: 75%;
+            bottom: 92%;
+            
+        }
+
+        #searchInput {
+        background-color: #242524;
+        opacity: 0.9;
+        width: 135%;
+        padding: 7px; /* Anda bisa menyesuaikan tinggi dan lebar sesuai preferensi */
+        border-radius: 0; /* Menghilangkan border-radius untuk membuatnya berbentuk segiempat */
+        border: 2px solid #1F1D2A;
+        box-sizing: border-box;
+        margin-bottom: 5px;
+        color: #fff;
+        }
+
+        .search-button {
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            transform: translateY(-50%);
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+        }
+
+        .Login-button {
+        display: inline-block;
+        width: 60px;
+        height: 45px;
+        border-radius: 50%;
+        overflow: hidden;
+        position: absolute;
+        top: 10px;
+        right: 50px;
+        }
+
+        .Login-button:hover {
+            background-color: #353b35;
+        }
+
+        .posters-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 60px;
+        }
+
+        .poster {
+            width: 23%;
+            margin-bottom: 80px;
+        }
+
+        .poster img {
+            width: 35%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .poster1 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 150px;
+            left: px;
+        }
+
+        .poster2 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 150px;
+            left: 220px;
+        }
+        .poster3 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 150px;
+            left: 380px;
+        }
+        .poster5 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 150px;
+            left: 538px;
+        }
+        .poster4 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 150px;
+            left: 700px;
+        }
+        .poster6 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 150px;
+            left: 850px;
+        }
+        .poster7 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 150px;
+            left: 1000px;
+        }
+        .poster8 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 150px;
+            left: 1150px;
+        }
+        .poster9 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 150px;
+            left: 1300px;
+        }
+        .poster10 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 455px;
+            left: 60px;
+        }
+        .poster11 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 455px;
+            left: 220px;
+        }
+        .poster12 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 455px;
+            left: 380px;
+        }
+        .poster13 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 455px;
+            left: 538px;
+        }
+        .poster14 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 455px;
+            left: 700px;
+        }
+        .poster15 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 455px;
+            left: 850px;
+        }
+        .poster16 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 455px;
+            left: 1000px;
+        }
+        .poster17 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 455px;
+            left: 1150px;
+        }
+        .poster18 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 455px;
+            left: 1300px;
+        }
+        .poster19 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 770px;
+            left: 60px;
+        }
+        .poster20 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 770px;
+            left: 220px;
+        }
+        .poster21 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 770px;
+            left: 380px;
+        }
+        .poster22 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 770px;
+            left: 538px;
+        }
+        .poster23 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 770px;
+            left: 700px;
+        }
+        .poster24 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 770px;
+            left: 850px;
+        }
+        .poster25 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 770px;
+            left: 1000px;
+        }
+        .poster26 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 770px;
+            left: 1150px;
+        }
+        .poster27 img {
+            width: 8%;
+            height: auto;
+            border-radius: 5px;
+            position: absolute;
+            top: 770px;
+            left: 1300px;
+        }
+
+        
+
+        
+
+        .poster-text {
+            text-align: center; 
+            margin-top: 10px;   
+            color: #fff;        
+        }
+        .search-button img {
+        position: absolute;
+        bottom: -10px;
+        right: -58px; /* Sesuaikan dengan posisi yang Anda inginkan */
+        }
+        .logo-button {
+            position: absolute;
+            left : 30px;
+        }
+       
+        
+
+    </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      fetch('http://localhost:8080//api/anime/all')
+          .then(response => response.json())
+          .then(animeList => {
+              // Handle the animeList data, update your HTML dynamically
+              console.log(animeList);
+          })
+          .catch(error => console.error('Error fetching anime data:', error));
+  });
+</script>
+
+</head>
+<body>
+
+    <header>
+        <a href="home.html"class="logo-button">
+            <img src="flix.png" alt="AnimeFlix Logo" style="width: 130px; height: 60px;" />
+        </a>
+        <nav>
+            <a href="genre.html" style="position: absolute; right: 1240px; top: 30px; font-size: 16px; color: #a29999;">Genre</a>
+            <a href="history.html" style="position: absolute; right: 1150px; top: 30px; font-size: 16px; color: #a29999;">History</a>
+
+        </nav>
+        <div class="search-box">
+            <input type="text" placeholder="Search..." id="searchInput" />
+            <a href="search.html">
+                <button class="search-button">
+                    <img src="Screenshot_1.png" alt="Search Icon" style="width: 20px; height: 23px;" />
+                </button>
+            </a>
+        </div>
+        <a href="profile.html"class="Login-button">
+            <img src="sasuke.png" alt="Login Icon" style="width: 130px; height: 60px;" />
+        </a>
+    </header>
+
+    <!-- Konten lainnya bisa ditambahkan di sini -->
+
+    <!-- Poster 4x4 ke samping -->
+    <div class="rekomendasi" style="position: absolute; top: 80px; left: 8%; transform: translateX(-50%);">
+        <h2 style="text-align: center; color: #fff; font-size: 20px; font-weight: bold;">REKOMENDASI</h2>
+    </div>
+
+    <div id="animeListContainer">
+      <!-- Anime list will be dynamically added here -->
+  </div>
+  
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          fetch('http://localhost:8080//api/anime/all')
+              .then(response => response.json())
+              .then(animeList => {
+                  const animeListContainer = document.getElementById('animeListContainer');
+  
+                  animeList.forEach(anime => {
+                      // Create HTML elements for each anime and append to the container
+                      const animeElement = document.createElement('div');
+                      animeElement.innerHTML = `
+                          <h3>${anime.title}</h3>
+                          <p>Genre: ${anime.genre}</p>
+                          <p>Description: ${anime.description}</p>
+                          <!-- Add more details as needed -->
+                      `;
+                      animeListContainer.appendChild(animeElement);
+                  });
+              })
+              .catch(error => console.error('Error fetching anime data:', error));
+      });
+  </script>
+
+
+    <div class="posters-container">
+        <div class="poster1">
+            <img src="gambar1.jpg" alt="Poster 1" >
+            <p class="poster-text" style="text-align: center; position: absolute; top: 340px; left: 90px;">Naruto</p>
+        </div>
+        <div class="poster2">
+            <img src="gambar2.jpg" alt="Poster 2">
+            <p class="poster-text"style="text-align: center; position: absolute; top: 340px; left: 250px;">Bleach</p>
+        </div>
+        <div class="poster3">
+            <img src="gambar3.jpg" alt="Poster 3">
+            <p class="poster-text"style="text-align: center; position: absolute; top: 340px; left: 410px;">One Piece</p>
+        </div>
+    </div>
+
+    <!-- Poster 4x4 ke bawah -->
+    <div class="posters-container">
+        <div class="poster4">
+            <img src="Boruto_manga_vol_1.jpg" alt="Poster 4">
+            <p class="poster-text"style="text-align: center; position: absolute; top: 340px; left: 730px;">Boruto</p>
+        </div>
+        <div class="poster5">
+            <img src="gambar5.jpg" alt="Poster 5">
+            <p class="poster-text" style="text-align: center; position: absolute; top: 340px; left: 545px;">Attack on Titan</p>
+        </div>
+        <div class="poster6">
+            <img src="gambar6.png" alt="Poster 6">
+            <p class="poster-text"style="text-align: center; position: absolute; top: 340px; left: 870px;">Doraemon</p>
+        </div>
+        <div class="poster7">
+            <img src="gambar7.png" alt="Poster 7">
+            <p class="poster-text"style="text-align: center; position: absolute; top: 340px; left: 1030px;">ragnarok</p>
+        </div>
+        <div class="poster8">
+            <img src="gambar8.png" alt="Poster 7">
+            <p class="poster-text"style="text-align: center; position: absolute; top: 340px; left: 1160px;">Jujutsu kaisen</p>
+        </div>
+        <div class="poster9">
+            <img src="gambar9.jpeg" alt="Poster 7">
+            <p class="poster-text"style="text-align: center; position: absolute; top: 340px; left: 1340px;">KNY</p>
+        </div>
+    </div>
+    <div class="rekomendasi" style="position: absolute; top: 390px; left: 7%; transform: translateX(-50%);">
+        <h2 style="text-align: center; color: #fff; font-size: 20px; font-weight: bold;">ONGOING</h2>
+    </div>
+    <div class="poster10">
+        <img src="gambar10.jpg" alt="Poster 7">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 655px; left: 80px;">Academia</p>
+    </div>
+    <div class="poster11">
+        <img src="gambar11.jpg" alt="Poster 7">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 655px; left: 250px;">Naruto</p>
+    </div>
+    <div class="poster12">
+        <img src="gambar12.jpg" alt="Poster 7">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 655px; left: 410px;">Clover</p>
+    </div>
+    <div class="poster13">
+        <img src="gambar13.png" alt="Poster 7">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 655px; left: 545px;">Death Note</p>
+    </div>
+    <div class="poster14">
+        <img src="gambar14.jpg" alt="Poster 4">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 655px; left: 730px;">Hunter</p>
+    </div>
+    <div class="poster15">
+        <img src="gambar15.jpg" alt="Poster 4">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 655px; left: 870px;">Haikyuu</p>
+    </div>
+    <div class="poster16">
+        <img src="gambar16.jpg" alt="Poster 4">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 655px; left: 1030px;">Revenger</p>
+    </div>
+    <div class="poster17">
+        <img src="gambar17.jpg" alt="Poster 4">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 655px; left: 1160px;">Assanation</p>
+    </div>
+    <div class="poster18">
+        <img src="gambar18.png" alt="Poster 4">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 655px; left: 1340px;">Fire force</p>
+    </div>
+    <div class="rekomendasi" style="position: absolute; top: 700px; left: 8%; transform: translateX(-50%);">
+        <h2 style="text-align: center; color: #fff; font-size: 20px; font-weight: bold;">COMPLETED</h2>
+    </div>
+    <div class="poster19">
+        <img src="gambar10.jpg" alt="Poster 7">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 970px; left: 80px;">Academia</p>
+    </div>
+    <div class="poster20">
+        <img src="gambar11.jpg" alt="Poster 7">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 970px; left: 250px;">Naruto</p>
+    </div>
+    <div class="poster21">
+        <img src="gambar12.jpg" alt="Poster 7">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 970px; left: 410px;">Clover</p>
+    </div>
+    <div class="poster22">
+        <img src="gambar13.png" alt="Poster 7">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 970px; left: 545px;">Death Note</p>
+    </div>
+    <div class="poster23">
+        <img src="gambar14.jpg" alt="Poster 4">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 970px; left: 730px;">Hunter</p>
+    </div>
+    <div class="poster24">
+        <img src="gambar15.jpg" alt="Poster 4">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 970px; left: 870px;">Haikyuu</p>
+    </div>
+    <div class="poster25">
+        <img src="gambar16.jpg" alt="Poster 4">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 970px; left: 1030px;">Revenger</p>
+    </div>
+    <div class="poster26">
+        <img src="gambar17.jpg" alt="Poster 4">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 970px; left: 1160px;">Assanation</p>
+    </div>
+    <div class="poster27">
+        <img src="gambar18.png" alt="Poster 4">
+        <p class="poster-text"style="text-align: center; position: absolute; top: 970px; left: 1340px;">Fire force</p>
+    </div>
+
+
+    <script>
+        function searchFunction() {
+            var searchInput = document.getElementById('searchInput').value;
+            console.log('Search Query:', searchInput);
+            // Add your search logic here
+        }
+    
+        document.getElementById("searchInput").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                // Redirect to search.html
+                window.location.href = "search.html";
+            }
+        });
+    </script>
+    
+
+</body>
+</html>
