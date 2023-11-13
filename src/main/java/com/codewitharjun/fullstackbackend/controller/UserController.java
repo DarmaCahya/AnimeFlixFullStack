@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 
 /* Created by Arjun Gautam */
 @RestController
-@CrossOrigin("http://localhost:8080")
+@CrossOrigin("http://localhost:3000")
 public class UserController {
 
     @Autowired

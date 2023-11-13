@@ -351,10 +351,9 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-      fetch('http://localhost:8080//api/anime/all')
+      fetch('http://localhost:8080/api/anime/all')
           .then(response => response.json())
           .then(animeList => {
-              // Handle the animeList data, update your HTML dynamically
               console.log(animeList);
           })
           .catch(error => console.error('Error fetching anime data:', error));
@@ -399,7 +398,7 @@
   
   <script>
       document.addEventListener("DOMContentLoaded", function () {
-          fetch('http://localhost:8080//api/anime/all')
+          fetch('http://localhost:8080/api/anime/all')
               .then(response => response.json())
               .then(animeList => {
                   const animeListContainer = document.getElementById('animeListContainer');
