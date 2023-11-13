@@ -62,6 +62,7 @@ public class AnimeController {
         return ResponseEntity.ok(animeList);
     }
 
+
     @GetMapping("/search/genre/{nama_genre}")
     public ResponseEntity<List<Anime>> getAnimeByGenre(@PathVariable String nama_genre) {
         List<Anime> animeList = animeRepository.findByGenre(nama_genre);

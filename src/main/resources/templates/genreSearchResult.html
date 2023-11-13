@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genre Search Result</title>
+</head>
+<body>
+    <h1>Genre Search Result</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Description</th>
+                <th>Publisher</th>
+                <th>Release Year</th>
+                <th>Likes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="anime : ${animeList}">
+                <td th:text="${anime.title}"></td>
+                <td th:text="${anime.genre}"></td>
+                <td th:text="${anime.description}"></td>
+                <td th:text="${anime.publisher}"></td>
+                <td th:text="${anime.releaseYear}"></td>
+                <td th:text="${anime.likes}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
