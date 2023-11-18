@@ -63,4 +63,14 @@ public class AnimeEpisode {
     public void setEpisodeNumber(int episodeNumber) {
         this.episodeNumber = episodeNumber;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    
 }

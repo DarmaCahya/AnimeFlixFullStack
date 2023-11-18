@@ -138,9 +138,10 @@ public class AnimeController {
     }
 
     @GetMapping("/nonton/{animeId}/eps/{episodeNumber}")
-    public ResponseEntity<String> watchAnimeEpisode(
-            @PathVariable Long animeId,
-            @PathVariable Integer episodeNumber) {
+    public ResponseEntity<String> GetwatchAnimeEpisode(
+        @PathVariable Long animeId,
+        @PathVariable Integer episodeNumber,
+        HttpSession session) {
 
         // Check if the anime exists
         Anime anime = animeRepository.findById(animeId).orElse(null);
@@ -151,48 +152,43 @@ public class AnimeController {
                     .orElse(null);
 
             if (episode != null) {
-                // Add your logic for watching the episode here
-                return ResponseEntity.ok("Watching episode " + episodeNumber + " of anime " + anime.getTitle());
+                // Get the currently logged-in user from the session
+                User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+                // Check if the episode requires subscription
+                boolean requiresSubscription = episode.isRequiresSubscription();
+
+                if (requiresSubscription) {
+                    // If the episode requires subscription, check if the user is subscribed
+                    boolean isSubscribed = checkUserSubscription(loggedInUser);
+
+                    if (isSubscribed) {
+                        // If the user is subscribed, update the user history
+                        UserHistory userHistory = new UserHistory();
+                        userHistory.setUser(loggedInUser);  // Ensure user is not null
+                        userHistory.setAnimeEpisode(episode);
+                        userHistory.setWatchedAt(new Date());
+
+                        userHistoryRepository.save(userHistory);
+
+                        return ResponseEntity.ok("Watching episode " + episodeNumber + " of anime " + anime.getTitle());
+                    } else {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                .body("You need to be subscribed to watch this episode.");
+                    }
+                } else {
+                    // If the episode does not require subscription, allow the user to watch
+                    UserHistory userHistory = new UserHistory();
+                    userHistory.setUser(loggedInUser);  // Ensure user is not null
+                    userHistory.setAnimeEpisode(episode);
+                    userHistory.setWatchedAt(new Date());
+
+                    userHistoryRepository.save(userHistory);
+
+                    return ResponseEntity.ok("Watching episode " + episodeNumber + " of anime " + anime.getTitle());
+                }
             } else {
                 return ResponseEntity.notFound().build();
-            }
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-
-
-    
-    @PostMapping("/nonton/{animeId}/eps/{episodeNumber}")
-    public ResponseEntity<String> watchAnimeEpisode(
-        @PathVariable Long animeId,
-        @PathVariable Integer episodeNumber,  // Change the variable name to episodeNumber
-        HttpSession session) {
-
-        // Check if the episode is found
-        AnimeEpisode episode = animeEpisodeRepository.findByEpisodeNumberAndAnime_Id(episodeNumber, animeId)
-                    .orElse(null);
-        if (episode != null) {
-            // Get the currently logged-in user from the session
-            User loggedInUser = (User) session.getAttribute("loggedInUser");
-
-            // Check if the user is subscribed
-            boolean isSubscribed = checkUserSubscription(loggedInUser);
-
-            if (isSubscribed) {
-                // If the user is subscribed, update the user history
-                UserHistory userHistory = new UserHistory();
-                userHistory.setUser(loggedInUser);  // Ensure user is not null
-                userHistory.setAnimeEpisode(episode);
-                userHistory.setWatchedAt(new Date());
-
-                userHistoryRepository.save(userHistory);
-
-                return ResponseEntity.ok("Episode watched. User history updated.");
-            } else {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                        .body("You need to be subscribed to watch this episode.");
             }
         } else {
             return ResponseEntity.notFound().build();
@@ -225,105 +221,167 @@ public class AnimeController {
         }
     }
 
-    @PostMapping("/nonton/{animeId}/eps/{episodeId}/komen")
+    @PostMapping("/nonton/{animeId}/eps/{episodeNumber}/komen")
     public ResponseEntity<String> addComment(
             @PathVariable Long animeId,
-            @PathVariable Long episodeId,
+            @PathVariable Integer episodeNumber,
             @RequestBody String comment,
             HttpSession session) {
-
-        // Check if the anime and episode exist
-        Anime anime = animeRepository.findByAnimeId(animeId);
-        AnimeEpisode episode = animeEpisodeRepository.findById(episodeId).orElse(null);
-
-        if (anime != null && episode != null) {
-            // Get the logged-in user
-            User loggedInUser = (User) session.getAttribute("loggedInUser");
-            String loggedInUsername = loggedInUser.getUsername();
-
-            // Get the user from the repository
-            User user = userRepository.findByUsername(loggedInUsername);
-
-            // Add the comment
-            Comment animeComment = new Comment();
-            animeComment.setUser(user);
-            animeComment.setAnimeEpisode(episode);
-            animeComment.setComment(comment);
-            animeComment.setCommentedAt(new Date());
-
-            // Save the comment
-            commentRepository.save(animeComment);
-
-            return ResponseEntity.ok("Comment added successfully.");
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @PostMapping("/nonton/{animeId}/eps/{episodeId}/like")
-    public ResponseEntity<String> likeAnimeEpisode(
-            @PathVariable Long animeId,
-            @PathVariable Long episodeId,
-            HttpSession session) {
-
-        // Check if the episode exists
-        AnimeEpisode episode = animeEpisodeRepository.findById(episodeId).orElse(null);
-
-        if (episode != null) {
-            // Get the logged-in user
-            User loggedInUser = (User) session.getAttribute("loggedInUser");
-            String loggedInUsername = loggedInUser.getUsername();
-
-            // Get the user from the repository
-            User user = userRepository.findByUsername(loggedInUsername);
-
-            // Check if the user has already liked the episode
-            if (likeRepository.existsByUserAndAnimeEpisode(user, episode)) {
-                return ResponseEntity.ok("User already liked this episode.");
+    
+        // Check if the anime exists
+        Anime anime = animeRepository.findById(animeId).orElse(null);
+    
+        if (anime != null) {
+            // Check if the episode exists for the given anime and episode number
+            AnimeEpisode episode = animeEpisodeRepository.findByEpisodeNumberAndAnime_Id(episodeNumber, animeId)
+                    .orElse(null);
+    
+            if (episode != null) {
+                // Get the currently logged-in user from the session
+                User loggedInUser = (User) session.getAttribute("loggedInUser");
+    
+                // Check if the episode requires subscription
+                boolean requiresSubscription = episode.isRequiresSubscription();
+    
+                if (requiresSubscription) {
+                    // If the episode requires subscription, check if the user is subscribed
+                    boolean isSubscribed = checkUserSubscription(loggedInUser);
+    
+                    if (!isSubscribed) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                .body("You need to be subscribed to add a comment for this episode.");
+                    }
+                }
+    
+                // Get the user from the repository
+                User user = userRepository.findByUsername(loggedInUser.getUsername());
+    
+                // Add the comment
+                Comment animeComment = new Comment();
+                animeComment.setUser(user);
+                animeComment.setAnimeEpisode(episode);
+                animeComment.setComment(comment);
+                animeComment.setCommentedAt(new Date());
+    
+                // Save the comment
+                commentRepository.save(animeComment);
+    
+                return ResponseEntity.ok("Comment added successfully.");
+            } else {
+                return ResponseEntity.notFound().build();
             }
-
-            // Save the like
-            Like like = new Like();
-            like.setUser(user);
-            like.setAnimeEpisode(episode);
-            likeRepository.save(like);
-
-            return ResponseEntity.ok("Episode liked.");
         } else {
             return ResponseEntity.notFound().build();
         }
     }
     
-    @DeleteMapping("/nonton/{animeId}/eps/{episodeId}/like")
-    public ResponseEntity<String> unlikeAnimeEpisode(
+
+    @PostMapping("/nonton/{animeId}/eps/{episodeNumber}/like")
+    public ResponseEntity<String> likeAnimeEpisode(
             @PathVariable Long animeId,
-            @PathVariable Long episodeId,
+            @PathVariable Integer episodeNumber,
             HttpSession session) {
 
-        // Check if the episode exists
-        AnimeEpisode episode = animeEpisodeRepository.findById(episodeId).orElse(null);
+        // Check if the anime exists
+        Anime anime = animeRepository.findById(animeId).orElse(null);
 
-        if (episode != null) {
-            // Get the logged-in user
-            User loggedInUser = (User) session.getAttribute("loggedInUser");
-            String loggedInUsername = loggedInUser.getUsername();
+        if (anime != null) {
+            // Check if the episode exists for the given anime and episode number
+            AnimeEpisode episode = animeEpisodeRepository.findByEpisodeNumberAndAnime_Id(episodeNumber, animeId)
+                    .orElse(null);
 
-            // Get the user from the repository
-            User user = userRepository.findByUsername(loggedInUsername);
+            if (episode != null) {
+                // Get the currently logged-in user from the session
+                User loggedInUser = (User) session.getAttribute("loggedInUser");
 
-            // Check if the user has liked the episode
-            Like like = likeRepository.findByUserAndAnimeEpisode(user, episode);
+                // Check if the episode requires subscription
+                boolean requiresSubscription = episode.isRequiresSubscription();
 
-            if (like != null) {
-                // User has liked the episode, delete the like
-                likeRepository.delete(like);
-                return ResponseEntity.ok("Like removed.");
+                if (requiresSubscription) {
+                    // If the episode requires subscription, check if the user is subscribed
+                    boolean isSubscribed = checkUserSubscription(loggedInUser);
+
+                    if (!isSubscribed) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                .body("You need to be subscribed to like this episode.");
+                    }
+                }
+
+                // Get the user from the repository
+                User user = userRepository.findByUsername(loggedInUser.getUsername());
+
+                // Check if the user has already liked the episode
+                if (likeRepository.existsByUserAndAnimeEpisode(user, episode)) {
+                    return ResponseEntity.ok("User already liked this episode.");
+                }
+
+                // Save the like
+                Like like = new Like();
+                like.setUser(user);
+                like.setAnimeEpisode(episode);
+                likeRepository.save(like);
+
+                return ResponseEntity.ok("Episode liked.");
             } else {
-                return ResponseEntity.ok("User has not liked this episode.");
+                return ResponseEntity.notFound().build();
             }
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
+    
+    @DeleteMapping("/nonton/{animeId}/eps/{episodeNumber}/like")
+    public ResponseEntity<String> unlikeAnimeEpisode(
+            @PathVariable Long animeId,
+            @PathVariable Integer episodeNumber,
+            HttpSession session) {
+
+        // Check if the anime exists
+        Anime anime = animeRepository.findById(animeId).orElse(null);
+
+        if (anime != null) {
+            // Check if the episode exists for the given anime and episode number
+            AnimeEpisode episode = animeEpisodeRepository.findByEpisodeNumberAndAnime_Id(episodeNumber, animeId)
+                    .orElse(null);
+
+            if (episode != null) {
+                // Get the currently logged-in user from the session
+                User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+                // Check if the episode requires subscription
+                boolean requiresSubscription = episode.isRequiresSubscription();
+
+                if (requiresSubscription) {
+                    // If the episode requires subscription, check if the user is subscribed
+                    boolean isSubscribed = checkUserSubscription(loggedInUser);
+
+                    if (!isSubscribed) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                .body("You need to be subscribed to unlike this episode.");
+                    }
+                }
+
+                // Get the user from the repository
+                User user = userRepository.findByUsername(loggedInUser.getUsername());
+
+                // Check if the user has liked the episode
+                Like like = likeRepository.findByUserAndAnimeEpisode(user, episode);
+
+                if (like != null) {
+                    // User has liked the episode, delete the like
+                    likeRepository.delete(like);
+                    return ResponseEntity.ok("Like removed.");
+                } else {
+                    return ResponseEntity.ok("User has not liked this episode.");
+                }
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 }
