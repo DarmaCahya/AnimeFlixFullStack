@@ -113,8 +113,11 @@ public class UserController {
 
             return ResponseEntity.ok(response);
         } else {
-            // Jika tidak ada pengguna yang login, kembalikan respons JSON dengan status UNAUTHORIZED
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            // Jika tidak ada pengguna yang login, kembalikan respons JSON dengan pesan "User belum login"
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "User is not logged in");
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
     }
 

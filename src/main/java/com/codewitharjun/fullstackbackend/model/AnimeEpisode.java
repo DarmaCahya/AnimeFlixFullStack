@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 public class AnimeEpisode {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,6 +15,12 @@ public class AnimeEpisode {
 
     private String episodeTitle;
     private String videoUrl;
+    
+    // New field to indicate if the episode requires subscription
+    private boolean requiresSubscription;
+
+    // New field to represent the episode number
+    private int episodeNumber;
 
     // Constructors, getters, and setters
 
@@ -40,5 +46,21 @@ public class AnimeEpisode {
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+    }
+
+    public boolean isRequiresSubscription() {
+        return requiresSubscription;
+    }
+
+    public void setRequiresSubscription(boolean requiresSubscription) {
+        this.requiresSubscription = requiresSubscription;
+    }
+
+    public int getEpisodeNumber() {
+        return episodeNumber;
+    }
+
+    public void setEpisodeNumber(int episodeNumber) {
+        this.episodeNumber = episodeNumber;
     }
 }

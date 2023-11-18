@@ -4,12 +4,14 @@ import com.codewitharjun.fullstackbackend.model.Anime;
 import com.codewitharjun.fullstackbackend.model.AnimeEpisode;
 import com.codewitharjun.fullstackbackend.model.Comment;
 import com.codewitharjun.fullstackbackend.model.Like;
+import com.codewitharjun.fullstackbackend.model.Subscribe;
 import com.codewitharjun.fullstackbackend.model.User;
 import com.codewitharjun.fullstackbackend.model.UserHistory;
 import com.codewitharjun.fullstackbackend.repository.AnimeEpisodeRepository;
 import com.codewitharjun.fullstackbackend.repository.AnimeRepository;
 import com.codewitharjun.fullstackbackend.repository.CommentRepository;
 import com.codewitharjun.fullstackbackend.repository.LikeRepository;
+import com.codewitharjun.fullstackbackend.repository.SubscribeRepository;
 import com.codewitharjun.fullstackbackend.repository.UserHistoryRepository;
 import com.codewitharjun.fullstackbackend.repository.UserRepository;
 
@@ -57,6 +59,10 @@ public class AnimeController {
 
     @Autowired
     private LikeRepository likeRepository;
+
+    @Autowired
+    private SubscribeRepository subscribeRepository;
+
 
 
     // @GetMapping("/all")
@@ -131,35 +137,77 @@ public class AnimeController {
         }
     }
 
-    
-    @PostMapping("/nonton/{animeId}/eps/{episodeId}")
+    @GetMapping("/nonton/{animeId}/eps/{episodeNumber}")
     public ResponseEntity<String> watchAnimeEpisode(
-        @PathVariable Long episodeId,
-        HttpSession session) {
+            @PathVariable Long animeId,
+            @PathVariable Integer episodeNumber) {
 
-        // Cek apakah episode ditemukan
-        AnimeEpisode episode = animeEpisodeRepository.findById(episodeId).orElse(null);
-        if (episode != null) {
-            // Dapatkan informasi pengguna yang sedang login dari konteks keamanan
-            // Dapatkan informasi pengguna dari sesi
-            User loggedInUser = (User) session.getAttribute("loggedInUser");
-            String loggedInUsername = loggedInUser.getUsername();
+        // Check if the anime exists
+        Anime anime = animeRepository.findById(animeId).orElse(null);
 
-            // // Dapatkan pengguna berdasarkan username (misalnya, dari repositori pengguna)
-            User user = userRepository.findByUsername(loggedInUsername);
+        if (anime != null) {
+            // Check if the episode exists for the given anime and episode number
+            AnimeEpisode episode = animeEpisodeRepository.findByEpisodeNumberAndAnime_Id(episodeNumber, animeId)
+                    .orElse(null);
 
-            // Tambahkan riwayat
-            UserHistory userHistory = new UserHistory();
-            userHistory.setUser(user);  // Pastikan user tidak null
-            userHistory.setAnimeEpisode(episode);  // Menggunakan setter yang diperbarui
-            userHistory.setWatchedAt(new Date());
-
-            userHistoryRepository.save(userHistory);
-
-            return ResponseEntity.ok("Episode watched. User history updated.");
+            if (episode != null) {
+                // Add your logic for watching the episode here
+                return ResponseEntity.ok("Watching episode " + episodeNumber + " of anime " + anime.getTitle());
+            } else {
+                return ResponseEntity.notFound().build();
+            }
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+
+
+    
+    @PostMapping("/nonton/{animeId}/eps/{episodeNumber}")
+    public ResponseEntity<String> watchAnimeEpisode(
+        @PathVariable Long animeId,
+        @PathVariable Integer episodeNumber,  // Change the variable name to episodeNumber
+        HttpSession session) {
+
+        // Check if the episode is found
+        AnimeEpisode episode = animeEpisodeRepository.findByEpisodeNumberAndAnime_Id(episodeNumber, animeId)
+                    .orElse(null);
+        if (episode != null) {
+            // Get the currently logged-in user from the session
+            User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+            // Check if the user is subscribed
+            boolean isSubscribed = checkUserSubscription(loggedInUser);
+
+            if (isSubscribed) {
+                // If the user is subscribed, update the user history
+                UserHistory userHistory = new UserHistory();
+                userHistory.setUser(loggedInUser);  // Ensure user is not null
+                userHistory.setAnimeEpisode(episode);
+                userHistory.setWatchedAt(new Date());
+
+                userHistoryRepository.save(userHistory);
+
+                return ResponseEntity.ok("Episode watched. User history updated.");
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body("You need to be subscribed to watch this episode.");
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+    private boolean checkUserSubscription(User user) {
+        // Implement your logic to check if the user is subscribed
+
+        // Example: Check if there is a subscription record for the user
+        Optional<Subscribe> subscription = subscribeRepository.findByUser(user);
+
+        // Return true if the user is subscribed, false otherwise
+        return subscription.isPresent();
     }
 
     
