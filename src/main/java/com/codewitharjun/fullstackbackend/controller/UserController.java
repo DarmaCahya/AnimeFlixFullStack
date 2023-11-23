@@ -9,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.codewitharjun.fullstackbackend.model.Admin;
 
-
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,9 +30,17 @@ public class UserController {
     private UserHistoryRepository userHistoryRepository;
 
     @PostMapping("/user")
-    User newUser(@RequestBody User newUser) {
-        return userRepository.save(newUser);
+    public ResponseEntity<String> newUser(@RequestBody User newUser) {
+        // Check if username or email already exists
+        if (userRepository.existsByUsername(newUser.getUsername()) || userRepository.existsByEmail(newUser.getEmail())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username or email is already in use");
+        }
+
+        // If username and email are unique, save the new user
+        User savedUser = userRepository.save(newUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully with ID: " + savedUser.getId());
     }
+
 
     @GetMapping("/users")
     List<User> getAllUsers() {
@@ -64,25 +73,36 @@ public class UserController {
         return  "User with id "+id+" has been deleted success.";
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody User loginUser, HttpSession session) {
-        User user = userRepository.findByUsername(loginUser.getUsername());
 
-        if (user != null && user.getPassword().equals(loginUser.getPassword())) {
-            // Simpan informasi pengguna dalam sesi
+    @PostMapping("/login")
+public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> loginRequest, HttpSession session) {
+    String username = loginRequest.get("username");
+    String password = loginRequest.get("password");
+
+    User user = userRepository.findByUsername(username);
+
+    if (user != null) {
+        // Jika username ditemukan
+        if (user.getPassword().equals(password)) {
+            // Jika password benar, simpan informasi pengguna dalam sesi
             session.setAttribute("loggedInUser", user);
 
-            // Jika login berhasil, kembalikan respons JSON
+            // Kembalikan respons JSON sukses dengan tambahan user_type
             Map<String, String> response = new HashMap<>();
             response.put("message", "Login successful");
             response.put("username", user.getUsername());
+            response.put("user_type", user instanceof Admin ? "ADMIN" : "REGULAR");
 
             return ResponseEntity.ok(response);
         } else {
-            // Jika login gagal, kembalikan respons JSON dengan status UNAUTHORIZED
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            // Jika password salah, kembalikan respons JSON dengan status UNAUTHORIZED
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("message", "Password salah"));
         }
+    } else {
+        // Jika username tidak ditemukan, kembalikan respons JSON dengan status UNAUTHORIZED
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("message", "Username tidak tersedia"));
     }
+}
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpSession session) {
