@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 /* Created by Arjun Gautam */
 @RestController
 @CrossOrigin("http://localhost:3000")
+@RequestMapping("/User")
 public class UserController {
 
     @Autowired
@@ -75,34 +76,34 @@ public class UserController {
 
 
     @PostMapping("/login")
-public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> loginRequest, HttpSession session) {
-    String username = loginRequest.get("username");
-    String password = loginRequest.get("password");
+    public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> loginRequest, HttpSession session) {
+        String username = loginRequest.get("username");
+        String password = loginRequest.get("password");
 
-    User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username);
 
-    if (user != null) {
-        // Jika username ditemukan
-        if (user.getPassword().equals(password)) {
-            // Jika password benar, simpan informasi pengguna dalam sesi
-            session.setAttribute("loggedInUser", user);
+        if (user != null) {
+            // Jika username ditemukan
+            if (user.getPassword().equals(password)) {
+                // Jika password benar, simpan informasi pengguna dalam sesi
+                session.setAttribute("loggedInUser", user);
 
-            // Kembalikan respons JSON sukses dengan tambahan user_type
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "Login successful");
-            response.put("username", user.getUsername());
-            response.put("user_type", user instanceof Admin ? "ADMIN" : "REGULAR");
+                // Kembalikan respons JSON sukses dengan tambahan user_type
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "Login successful");
+                response.put("username", user.getUsername());
+                response.put("user_type", user instanceof Admin ? "ADMIN" : "REGULAR");
 
-            return ResponseEntity.ok(response);
+                return ResponseEntity.ok(response);
+            } else {
+                // Jika password salah, kembalikan respons JSON dengan status UNAUTHORIZED
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("message", "Password salah"));
+            }
         } else {
-            // Jika password salah, kembalikan respons JSON dengan status UNAUTHORIZED
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("message", "Password salah"));
+            // Jika username tidak ditemukan, kembalikan respons JSON dengan status UNAUTHORIZED
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("message", "Username tidak tersedia"));
         }
-    } else {
-        // Jika username tidak ditemukan, kembalikan respons JSON dengan status UNAUTHORIZED
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("message", "Username tidak tersedia"));
     }
-}
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpSession session) {

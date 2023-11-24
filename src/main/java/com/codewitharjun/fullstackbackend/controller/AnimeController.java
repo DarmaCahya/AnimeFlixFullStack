@@ -25,10 +25,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-//import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
 //import java.util.Collections;
@@ -71,21 +69,11 @@ public class AnimeController {
     //     return ResponseEntity.ok(animeList);
     // }
 
-   @GetMapping("/all")
-    public ModelAndView getAllAnime() {
-        List<Anime> animeList = animeRepository.findAll();
-        ModelAndView modelAndView = new ModelAndView("allAnime");
-        modelAndView.addObject("animeList", animeList);
-        return modelAndView;
-    }
-
     @GetMapping("/all-json")
     public ResponseEntity<List<Anime>> getAllAnimeJson() {
         List<Anime> animeList = animeRepository.findAll();
         return ResponseEntity.ok(animeList);
     }
-
-
 
     @GetMapping("/search/genre/{nama_genre}")
     public ResponseEntity<List<Anime>> getAnimeByGenre(@PathVariable String nama_genre) {

@@ -19,14 +19,15 @@
             background-color: #0d0c0c;
             color: #fff;
             padding: 10px;
-            text-align: center;
         }
 
         .logo {
             display: inline-block;
             margin-right: 20px;
-            color: #ff0000;
+            color: #ffffff;
             text-decoration: none;
+            position: relative;
+            left: 20px;
         }
 
         nav {
@@ -42,8 +43,9 @@
         .search-box {
             display: inline-block;
             position: absolute;
-            left: 75%;
+            left: 76%;
             bottom: 92%;
+            top: 50px;
         }
 
         #searchInput {
@@ -56,12 +58,13 @@
             box-sizing: border-box;
             margin-bottom: 5px;
             color: #fff;
+            right: 70%;
         }
 
         .search-button {
             position: absolute;
-            top: 50%;
-            right: 5px;
+            top: 45%;
+            right: -52px;
             transform: translateY(-50%);
             border: none;
             background-color: transparent;
@@ -70,14 +73,35 @@
 
         .Login-button {
             display: inline-block;
-            width: 60px;
-            height: 45px;
+            width: 65px;
+            height: 60px;
             border-radius: 50%;
             overflow: hidden;
             position: absolute;
-            top: 10px;
-            right: 50px;
+            top: 33px;
+            right: 70px;
         }
+        
+        .posters-container {
+            display: flex;
+            overflow-x: auto; /* Mengaktifkan scrolling horizontal */
+        }
+
+        .poster {
+            margin-right: 20px; /* Jarak antar poster */
+        }
+
+        .poster-img {
+            width: 220px;
+            height: 300px;
+            object-fit: cover; /* Membuat gambar memenuhi area dengan mempertahankan aspek rasio */
+        }
+
+        .poster-text {
+            text-align: center;
+            margin-top: 10px;
+        }
+
 
     </style>
 </head>
@@ -85,11 +109,11 @@
 
     <header>
         <a href="home.html" class="logo">
-            <img src="https://i.ibb.co/RzzSCg2/flix.png" alt="AnimeFlix Logo" style="width: 130px; height: 60px;" />
+            <img src="https://i.ibb.co/RzzSCg2/flix.png" alt="AnimeFlix Logo" style="width: 130px; height: 65px;" />
         </a>
         <nav>
-            <a href="genre.html" style="position: absolute; right: 1240px; top: 30px; font-size: 16px; color: #a29999;">Genre</a>
-            <a href="history.html" style="position: absolute; right: 1150px; top: 30px; font-size: 16px; color: #a29999;">History</a>
+            <a href="genre.html" style="position: absolute; top: 48px; font-size: 16px; color: #a29999;left: 200px;font-size: 22px;">Genre</a>
+            <a href="history.html" style="position: absolute; top: 48px; font-size: 16px; color: #a29999;left: 310px;font-size: 22px;">History</a>
         </nav>
         <div class="search-box">
             <input type="text" placeholder="Search..." id="searchInput" />
@@ -103,15 +127,56 @@
             <img src="https://i.ibb.co/275wkRK/sasuke.png" alt="Login Icon" style="width: 130px; height: 60px;" />
         </a>
     </header>
-
-    <c:forEach var="anime" items="${animeList}">
+    <h3>Default</h3><br>
         <div class="posters-container">
-            <div class="poster1">
-                <img src="https://i.ibb.co/k6Xt04B/gambar1.jpg" alt="Poster 1" >
-                <p class="poster-text" style="text-align: center; position: absolute; top: 340px; left: 90px;">${anime.title}</p>
-            </div>
+            
+            <c:forEach var="anime" items="${animeList}">
+                <div class="poster">
+                    <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
+                    <p class="poster-text">${anime.title}</p>
+                </div>
+            </c:forEach>
         </div>
-    </c:forEach>
+    <c:if test="${not empty animeListgenre}">
+        <h3>${animeListgenre[0].genre}</h3><br>
+    </c:if>
+        <div class="posters-container">
+            
+            <c:forEach var="anime" items="${animeListgenre}">
+                <div class="poster">
+                    <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
+                    <p class="poster-text">${anime.title}</p>
+                </div>
+            </c:forEach>
+        </div>
+
+    <c:if test="${not empty animeListgenre2}">
+        <h3>${animeListgenre2[0].genre}</h3><br>
+    </c:if>
+        <div class="posters-container">
+            
+            <c:forEach var="anime" items="${animeListgenre2}">
+                <div class="poster">
+                    <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
+                    <p class="poster-text">${anime.title}</p>
+                </div>
+            </c:forEach>
+        </div>
+    
+    <c:if test="${not empty animeListgenre3}">
+        <h3>${animeListgenre3[0].genre}</h3><br>
+    </c:if>
+        <div class="posters-container">
+            
+            <c:forEach var="anime" items="${animeListgenre3}">
+                <div class="poster">
+                    <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
+                    <p class="poster-text">${anime.title}</p>
+                </div>
+            </c:forEach>
+        </div>
+        
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/QczGoCmX-pI?si=t-cOk0C6w02vsjWe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     
 
     <script>

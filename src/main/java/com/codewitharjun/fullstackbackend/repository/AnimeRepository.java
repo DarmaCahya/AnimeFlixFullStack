@@ -31,4 +31,8 @@ public interface AnimeRepository extends JpaRepository<Anime, Long> {
     @Transactional
     @Query("UPDATE Anime a SET a.likes = a.likes + 1 WHERE a.animeId = :animeId")
     void incrementLikes(Long animeId);
+
+
+    @Query("SELECT DISTINCT a.genre FROM Anime a")
+    List<String> findAllGenres();
 }
