@@ -16,7 +16,10 @@
         <ul>
             <%-- Loop through each episode in the episodeList --%>
             <c:forEach var="episode" items="${episodeList}">
-                <li>${episode.episodeTitle} - Episode ${episode.episodeNumber} - <a href=${episode.id}> link </a></li>
+                <li>${episode.episodeTitle} - Episode ${episode.episodeNumber}
+                <form method="post" action=eps/${episode.episodeNumber}>
+                    <button type="submit">Nonton</button>
+                </form>
             </c:forEach>
         </ul>
     </c:if>

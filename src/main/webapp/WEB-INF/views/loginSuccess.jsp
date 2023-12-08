@@ -21,5 +21,13 @@
         <button type="submit">logout</button>
     </form>
 
+    <form method="get" action="/Home">
+        <button type="submit">Home</button>
+    </form>
+
+    <form method="get" action="/Home/nonton/1/eps">
+        <button type="submit">Anime</button>
+    </form>
+
 </body>
 </html>

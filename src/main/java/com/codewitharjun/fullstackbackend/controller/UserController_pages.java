@@ -3,8 +3,6 @@ package com.codewitharjun.fullstackbackend.controller;
 import com.codewitharjun.fullstackbackend.model.User;
 import com.codewitharjun.fullstackbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
