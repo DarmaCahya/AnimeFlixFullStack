@@ -68,7 +68,7 @@ public class AnimeController_pages {
         }
 
         List<Anime> animeList = animeRepository.findAll();
-        ModelAndView modelAndView = new ModelAndView("allAnime");
+        ModelAndView modelAndView = new ModelAndView("Home");
         modelAndView.addObject("animeList", animeList);
 
         // Get all genres
@@ -102,6 +102,35 @@ public class AnimeController_pages {
     private String getRandomGenre(List<String> genres) {
         int randomIndex = (int) (Math.random() * genres.size());
         return genres.get(randomIndex);
+    }
+
+    @GetMapping("/genre/")
+    public ModelAndView getAllGenre() {
+        ModelAndView modelAndView = new ModelAndView("AllGenre");
+        List<String> allGenres = animeRepository.findAllGenres();
+        modelAndView.addObject("allGenres", allGenres);
+        return modelAndView;
+    }
+
+    @GetMapping("/genre/{genre}")
+    public ModelAndView getAnimeByGenre(@PathVariable String genre) {
+        List<Anime> animeList = animeRepository.findByGenre(genre);
+        ModelAndView modelAndView = new ModelAndView("AnimebyGenre");
+        modelAndView.addObject("animeList", animeList);
+        return modelAndView;
+    }
+
+    @GetMapping("/history")
+    public ModelAndView getUserWatchHistory(HttpSession session) {
+        if (session == null || session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        List<UserHistory> userHistoryList = userHistoryRepository.findByUser(loggedInUser);
+        ModelAndView modelAndView = new ModelAndView("History");
+        modelAndView.addObject("userHistoryList", userHistoryList);
+        return modelAndView;
     }
     
     @GetMapping("/search/")

@@ -112,8 +112,8 @@
             <img src="https://i.ibb.co/RzzSCg2/flix.png" alt="AnimeFlix Logo" style="width: 130px; height: 65px;" />
         </a>
         <nav>
-            <a href="genre.html" style="position: absolute; top: 48px; font-size: 16px; color: #a29999;left: 200px;font-size: 22px;">Genre</a>
-            <a href="history.html" style="position: absolute; top: 48px; font-size: 16px; color: #a29999;left: 310px;font-size: 22px;">History</a>
+            <a href="Home/genre/" style="position: absolute; top: 48px; font-size: 16px; color: #a29999;left: 200px;font-size: 22px;">Genre</a>
+            <a href="Home/history/" style="position: absolute; top: 48px; font-size: 16px; color: #a29999;left: 310px;font-size: 22px;">History</a>
         </nav>
         <form action="/Home/search/" method="get" class="search-box">
             <select name="searchType" id="searchType">
