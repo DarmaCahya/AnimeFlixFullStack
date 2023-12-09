@@ -23,6 +23,7 @@
                         <td>${history.animeEpisode.anime.title}</td>
                         <td>${history.animeEpisode.episodeTitle}</td>
                         <td>${history.watchedAt}</td>
+                        <td><a href=/Home/nonton/${anime.animeId}/eps>Detail</a></td>
                     </tr>
                 </c:forEach>
             </tbody>
