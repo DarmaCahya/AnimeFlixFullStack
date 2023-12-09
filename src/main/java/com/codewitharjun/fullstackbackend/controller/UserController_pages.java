@@ -5,12 +5,14 @@ import com.codewitharjun.fullstackbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.codewitharjun.fullstackbackend.model.Admin;
 
 
 import javax.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 /* Created by Arjun Gautam */
 @RestController
@@ -58,18 +60,22 @@ public class UserController_pages {
     }
 
     @PostMapping("/logout")
-    public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
-        // Dapatkan informasi pengguna dari sesi
+    public ResponseEntity<String> logout(HttpSession session, RedirectAttributesModelMap redirectAttributes) {
+        // Get user information from the session
         User loggedInUser = (User) session.getAttribute("loggedInUser");
 
         if (loggedInUser != null) {
-            // Hapus informasi pengguna dari sesi untuk logout
+            // Remove user information from the session for logout
             session.removeAttribute("loggedInUser");
             redirectAttributes.addFlashAttribute("logoutMessage", "Logout successful");
-            return "redirect:http://localhost:8080/login";
+            return ResponseEntity.status(HttpStatus.FOUND)
+                    .header("Location", "http://localhost:8080/login")
+                    .build();
         } else {
-            // Jika tidak ada pengguna yang login, kembalikan respons JSON dengan status UNAUTHORIZED
-            return "redirect:http://localhost:8080/login?error=User not logged in";
+            // If no user is logged in, return JSON response with UNAUTHORIZED status
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .header("Location", "http://localhost:8080/login?error=User not logged in")
+                    .build();
         }
     }
 }

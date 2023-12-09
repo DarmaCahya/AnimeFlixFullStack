@@ -108,31 +108,36 @@
 <body>
 
     <header>
-        <a href="home.html" class="logo">
+        <a href="Home" class="logo">
             <img src="https://i.ibb.co/RzzSCg2/flix.png" alt="AnimeFlix Logo" style="width: 130px; height: 65px;" />
         </a>
         <nav>
             <a href="genre.html" style="position: absolute; top: 48px; font-size: 16px; color: #a29999;left: 200px;font-size: 22px;">Genre</a>
             <a href="history.html" style="position: absolute; top: 48px; font-size: 16px; color: #a29999;left: 310px;font-size: 22px;">History</a>
         </nav>
-        <div class="search-box">
-            <input type="text" placeholder="Search..." id="searchInput" />
-            <a href="search.html">
-                <button class="search-button">
-                    <img src="https://i.ibb.co/rb6kTcJ/Screenshot-1.png" alt="Search Icon" style="width: 20px; height: 23px;" />
-                </button>
-            </a>
-        </div>
+        <form action="/Home/search/" method="get" class="search-box">
+            <select name="searchType" id="searchType">
+                <option value="genre">Genre</option>
+                <option value="title">Title</option>
+            </select>
+            <input type="text" placeholder="Search..." id="searchInput" name="Cari" />
+            <button type="submit" class="search-button">
+                <img src="https://i.ibb.co/rb6kTcJ/Screenshot-1.png" alt="Search Icon" style="width: 20px; height: 23px;" />
+            </button>
+        </form>
         <a href="profile.html" class="Login-button">
             <img src="https://i.ibb.co/275wkRK/sasuke.png" alt="Login Icon" style="width: 130px; height: 60px;" />
         </a>
     </header>
+    
     <h3>Default</h3><br>
         <div class="posters-container">
             
             <c:forEach var="anime" items="${animeList}">
                 <div class="poster">
-                    <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
+                    <a href="/Home/nonton/${anime.animeId}/eps">
+                        <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
+                    </a> 
                     <p class="poster-text">${anime.title}</p>
                 </div>
             </c:forEach>
@@ -144,7 +149,9 @@
             
             <c:forEach var="anime" items="${animeListgenre}">
                 <div class="poster">
-                    <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
+                    <a href="/Home/nonton/${anime.animeId}/eps">
+                        <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
+                    </a> 
                     <p class="poster-text">${anime.title}</p>
                 </div>
             </c:forEach>
@@ -157,7 +164,9 @@
             
             <c:forEach var="anime" items="${animeListgenre2}">
                 <div class="poster">
-                    <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
+                    <a href="/Home/nonton/${anime.animeId}/eps">
+                        <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
+                    </a>
                     <p class="poster-text">${anime.title}</p>
                 </div>
             </c:forEach>
@@ -170,7 +179,9 @@
             
             <c:forEach var="anime" items="${animeListgenre3}">
                 <div class="poster">
-                    <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
+                    <a href="/Home/nonton/${anime.animeId}/eps"></a>
+                        <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
+                    </a>
                     <p class="poster-text">${anime.title}</p>
                 </div>
             </c:forEach>
@@ -178,21 +189,6 @@
         
     <iframe width="560" height="315" src="https://www.youtube.com/embed/QczGoCmX-pI?si=t-cOk0C6w02vsjWe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     
-
-    <script>
-        function searchFunction() {
-            var searchInput = document.getElementById('searchInput').value;
-            console.log('Search Query:', searchInput);
-            // Add your search logic here
-        }
-    
-        document.getElementById("searchInput").addEventListener("keydown", function(event) {
-            if (event.key === "Enter") {
-                // Redirect to search.html
-                window.location.href = "search.html";
-            }
-        });
-    </script>
     
 </body>
 </html>
