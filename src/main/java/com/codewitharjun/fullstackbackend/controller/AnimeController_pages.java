@@ -2,6 +2,7 @@ package com.codewitharjun.fullstackbackend.controller;
 
 import com.codewitharjun.fullstackbackend.model.Anime;
 import com.codewitharjun.fullstackbackend.model.AnimeEpisode;
+import com.codewitharjun.fullstackbackend.model.Comment;
 import com.codewitharjun.fullstackbackend.model.Like;
 import com.codewitharjun.fullstackbackend.model.Subscribe;
 import com.codewitharjun.fullstackbackend.model.User;
@@ -14,8 +15,11 @@ import com.codewitharjun.fullstackbackend.repository.UserHistoryRepository;
 import com.codewitharjun.fullstackbackend.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 //import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -245,5 +249,161 @@ public class AnimeController_pages {
             // Return true if the user is subscribed, false otherwise
             return subscription.isPresent();
         }
+
+        @PostMapping("/nonton/{animeId}/eps/{episodeNumber}/comment")
+        public ModelAndView addComment(
+                @PathVariable Long animeId,
+                @PathVariable Integer episodeNumber,
+                @RequestParam String comment,
+                HttpSession session) {
+
+            // Check if the anime exists
+            Anime anime = animeRepository.findById(animeId).orElse(null);
+
+            if (anime != null) {
+                // Check if the episode exists for the given anime and episode number
+                AnimeEpisode episode = animeEpisodeRepository.findByEpisodeNumberAndAnime_Id(episodeNumber, animeId)
+                        .orElse(null);
+
+                if (episode != null) {
+                    // Get the currently logged-in user from the session
+                    User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+                    // Create a new Comment object
+                    Comment newComment = new Comment();
+                    newComment.setUser(loggedInUser);
+                    newComment.setAnimeEpisode(episode);
+                    newComment.setComment(comment);
+                    newComment.setCommentedAt(new Date());
+
+                    // Save the comment to the episode
+                    episode.getComments().add(newComment);
+                    animeEpisodeRepository.save(episode);
+
+                    ModelAndView modelAndView = new ModelAndView("watchAnimeEps");
+                    modelAndView.addObject("AnimeDetail", anime);
+                    modelAndView.addObject("episode", episode);
+                    modelAndView.addObject("errorMessage", "Komentar ditambahkan.");
+                    return modelAndView;
+                } else {
+                    // Handle case where the episode is not found
+                    ModelAndView modelAndView = new ModelAndView("episodeNotFound");
+                    modelAndView.addObject("errorMessage", "Episode not found");
+                    return modelAndView;
+                }
+            } else {
+                // Handle case where the anime is not found
+                ModelAndView modelAndView = new ModelAndView("animeNotFound");
+                modelAndView.addObject("errorMessage", "Anime not found");
+                return modelAndView;
+            }
+        }
+
+
+    @PostMapping("/nonton/{animeId}/eps/{episodeNumber}/like")
+    public ResponseEntity<String> likeAnimeEpisode(
+            @PathVariable Long animeId,
+            @PathVariable Integer episodeNumber,
+            HttpSession session) {
+
+        // Check if the anime exists
+        Anime anime = animeRepository.findById(animeId).orElse(null);
+
+        if (anime != null) {
+            // Check if the episode exists for the given anime and episode number
+            AnimeEpisode episode = animeEpisodeRepository.findByEpisodeNumberAndAnime_Id(episodeNumber, animeId)
+                    .orElse(null);
+
+            if (episode != null) {
+                // Get the currently logged-in user from the session
+                User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+                // Check if the episode requires subscription
+                boolean requiresSubscription = episode.isRequiresSubscription();
+
+                if (requiresSubscription) {
+                    // If the episode requires subscription, check if the user is subscribed
+                    boolean isSubscribed = checkUserSubscription(loggedInUser);
+
+                    if (!isSubscribed) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                .body("You need to be subscribed to like this episode.");
+                    }
+                }
+
+                // Get the user from the repository
+                User user = userRepository.findByUsername(loggedInUser.getUsername());
+
+                // Check if the user has already liked the episode
+                if (likeRepository.existsByUserAndAnimeEpisode(user, episode)) {
+                    return ResponseEntity.ok("User already liked this episode.");
+                }
+
+                // Save the like
+                Like like = new Like();
+                like.setUser(user);
+                like.setAnimeEpisode(episode);
+                likeRepository.save(like);
+
+                return ResponseEntity.ok("Episode liked.");
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/nonton/{animeId}/eps/{episodeNumber}/like")
+    public ResponseEntity<String> unlikeAnimeEpisode(
+            @PathVariable Long animeId,
+            @PathVariable Integer episodeNumber,
+            HttpSession session) {
+
+        // Check if the anime exists
+        Anime anime = animeRepository.findById(animeId).orElse(null);
+
+        if (anime != null) {
+            // Check if the episode exists for the given anime and episode number
+            AnimeEpisode episode = animeEpisodeRepository.findByEpisodeNumberAndAnime_Id(episodeNumber, animeId)
+                    .orElse(null);
+
+            if (episode != null) {
+                // Get the currently logged-in user from the session
+                User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+                // Check if the episode requires subscription
+                boolean requiresSubscription = episode.isRequiresSubscription();
+
+                if (requiresSubscription) {
+                    // If the episode requires subscription, check if the user is subscribed
+                    boolean isSubscribed = checkUserSubscription(loggedInUser);
+
+                    if (!isSubscribed) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                .body("You need to be subscribed to unlike this episode.");
+                    }
+                }
+
+                // Get the user from the repository
+                User user = userRepository.findByUsername(loggedInUser.getUsername());
+
+                // Check if the user has liked the episode
+                Like like = likeRepository.findByUserAndAnimeEpisode(user, episode);
+
+                if (like != null) {
+                    // User has liked the episode, delete the like
+                    likeRepository.delete(like);
+                    return ResponseEntity.ok("Like removed.");
+                } else {
+                    return ResponseEntity.ok("User has not liked this episode.");
+                }
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }

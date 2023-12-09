@@ -1,5 +1,8 @@
 package com.codewitharjun.fullstackbackend.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +15,9 @@ public class AnimeEpisode {
     @ManyToOne
     @JoinColumn(name = "anime_id", nullable = false)
     private Anime anime;
+
+    @OneToMany(mappedBy = "animeEpisode", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 
     private String episodeTitle;
     private String videoUrl;
@@ -72,5 +78,12 @@ public class AnimeEpisode {
         this.id = id;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
     
 }
