@@ -7,6 +7,7 @@
 <body>
 
     <h1>User Watch History</h1>
+    <a href="../historyLasts">Lastes</a>
 
     <c:if test="${not empty userHistoryList}">
         <table border="1">
