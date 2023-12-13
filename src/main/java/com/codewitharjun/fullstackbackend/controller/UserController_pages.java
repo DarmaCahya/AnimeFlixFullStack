@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.codewitharjun.fullstackbackend.model.Admin;
-
+import com.codewitharjun.fullstackbackend.model.Customer;
 
 import javax.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
@@ -77,5 +77,37 @@ public class UserController_pages {
                     .header("Location", "http://localhost:8080/login?error=User not logged in")
                     .build();
         }
+    }
+
+
+    @GetMapping("/register")
+    public ModelAndView registerPage() {
+        ModelAndView modelAndView = new ModelAndView("register");
+        return modelAndView;
+    }
+
+    @PostMapping("/register")
+    public ModelAndView register(@RequestParam String username, @RequestParam String email, @RequestParam String password){
+        Customer newUser = new Customer();
+        newUser.setEmail(email);
+        newUser.setUsername(username);
+        newUser.setPassword(password);
+
+        ModelAndView modelAndView = new ModelAndView("register");
+        if (userRepository.findByUsername(newUser.getUsername()) != null) {
+            modelAndView.addObject("Error Message", "Username already exists");
+            return modelAndView;
+        }
+
+        // Cek apakah email sudah digunakan
+        if (userRepository.findByEmail(newUser.getEmail()) != null) {
+            modelAndView.addObject("Error Message", "Email already exists");
+            return modelAndView;
+        }
+
+        // Simpan pengguna baru ke basis data
+        userRepository.save(newUser);
+
+        return modelAndView;
     }
 }

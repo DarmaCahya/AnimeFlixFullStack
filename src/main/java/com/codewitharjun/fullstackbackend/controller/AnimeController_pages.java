@@ -28,13 +28,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 //import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -127,11 +129,57 @@ public class AnimeController_pages {
         }
 
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        List<UserHistory> userHistoryList = userHistoryRepository.findByUser(loggedInUser);
-        ModelAndView modelAndView = new ModelAndView("History");
+
+        // Fetch all user history and order by watchedAt in descending order
+        List<UserHistory> userHistoryList = userHistoryRepository.findByUserOrderByWatchedAtDesc(loggedInUser);
+
+        // Use a Set to keep track of unique combinations of user and animeEpisode
+        Set<Long> uniqueAnimeEpisodeIds = new HashSet<>();
+        List<UserHistory> uniqueUserHistoryList = new ArrayList<>();
+
+        for (UserHistory userHistory : userHistoryList) {
+            Long animeEpisodeId = userHistory.getAnimeEpisode().getId();
+            if (!uniqueAnimeEpisodeIds.contains(animeEpisodeId)) {
+                uniqueAnimeEpisodeIds.add(animeEpisodeId);
+                uniqueUserHistoryList.add(userHistory);
+            }
+        }
+
+        ModelAndView modelAndView = new ModelAndView("HistoryLastWatched");
+        modelAndView.addObject("userHistoryList", uniqueUserHistoryList);
+        return modelAndView;
+    }
+
+    @GetMapping("/history/all")
+    public ModelAndView getUserAllWatchHistory(HttpSession session) {
+        if (session == null || session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        
+        // Fetch all user history and order by watchedAt in descending order
+        List<UserHistory> userHistoryList = userHistoryRepository.findByUserOrderByWatchedAtDesc(loggedInUser);
+
+        ModelAndView modelAndView = new ModelAndView("AllHistory");
         modelAndView.addObject("userHistoryList", userHistoryList);
         return modelAndView;
     }
+
+    @GetMapping("/profile")
+    public ModelAndView getProfile(HttpSession session) {
+        if (session == null || session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User user = userRepository.findByUsername(loggedInUser.getUsername());
+
+        ModelAndView modelAndView = new ModelAndView("profile");
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
     
     @GetMapping("/search/")
     public ModelAndView getAnimeByGenre(

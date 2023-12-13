@@ -16,4 +16,9 @@ public interface UserHistoryRepository extends JpaRepository<UserHistory, Long> 
 
     // Metode untuk mencari riwayat pengguna berdasarkan epsanime
     List<UserHistory> findByAnimeEpisode(AnimeEpisode animeEpisode);
+
+
+    UserHistory findTopByUserOrderByWatchedAtDesc(User user);
+
+    List<UserHistory> findByUserOrderByWatchedAtDesc(User user);
 }

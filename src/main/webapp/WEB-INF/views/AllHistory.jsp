@@ -7,8 +7,6 @@
 <body>
 
     <h1>User Watch History</h1>
-    <a href="../historyLasts">Lastes</a>
-
     <c:if test="${not empty userHistoryList}">
         <table border="1">
             <thead>
@@ -25,13 +23,18 @@
                         <td>${history.animeEpisode.anime.title}</td>
                         <td>${history.animeEpisode.episodeTitle}</td>
                         <td>${history.watchedAt}</td>
-                        <td><a href="../nonton/${history.animeEpisode.anime.animeId}/eps/">Watch Anime</a></td>
+                        <td>
+                            <form method="post" action="../nonton/${history.animeEpisode.anime.animeId}/eps/${history.animeEpisode.episodeNumber}">
+                                <button type="submit">Nonton</button>
+                            </form> 
+                        </td>
                     </tr>
                 </c:forEach>
                 
             </tbody>
         </table>
     </c:if>
+    
 
 </body>
 </html>
