@@ -42,7 +42,7 @@ public class UserController_pages {
                 ModelAndView modelAndView = new ModelAndView("loginSuccess");
                 modelAndView.addObject("message", "Login successful");
                 modelAndView.addObject("username", user.getUsername());
-                modelAndView.addObject("userType", user instanceof Admin ? "ADMIN" : "REGULAR");
+                modelAndView.addObject("userType", user instanceof Admin ? "ADMIN" : "CUSTOMER");
 
                 return modelAndView;
             } else {
