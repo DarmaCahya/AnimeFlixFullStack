@@ -16,9 +16,18 @@ public class FK_Publisher {
     private String TahunDidirikan;
     private String Alamat;
     private String Deskripsi;
+    private String pesan;
 
 
     // Constructors, getters, and setters
+
+    public String getPesan() {
+        return pesan;
+    }
+
+    public void setPesan(String pesan) {
+        this.pesan = pesan;
+    }
 
     // Constructors
     public FK_Publisher() {

@@ -15,9 +15,18 @@ public class FK_Customer {
     private String namaCustomer;
     private String jenisKelamin;
     private String payment_id;
+    private String pesan;
 
 
     // Constructors, getters, and setters
+
+    public String getPesan() {
+        return pesan;
+    }
+
+    public void setPesan(String pesan) {
+        this.pesan = pesan;
+    }
 
     // Constructors
     public FK_Customer() {
