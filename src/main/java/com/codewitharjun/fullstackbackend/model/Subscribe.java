@@ -18,13 +18,23 @@ public class Subscribe {
     // Constructors, getters, and setters
 
     // Constructors
+    public Subscribe(User user) {
+        this.user = user;
+        this.duration = 2;
+    }
     public Subscribe() {
     }
+
 
     public Subscribe(int duration, User user) {
         this.duration = duration;
         this.user = user;
     }
+
+    public Subscribe(int duration) {
+        this.duration = duration;
+    }
+    
 
     // Getters and Setters
     public Long getSubscribeId() {
@@ -49,5 +59,14 @@ public class Subscribe {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Subscribe{" +
+                "subscribeId=" + subscribeId +
+                ", duration=" + duration +
+                ", user=" + user +
+                '}';
     }
 }

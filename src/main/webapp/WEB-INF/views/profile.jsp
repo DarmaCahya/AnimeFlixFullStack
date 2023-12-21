@@ -28,17 +28,7 @@
         
         <!-- Display Subscription Status -->
         <div id="subscriptionStatus"></div>
-
-        <!-- Fetch Subscription Status on Page Load -->
-        <script>
-            $(document).ready(function () {
-                // Make an AJAX request to fetch subscription status
-                $.get("/user/subscribe", function (data) {
-                    $("#subscriptionStatus").text(data.message);
-                });
-            });
-        </script>
-
+        
         <!-- Subscribe Button -->
         <button id="subscribeBtn" onclick="subscribeUser()">Subscribe</button>
 
@@ -51,7 +41,16 @@
     </form>
 
     <!-- Subscribe/Cancel Subscribe JavaScript Functions -->
+    <!-- Fetch Subscription Status on Page Load -->
     <script>
+         $(document).ready(function () {
+                // Make an AJAX request to fetch subscription status
+                $.get("/user/subscribe", function (data) {
+                    $("#subscriptionStatus").text(data.message);
+                });
+            });
+
+
         function subscribeUser() {
             $.ajax({
                 type: "POST",

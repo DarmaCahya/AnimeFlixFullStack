@@ -2,12 +2,20 @@ package com.codewitharjun.fullstackbackend.controller;
 
 import com.codewitharjun.fullstackbackend.model.User;
 import com.codewitharjun.fullstackbackend.repository.UserRepository;
+import com.codewitharjun.fullstackbackend.repository.User_AdminRepository;
+import com.codewitharjun.fullstackbackend.repository.User_CustomerRepository;
+import com.codewitharjun.fullstackbackend.repository.User_PublisherRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.codewitharjun.fullstackbackend.model.Admin;
 import com.codewitharjun.fullstackbackend.model.Customer;
+import com.codewitharjun.fullstackbackend.model.FK_Admin;
+import com.codewitharjun.fullstackbackend.model.FK_Customer;
+import com.codewitharjun.fullstackbackend.model.FK_Publisher;
+import com.codewitharjun.fullstackbackend.model.Publisher;
 
 import javax.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
@@ -21,6 +29,15 @@ public class UserController_pages {
 
     @Autowired
     private UserRepository userRepository;
+
+     @Autowired
+    private User_AdminRepository user_AdminRepository;
+
+    @Autowired
+    private User_CustomerRepository user_CustomerRepository;
+
+    @Autowired
+    private User_PublisherRepository user_PublisherRepository;
 
     @GetMapping("/login")
     public ModelAndView loginPage() {
@@ -42,7 +59,13 @@ public class UserController_pages {
                 ModelAndView modelAndView = new ModelAndView("loginSuccess");
                 modelAndView.addObject("message", "Login successful");
                 modelAndView.addObject("username", user.getUsername());
-                modelAndView.addObject("userType", user instanceof Admin ? "ADMIN" : "CUSTOMER");
+                if (user instanceof Admin) {
+                    modelAndView.addObject("userType", "ADMIN");
+                } else if (user instanceof Customer) {
+                    modelAndView.addObject("userType", "CUSTOMER");
+                } else if (user instanceof Publisher) {
+                    modelAndView.addObject("userType", "PUBLISHER");
+                }
 
                 return modelAndView;
             } else {
@@ -87,8 +110,27 @@ public class UserController_pages {
     }
 
     @PostMapping("/register")
-    public ModelAndView register(@RequestParam String username, @RequestParam String email, @RequestParam String password){
-        Customer newUser = new Customer();
+    public ModelAndView register(@RequestParam String username, @RequestParam String email, @RequestParam String password, @RequestParam String usertype, HttpSession session) {
+        
+        User newUser;
+        if (usertype.equals("ADMIN")) {
+            newUser = new Admin();
+            FK_Admin newfkadmin  = new FK_Admin(username);
+            user_AdminRepository.save(newfkadmin);
+            ((Admin) newUser).setAdminCHMOD(newfkadmin);
+
+        }else if (usertype.equals("CUSTOMER")) {
+            newUser = new Customer();
+            FK_Customer newfkcustomer  = new FK_Customer("Mr/Ms. "+ username);
+            user_CustomerRepository.save(newfkcustomer);
+            ((Customer) newUser).setCustomerCHMOD(newfkcustomer);
+
+        } else {
+            newUser = new Publisher();
+            FK_Publisher newfkpublisher  = new FK_Publisher("PT. "+username);
+            user_PublisherRepository.save(newfkpublisher);
+            ((Publisher) newUser).setPublisherCHMOD(newfkpublisher);
+        }
         newUser.setEmail(email);
         newUser.setUsername(username);
         newUser.setPassword(password);
@@ -108,6 +150,6 @@ public class UserController_pages {
         // Simpan pengguna baru ke basis data
         userRepository.save(newUser);
 
-        return modelAndView;
+        return new ModelAndView("redirect:/login");
     }
 }

@@ -197,6 +197,14 @@
                     <input type="checkbox" id="showConfirmPassword" name="showConfirmPassword">
                 </div>
             </div>
+            <div class="form-group">
+                <label for="usertype" style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 700px; left: 80px;">User Type</label>
+                <select id="usertype" name="usertype" style="opacity: 1; color: #FFEFEF; padding: 10px;">
+                    <option value="ADMIN">ADMIN</option>
+                    <option value="CUSTOMER">CUSTOMER</option>
+                    <option value="PUBLISHER">PUBLISHER</option>
+                </select>
+            </div>
             <button class="signup-button" onclick="signup()">Signup</button>
         </div>
     </form>
