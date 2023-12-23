@@ -22,7 +22,7 @@
 
         #username{
             position: absolute;
-            top: 21.5%;
+            top: 17%;
             left: 15%;
             font-size: 100%;
             border: 1px solid #646161;
@@ -30,7 +30,7 @@
 
         #password{
             position: absolute;
-            top:62%;
+            top:55.5%;
             left: 15%;
             font-size: 100%;
             border: 1px solid #646161;
@@ -38,7 +38,7 @@
 
         #confirmPassword{
             position: absolute;
-            top: 76.5%;
+            top: 68.5%;
             left: 15%;
             font-size: 100%;
             border: 1px solid #646161;
@@ -46,7 +46,7 @@
 
         #email{
             position: absolute;
-            top: 35%;
+            top: 30%;
             left: 15%;
             font-size: 100%;
             border: 1px solid #646161;
@@ -54,7 +54,7 @@
 
         #phone{
             position: absolute;
-            top: 48.5%;
+            top: 43%;
             left: 15%;
             font-size: 100%;
             border: 1px solid #646161;
@@ -62,17 +62,19 @@
 
         #showPassword{
             position: absolute;
-            bottom: 32.5%;
-            left: 40%;
+            bottom: 39%;
+            left: 73%;
             height: 2.5%;
+            width: 20px;
             border: 1px solid #646161;
         }
 
         #showConfirmPassword{
             position: absolute;
-            bottom: 18%;
-            left: 40%;
+            bottom: 26%;
+            left: 73%;
             height: 2.5%;
+            width: 20px;
             border: 1px solid #646161;
         }
 
@@ -80,7 +82,7 @@
             position: relative;
             left: -275px;
             top: -15px;
-            height: 85vh;
+            height: 90vh;
             width: 23vw;
             border: 1px solid #000000;
             border-radius: 8px;
@@ -154,6 +156,12 @@
         .login-button:hover {
             background-color: #45a049;
         }
+
+        #usertype{
+            position: absolute;
+            bottom: 14.5%;
+            left: 15%;
+        }
     </style>
 </head>
 <body>
@@ -168,39 +176,38 @@
                 color: #FFEFEF;
                 opacity: 0.7;
                 position:relative;
-                top: 3%;
+                top: 1%;
                 left: 36%; }
             </style>
             <div class="form-group">
-                <label for="username", style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 140px; left: 80px;">Username</label>
+                <label for="username", style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 110px; left: 80px;">Username</label>
                 <input type="text" id="username" name="username" placeholder="Enter your username", style="opacity: 1;color: #FFEFEF; ">
             </div>
             <div class="form-group">
-                <label for="email", style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 250px; left: 80px;">Email</label>
+                <label for="email", style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 220px; left: 80px;">Email</label>
                 <input type="text" id="email" name="email" placeholder="Enter your email", style="opacity: 1;color: #FFEFEF; ">
             </div>
             <div class="form-group">
-                <label for="phone", style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 360px; left: 80px;">No Handphone</label>
+                <label for="phone", style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 331px; left: 80px;">No Handphone</label>
                 <input type="text" id="phone" name="phone" placeholder="Enter your phone number", style="opacity: 1;color: #FFEFEF; ">
             </div>
             <div class="form-group">
-                <label for="password", style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 472px; left: 80px;">Password</label>
+                <label for="password", style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 440px; left: 80px;">Password</label>
                 <input type="password" id="password" name="password" class="password-input" placeholder="Enter your password", style="opacity: 1;color: #FFEFEF; ">
                 <div class="checkbox-group">
                     <input type="checkbox" id="showPassword" name="showPassword">
                 </div>
             </div>
             <div class="form-group">
-                <label for="confirmPassword", style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 585px; left: 80px;">Confirm Password</label>
+                <label for="confirmPassword", style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 550px; left: 80px;">Confirm Password</label>
                 <input type="password" id="confirmPassword" name="confirmPassword" class="password-input" placeholder="Confirm your password", style="opacity: 1;color: #FFEFEF; ">
                 <div class="checkbox-group">
                     <input type="checkbox" id="showConfirmPassword" name="showConfirmPassword">
                 </div>
             </div>
             <div class="form-group">
-                <label for="usertype" style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 700px; left: 80px;">User Type</label>
-                <select id="usertype" name="usertype" style="opacity: 1; color: #FFEFEF; padding: 10px;">
-                    <option value="ADMIN">ADMIN</option>
+                <label for="usertype" style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 662px; left: 80px;">User Type</label>
+                <select id="usertype" name="usertype" style="opacity: 1; color: #000000; padding: 10px;">
                     <option value="CUSTOMER">CUSTOMER</option>
                     <option value="PUBLISHER">PUBLISHER</option>
                 </select>
