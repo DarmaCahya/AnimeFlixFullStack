@@ -141,13 +141,6 @@
         <div class="content">
             <h2>Main Content</h2>
             <p>This is the main content area. You can add your page content here.</p>
-            <c:if test="${not empty users}">
-                <ul>
-                    <c:forEach var="user" items="${users}">
-                        <li>${user} - <a href=/Home/genre/${user}>klik sini</a></li>
-                    </c:forEach>
-                </ul>
-            </c:if>
         </div>
     </div>
 
