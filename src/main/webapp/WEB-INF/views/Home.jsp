@@ -19,6 +19,7 @@
             background-color: #0d0c0c;
             color: #fff;
             padding: 10px;
+            border-bottom: 2px solid #333;
         }
 
         .logo {
@@ -31,44 +32,64 @@
         }
 
         nav {
-            display: inline-block;
+            display: flex;
+            height: 5px;
         }
 
         nav a {
+            position: relative;
             color: #fff;
             text-decoration: none;
-            margin-right: 15px;
+            margin-right: 2%;
+            font-size: 25px;
+            color: #a29999;
+            top: -50px;
+            left: 180px;
         }
 
         .search-box {
             display: inline-block;
             position: absolute;
-            left: 76%;
-            bottom: 92%;
-            top: 50px;
+            right: 8%;
+            top: 3%;
+        }
+
+        .search-container {
+            display: flex;
+            background-color: #242524;
+            opacity: 0.9;
+            width: 87%;
+            border-radius: 0;
+            border: 2px solid #1f1d2a;
+            box-sizing: border-box;
+            margin-bottom: 5px;
+            right: 70%;
+            padding: 3%;
         }
 
         #searchInput {
             background-color: #242524;
             opacity: 0.9;
-            width: 135%;
-            padding: 7px;
+            width: 87%;
             border-radius: 0;
-            border: 2px solid #1F1D2A;
-            box-sizing: border-box;
-            margin-bottom: 5px;
+            border: none;
             color: #fff;
-            right: 70%;
+            padding: 4%;
         }
 
         .search-button {
             position: absolute;
-            top: 45%;
-            right: -52px;
-            transform: translateY(-50%);
+            right: 6%;
+            top: 40%;
             border: none;
             background-color: transparent;
             cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .search-button:hover {
+            opacity: 0.6;
+            transition: all 0.25s;
         }
 
         .Login-button {
@@ -78,13 +99,16 @@
             border-radius: 50%;
             overflow: hidden;
             position: absolute;
-            top: 33px;
-            right: 70px;
+            top: 2%;
+            right: 3%;
         }
         
+        nav a:hover {
+        color: #504f4c;
+        }
+
         .posters-container {
             display: flex;
-            overflow-x: auto; /* Mengaktifkan scrolling horizontal */
         }
 
         .poster {
@@ -102,7 +126,14 @@
             margin-top: 10px;
         }
 
-
+        .scroll-container {
+            overflow-x: auto;
+            display: flex;
+            overflow: hidden;
+        }
+        h3{
+            margin-bottom: 0;
+        }
     </style>
 </head>
 <body>
@@ -112,8 +143,8 @@
             <img src="https://i.ibb.co/RzzSCg2/flix.png" alt="AnimeFlix Logo" style="width: 130px; height: 65px;" />
         </a>
         <nav>
-            <a href="Home/genre/" style="position: absolute; top: 48px; font-size: 16px; color: #a29999;left: 200px;font-size: 22px;">Genre</a>
-            <a href="Home/history/" style="position: absolute; top: 48px; font-size: 16px; color: #a29999;left: 310px;font-size: 22px;">History</a>
+            <a href="Home/genre/">Genre</a>
+            <a href="Home/history/">History</a>
         </nav>
         <form action="/Home/search/" method="get" class="search-box">
             <select name="searchType" id="searchType">
@@ -131,22 +162,27 @@
     </header>
     
     <h3>Default</h3><br>
-        <div class="posters-container">
-            
+    <div class="scroll-buttons">
+        <button onclick="scrollPosters('default', 'right')" style="position: absolute; margin-top: 7%; margin-left: 95%; width: 2%; height: 5%;">></button>
+    </div>
+        <div class="scroll-container posters-container" id="defaultPosters">
             <c:forEach var="anime" items="${animeList}">
                 <div class="poster">
                     <a href="/Home/nonton/${anime.animeId}/eps">
-                        <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
+                        <img src="${anime.thumbnail}" alt="Poster 1" class="poster-img">
                     </a> 
                     <p class="poster-text">${anime.title}</p>
                 </div>
             </c:forEach>
         </div>
+
     <c:if test="${not empty animeListgenre}">
         <h3>${animeListgenre[0].genre}</h3><br>
     </c:if>
         <div class="posters-container">
-            
+            <div class="scroll-buttons">
+                <button onclick="scrollPosters('default', 'right')">></button>
+            </div>
             <c:forEach var="anime" items="${animeListgenre}">
                 <div class="poster">
                     <a href="/Home/nonton/${anime.animeId}/eps">
@@ -186,9 +222,25 @@
                 </div>
             </c:forEach>
         </div>
-        
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/QczGoCmX-pI?si=t-cOk0C6w02vsjWe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-    
-    
+    <script>
+        function scrollPosters(containerId, direction) {
+            const container = document.getElementById(containerId + 'Posters');
+            const scrollAmount = 200; // Jarak geser (px)
+
+            if (direction === 'right') {
+                container.scrollLeft += scrollAmount;
+                if (container.scrollLeft >= container.scrollWidth - container.clientWidth) {
+                    // Jika sudah mencapai ujung, kembali ke awal
+                    container.scrollLeft = 0;
+                }
+            } else if (direction === 'left') {
+                container.scrollLeft -= scrollAmount;
+                if (container.scrollLeft <= 0) {
+                    // Jika sudah mencapai ujung, kembali ke akhir
+                    container.scrollLeft = container.scrollWidth - container.clientWidth;
+                }
+            }
+        }
+    </script>
 </body>
 </html>
