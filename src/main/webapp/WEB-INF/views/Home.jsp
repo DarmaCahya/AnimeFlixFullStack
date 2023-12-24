@@ -109,6 +109,7 @@
 
         .posters-container {
             display: flex;
+            margin-left: 2%;
         }
 
         .poster {
@@ -133,6 +134,7 @@
         }
         h3{
             margin-bottom: 0;
+            margin-left: 2%;
         }
     </style>
 </head>
@@ -163,7 +165,7 @@
     
     <h3>Default</h3><br>
     <div class="scroll-buttons">
-        <button onclick="scrollPosters('default', 'right')" style="position: absolute; margin-top: 7%; margin-left: 95%; width: 2%; height: 5%;">></button>
+        <button onclick="scrollPosters('defaultPosters', 'right')" style="position: absolute; margin-top: 7%; margin-left: 95%; width: 2%; height: 5%;">></button>
     </div>
         <div class="scroll-container posters-container" id="defaultPosters">
             <c:forEach var="anime" items="${animeList}">
@@ -176,11 +178,47 @@
             </c:forEach>
         </div>
 
+    <c:if test="${not empty animeListgenre}">
+        <h3>${animeListgenre[0].genre}</h3><br>
+    </c:if>
+        <div class="scroll-buttons">
+            <button onclick="scrollPosters('poster1', 'right')" style="position: absolute; margin-top: 7%; margin-left: 95%; width: 2%; height: 5%;">></button>
+        </div>
+        <div class="posters-container" id="poster1" style="width: 100%; overflow-x: auto; overflow: hidden;">
+            <c:forEach var="anime" items="${animeListgenre}">
+                <div class="poster" >
+                    <a href="/Home/nonton/${anime.animeId}/eps">
+                        <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
+                    </a> 
+                    <p class="poster-text">${anime.title}</p>
+                </div>
+            </c:forEach>
+        </div>
+
+    <c:if test="${not empty animeListgenre2}">
+        <h3>${animeListgenre2[0].genre}</h3><br>
+    </c:if>
+    <div class="scroll-buttons">
+        <button onclick="scrollPosters('poster2', 'right')" style="position: absolute; margin-top: 7%; margin-left: 95%; width: 2%; height: 5%;">></button>
+    </div>
+    <div class="posters-container" id="poster2" style="width: 100%; overflow-x: auto; overflow: hidden;">
+        <c:forEach var="anime" items="${animeListgenre2}">
+                <div class="poster">
+                    <a href="/Home/nonton/${anime.animeId}/eps">
+                        <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
+                    </a>
+                    <p class="poster-text">${anime.title}</p>
+                </div>
+            </c:forEach>
+        </div>
+    
     <c:if test="${not empty animeListgenre3}">
         <h3>${animeListgenre3[0].genre}</h3><br>
     </c:if>
-        <div class="posters-container">
-            
+    <div class="scroll-buttons">
+        <button onclick="scrollPosters('poster3', 'right')" style="position: absolute; margin-top: 7%; margin-left: 95%; width: 2%; height: 5%;">></button>
+    </div>
+    <div class="posters-container" id="poster3" style="width: 100%; overflow-x: auto; overflow: hidden;">
             <c:forEach var="anime" items="${animeListgenre3}">
                 <div class="poster">
                     <a href="/Home/nonton/${anime.animeId}/eps"></a>
@@ -190,25 +228,28 @@
                 </div>
             </c:forEach>
         </div>
-    <script>
-        function scrollPosters(containerId, direction) {
-            const container = document.getElementById(containerId + 'Posters');
-            const scrollAmount = 200; // Jarak geser (px)
 
-            if (direction === 'right') {
-                container.scrollLeft += scrollAmount;
-                if (container.scrollLeft >= container.scrollWidth - container.clientWidth) {
-                    // Jika sudah mencapai ujung, kembali ke awal
-                    container.scrollLeft = 0;
-                }
-            } else if (direction === 'left') {
-                container.scrollLeft -= scrollAmount;
-                if (container.scrollLeft <= 0) {
-                    // Jika sudah mencapai ujung, kembali ke akhir
-                    container.scrollLeft = container.scrollWidth - container.clientWidth;
-                }
+ <script>
+    function scrollPosters(containerId, direction) {
+        const container = document.getElementById(containerId);
+        const scrollAmount = 200; // Jarak geser (px)
+
+        if (direction === 'right') {
+            container.scrollLeft += scrollAmount;
+            if (container.scrollLeft >= container.scrollWidth - container.clientWidth) {
+                // Jika sudah mencapai ujung, kembali ke awal
+                container.scrollLeft = 0;
+            }
+        } else if (direction === 'left') {
+            container.scrollLeft -= scrollAmount;
+            if (container.scrollLeft <= 0) {
+                // Jika sudah mencapai ujung, kembali ke akhir
+                container.scrollLeft = container.scrollWidth - container.clientWidth;
             }
         }
-    </script>
+    }
+</script>
+
+
 </body>
 </html>
