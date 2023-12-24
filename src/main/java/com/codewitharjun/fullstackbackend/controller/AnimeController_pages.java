@@ -3,6 +3,8 @@ package com.codewitharjun.fullstackbackend.controller;
 import com.codewitharjun.fullstackbackend.model.Anime;
 import com.codewitharjun.fullstackbackend.model.AnimeEpisode;
 import com.codewitharjun.fullstackbackend.model.Comment;
+import com.codewitharjun.fullstackbackend.model.Customer;
+import com.codewitharjun.fullstackbackend.model.FK_Customer;
 import com.codewitharjun.fullstackbackend.model.Like;
 import com.codewitharjun.fullstackbackend.model.Subscribe;
 import com.codewitharjun.fullstackbackend.model.User;
@@ -68,9 +70,14 @@ public class AnimeController_pages {
         if (session == null || session.getAttribute("loggedInUser") == null) {
             return new ModelAndView("redirect:/login");
         }
+        ModelAndView modelAndView = new ModelAndView("Home");
+        
+        User user = (User) session.getAttribute("loggedInUser");
+        FK_Customer fk_customer = ((Customer) user).getCustomerCHMOD();
+
+        modelAndView.addObject("PesanAlert", fk_customer.getPesan());
 
         List<Anime> animeList = animeRepository.findAll();
-        ModelAndView modelAndView = new ModelAndView("Home");
         modelAndView.addObject("animeList", animeList);
 
         // Get all genres

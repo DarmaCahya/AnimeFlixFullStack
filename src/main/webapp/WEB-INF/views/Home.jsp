@@ -160,6 +160,15 @@
             <img src="https://i.ibb.co/275wkRK/sasuke.png" alt="Login Icon" style="width: 130px; height: 60px;" />
         </a>
     </header>
+
+    <c:if test="${PesanAlert != null}">
+        <script>
+            // JavaScript code to show a pop-up message
+            window.onload = function() {
+                alert('Minimal sopan dek');
+            };
+        </script>
+    </c:if>
     
     <h3>Default</h3><br>
     <div class="scroll-buttons">

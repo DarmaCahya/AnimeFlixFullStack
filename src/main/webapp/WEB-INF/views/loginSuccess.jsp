@@ -16,6 +16,30 @@
     
     <p>User Type: ${userType}</p>
 
+    <c:if test="${userType == 'ADMIN'}">
+        <form method="get" action="/Dashboard">
+            <button type="submit">Dashboard</button>
+        </form>
+    </c:if>
+
+
+    <c:if test="${userType == 'PUBLISHER'}">
+        <form method="get" action="/AnimeManager">
+            <button type="submit">AnimeManager</button>
+        </form>
+    </c:if>
+
+    <c:if test="${userType == 'CUSTOMER'}">
+        <script>
+             window.onload = function() {
+                alert('Hai Customer, Selamat Datang di Website Kami!');
+            };
+
+            setTimeout(function() {
+                window.location.href = "/Home";
+            }, 5000);
+        </script>
+    </c:if>
 
     <form method="post" action="/logout">
         <button type="submit">logout</button>
@@ -28,6 +52,5 @@
     <form method="get" action="/Home/nonton/1/eps">
         <button type="submit">Anime</button>
     </form>
-
 </body>
 </html>
