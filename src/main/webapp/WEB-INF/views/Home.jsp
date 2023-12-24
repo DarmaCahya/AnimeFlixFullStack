@@ -176,38 +176,6 @@
             </c:forEach>
         </div>
 
-    <c:if test="${not empty animeListgenre}">
-        <h3>${animeListgenre[0].genre}</h3><br>
-    </c:if>
-        <div class="posters-container">
-            <div class="scroll-buttons">
-                <button onclick="scrollPosters('default', 'right')">></button>
-            </div>
-            <c:forEach var="anime" items="${animeListgenre}">
-                <div class="poster">
-                    <a href="/Home/nonton/${anime.animeId}/eps">
-                        <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
-                    </a> 
-                    <p class="poster-text">${anime.title}</p>
-                </div>
-            </c:forEach>
-        </div>
-
-    <c:if test="${not empty animeListgenre2}">
-        <h3>${animeListgenre2[0].genre}</h3><br>
-    </c:if>
-        <div class="posters-container">
-            
-            <c:forEach var="anime" items="${animeListgenre2}">
-                <div class="poster">
-                    <a href="/Home/nonton/${anime.animeId}/eps">
-                        <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
-                    </a>
-                    <p class="poster-text">${anime.title}</p>
-                </div>
-            </c:forEach>
-        </div>
-    
     <c:if test="${not empty animeListgenre3}">
         <h3>${animeListgenre3[0].genre}</h3><br>
     </c:if>
