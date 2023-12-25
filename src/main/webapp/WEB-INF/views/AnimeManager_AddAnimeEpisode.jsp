@@ -158,12 +158,15 @@
             <label for="anime_id">Anime ID:</label>
             <select id="anime_id" name="anime_id" required>
                 <c:forEach var="anime" items="${animeList}">
-            <option value="${anime.animeId}">${anime.animeId} - ${anime.title}</option>
-        </c:forEach>
+                    <option value="${anime.animeId}">${anime.animeId} - ${anime.title}</option>
+                </c:forEach>
             </select><br>
         
             <label for="requires_subscription">Requires Subscription:</label>
-            <input type="text" id="requires_subscription" name="requires_subscription" required><br>
+            <select id="requires_subscription" name="requires_subscription" required>
+                <option value="true">True</option>
+                <option value="false">False</option>
+            </select><br>
         
             <label for="episode_number">Episode Number:</label>
             <input type="text" id="episode_number" name="episode_number" required><br>

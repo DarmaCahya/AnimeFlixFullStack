@@ -131,7 +131,7 @@ public class PublisherController extends UserController {
         Anime anime = animeRepository.findById(Long.parseLong(anime_id)).orElse(null);
         AnimeEpisode newAnimeEpisode = new AnimeEpisode((long) animeRepository.count() + 1,episode_title, video_url, Boolean.parseBoolean(requires_subscription), Integer.parseInt(episode_number), anime);
         animeEpisodeRepository.save(newAnimeEpisode);
-        return new ModelAndView("redirect:./ListAnime");
+        return new ModelAndView("redirect:http://localhost:8080/Home/nonton/"+anime.getAnimeId()+"/eps/"+newAnimeEpisode.getEpisodeNumber());
     }
     
 }
