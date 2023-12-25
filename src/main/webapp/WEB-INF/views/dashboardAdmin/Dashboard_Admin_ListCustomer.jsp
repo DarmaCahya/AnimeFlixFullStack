@@ -149,7 +149,6 @@
             <table border="1">
                 <thead>
                     <tr>
-                        <td>Code</td>
                         <td>id</td>
                         <th>Nama</th>
                         <th>Email</th>
@@ -161,7 +160,6 @@
                 <tbody>
                     <c:forEach var="user" items="${users}">
                         <tr>
-                            <td>${user}</td>
                             <td>${user.id}</td>
                             <td>${user.username}</td>
                             <td>${user.email}</td>

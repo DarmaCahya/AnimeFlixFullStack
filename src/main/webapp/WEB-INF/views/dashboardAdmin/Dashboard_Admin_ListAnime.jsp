@@ -166,7 +166,7 @@
                             <td>${anime.animeId}</td>
                             <td>${anime.title}</td>  
                             <td>${anime.genre}</td>
-                            <td>${anime.publisher}</td>
+                            <td>${anime.publisher.nama}</td>
                             <td><img src="${anime.thumbnail}" alt="Poster 1" class="poster-img" width="80"> </td>
                             <td><a href="/Home/nonton/${anime.animeId}/eps">Link</a></td>
                             <td>${anime.likes}</td>

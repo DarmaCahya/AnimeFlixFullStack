@@ -70,13 +70,13 @@ public class UserController_pages {
                 return modelAndView;
             } else {
                 // If password is incorrect, return ModelAndView with error message
-                ModelAndView modelAndView = new ModelAndView("login");
+                ModelAndView modelAndView = new ModelAndView("user/login");
                 modelAndView.addObject("errorMessage", "Incorrect password");
                 return modelAndView;
             }
         } else {
             // If username is not found, return ModelAndView with error message
-            ModelAndView modelAndView = new ModelAndView("login");
+            ModelAndView modelAndView = new ModelAndView("user/login");
             modelAndView.addObject("errorMessage", "Username not found");
             return modelAndView;
         }
@@ -136,7 +136,7 @@ public class UserController_pages {
         newUser.setUsername(username);
         newUser.setPassword(password);
 
-        ModelAndView modelAndView = new ModelAndView("register");
+        ModelAndView modelAndView = new ModelAndView("user/register");
         if (userRepository.findByUsername(newUser.getUsername()) != null) {
             modelAndView.addObject("Error Message", "Username already exists");
             return modelAndView;
