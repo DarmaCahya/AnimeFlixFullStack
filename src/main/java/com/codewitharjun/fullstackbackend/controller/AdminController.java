@@ -59,7 +59,7 @@ public class AdminController extends UserController {
         long customerCount = users.stream().filter(user -> user instanceof Customer).count();
         long publisherCount = users.stream().filter(user -> user instanceof Publisher).count();
 
-        ModelAndView modelAndView = new ModelAndView("Dashboard_Admin");
+        ModelAndView modelAndView = new ModelAndView("dashboardAdmin/Dashboard_Admin");
 
         modelAndView.addObject("banyakuser", userCount);
         modelAndView.addObject("adminCount", adminCount);
@@ -78,7 +78,7 @@ public class AdminController extends UserController {
                 .filter(user -> user instanceof Customer)
                 .collect(Collectors.toList());
 
-        ModelAndView modelAndView = new ModelAndView("Dashboard_Admin_ListCustomer");
+        ModelAndView modelAndView = new ModelAndView("dashboardAdmin/Dashboard_Admin_ListCustomer");
         modelAndView.addObject("users", customerUsers);
         return modelAndView;
     }
@@ -112,7 +112,7 @@ public class AdminController extends UserController {
                 .filter(user -> user instanceof Publisher)
                 .collect(Collectors.toList());
 
-        ModelAndView modelAndView = new ModelAndView("Dashboard_Admin_ListPublisher");
+        ModelAndView modelAndView = new ModelAndView("dashboardAdmin/Dashboard_Admin_ListPublisher");
         modelAndView.addObject("users", customerUsers);
 
         return modelAndView;
@@ -122,7 +122,7 @@ public class AdminController extends UserController {
     public ModelAndView getAllAnimeList() {
         List<Anime> animeList = animeRepository.findAll();
 
-        ModelAndView modelAndView = new ModelAndView("Dashboard_Admin_ListAnime");
+        ModelAndView modelAndView = new ModelAndView("dashboardAdmin/Dashboard_Admin_ListAnime");
         modelAndView.addObject("animeList", animeList);
 
         return modelAndView;
@@ -159,48 +159,48 @@ public class AdminController extends UserController {
     //     return  "User with id "+id+" has been deleted success.";
     // }
 
-    @Override
-    @GetMapping("/customer/status")
-    public ResponseEntity<Map<String, String>> checkLogin(HttpSession session) {
-        // Dapatkan informasi pengguna dari sesi
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
+    // @Override
+    // @GetMapping("/customer/status")
+    // public ResponseEntity<Map<String, String>> checkLogin(HttpSession session) {
+    //     // Dapatkan informasi pengguna dari sesi
+    //     User loggedInUser = (User) session.getAttribute("loggedInUser");
 
-        if (loggedInUser != null) {
-            // Jika pengguna sedang login, kembalikan respons JSON
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "User is logged in");
-            response.put("username", loggedInUser.getUsername());
+    //     if (loggedInUser != null) {
+    //         // Jika pengguna sedang login, kembalikan respons JSON
+    //         Map<String, String> response = new HashMap<>();
+    //         response.put("message", "User is logged in");
+    //         response.put("username", loggedInUser.getUsername());
 
-            return ResponseEntity.ok(response);
-        } else {
-            // Jika tidak ada pengguna yang login, kembalikan respons JSON dengan pesan "User belum login"
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "User is not logged in");
+    //         return ResponseEntity.ok(response);
+    //     } else {
+    //         // Jika tidak ada pengguna yang login, kembalikan respons JSON dengan pesan "User belum login"
+    //         Map<String, String> response = new HashMap<>();
+    //         response.put("message", "User is not logged in");
 
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-        }
-    }
+    //         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    //     }
+    // }
 
-    @Override
-    @GetMapping("/customer/history")
-    public ResponseEntity<List<UserHistory>> getUserWatchHistory(HttpSession session) {
-        // Dapatkan informasi pengguna yang sedang login dari konteks keamanan
-        // Dapatkan informasi pengguna dari sesi
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        String loggedInUsername = loggedInUser.getUsername();
+    // @Override
+    // @GetMapping("/customer/history")
+    // public ResponseEntity<List<UserHistory>> getUserWatchHistory(HttpSession session) {
+    //     // Dapatkan informasi pengguna yang sedang login dari konteks keamanan
+    //     // Dapatkan informasi pengguna dari sesi
+    //     User loggedInUser = (User) session.getAttribute("loggedInUser");
+    //     String loggedInUsername = loggedInUser.getUsername();
 
-        // Dapatkan pengguna berdasarkan username (misalnya, dari repositori pengguna)
-        User user = userRepository.findByUsername(loggedInUsername);
+    //     // Dapatkan pengguna berdasarkan username (misalnya, dari repositori pengguna)
+    //     User user = userRepository.findByUsername(loggedInUsername);
 
-        // Cari riwayat tontonan pengguna
-        List<UserHistory> userHistoryList = userHistoryRepository.findByUser(user);
+    //     // Cari riwayat tontonan pengguna
+    //     List<UserHistory> userHistoryList = userHistoryRepository.findByUser(user);
 
-        if (userHistoryList != null && !userHistoryList.isEmpty()) {
-            return ResponseEntity.ok(userHistoryList);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+    //     if (userHistoryList != null && !userHistoryList.isEmpty()) {
+    //         return ResponseEntity.ok(userHistoryList);
+    //     } else {
+    //         return ResponseEntity.notFound().build();
+    //     }
+    // }
 
     
 }
