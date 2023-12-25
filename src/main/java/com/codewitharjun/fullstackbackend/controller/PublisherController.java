@@ -66,7 +66,7 @@ public class PublisherController extends UserController {
         Long commnetCount = commentRepository.count();
         Long customerCount = user_CustomerRepository.count();
 
-        ModelAndView modelAndView = new ModelAndView("AnimeManager");
+        ModelAndView modelAndView = new ModelAndView("/animeManager/AnimeManager");
 
         modelAndView.addObject("BanyakAnime", animeCount);
         modelAndView.addObject("BanyakAnimemu", animePublisher.size());
@@ -88,7 +88,7 @@ public class PublisherController extends UserController {
         FK_Publisher fkPublisher = ((Publisher) user).getPublisherCHMOD();
         List<Anime> animePublisher = animeRepository.findByPublisher(fkPublisher);
 
-        ModelAndView modelAndView = new ModelAndView("AnimeManager_ListAnime");
+        ModelAndView modelAndView = new ModelAndView("/animeManager/AnimeManager_ListAnime");
         modelAndView.addObject("animeList", animePublisher);
 
         return modelAndView;
@@ -103,7 +103,7 @@ public class PublisherController extends UserController {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         User user = userRepository.findByUsername(loggedInUser.getUsername());
         
-        ModelAndView modelAndView = new ModelAndView("AnimeManager_AddAnime");
+        ModelAndView modelAndView = new ModelAndView("/animeManager/AnimeManager_AddAnime");
         modelAndView.addObject("publiser", user);
         return modelAndView;
     }
@@ -140,7 +140,7 @@ public class PublisherController extends UserController {
         User user = userRepository.findByUsername(loggedInUser.getUsername());
         FK_Publisher fkPublisher = ((Publisher) user).getPublisherCHMOD();
 
-        ModelAndView modelAndView = new ModelAndView("AnimeManager_AddAnimeEpisode");
+        ModelAndView modelAndView = new ModelAndView("/animeManager/AnimeManager_AddAnimeEpisode");
         List<Anime> animePublisher = animeRepository.findByPublisher(fkPublisher);
         modelAndView.addObject("animeList", animePublisher);
         return modelAndView;

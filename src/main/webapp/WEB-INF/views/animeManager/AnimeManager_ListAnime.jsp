@@ -157,7 +157,7 @@
         /* Content Styling */
         .content {
             margin-left: 20%; /* Adjust the margin to match the sidebar width */
-            padding: 1px 16px;
+            padding: 40px 40px;
             width: 80%;
             height: 90vh;
             overflow: auto;

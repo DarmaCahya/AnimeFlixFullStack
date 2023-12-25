@@ -156,15 +156,16 @@
 
         /* Content Styling */
         .content {
-            margin-left: 20%;
-            padding: 1px 16px;
+            margin-left: 20%; /* Adjust the margin to match the sidebar width */
+            padding: 40px 40px;
             width: 80%;
             height: 90vh;
-            overflow: auto; 
+            overflow: auto;
             flex-grow: 1;
             box-sizing: content-box;
             background-color: #FFEFEF;
         }
+
 
         .button {
             position: fixed;
@@ -201,26 +202,6 @@
         td {
         text-align: center;
         }
-
-        .back-button {
-            cursor: pointer;
-            padding: 10px 15px;
-            background-color: #3498db;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        .back-button:hover {
-            background-color: #2980b9;
-        }
-
-        .back-button span {
-            margin-right: 5px;
-        }
-
     </style>
 </head>
 
@@ -238,9 +219,9 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <a href="../AnimeManager">Dashboard</a>
-            <a href="./AnimeManager/ListAnime">List Anime</a>
-            <a href="./AnimeManager/TambahAnime">TambahAnime</a>
-            <a href="./AnimeManager/TambahAnimeEpisode">TambahAnimeEpisode</a>
+            <a href="./ListAnime">List Anime</a>
+            <a href="./TambahAnime">TambahAnime</a>
+            <a href="./TambahAnimeEpisode">TambahAnimeEpisode</a>
             <div class="button">
                 <form method="post" action="/logout">
                     <button type="submit" class="logout-button">logout</button>
@@ -248,31 +229,38 @@
             </div>
         </div>
 
-        <!-- Content -->
-        <div class="content">
-            <table border="1">
-                <thead>
-                    <tr>
-                        <td>Banyak Anime</td>
-                        <td>Banyak Animemu</td>
-                        <td>Banyak Like</td>
-                        <td>Banyak Komen</td>
-                        <td>Banyak Customer</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>${BanyakAnime}</td>
-                        <td>${BanyakAnimemu}</td>
-                        <td>${BanyakLike}</td>
-                        <td>${BanyakComment}</td>
-                        <td>${BanyakCustomer}</td>
-                    </tr>
-                </tbody>
-            </table>  
-            </h2>  
-        </div>
+
+            
+    <!-- Content -->
+    <div class="content">
+        <form method="post" action="./TambahAnime"> <!-- Adjust the action attribute accordingly -->
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required><br>
+
+            <label for="genre">Genre:</label>
+            <input type="text" id="genre" name="genre" required><br>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4" cols="50" required></textarea><br>
+
+            <label for="publisher">Publisher: ${publiser.username}</label>
+            <br>
+
+            <label for="thumbnail">Thumbnail:</label>
+            <input type="text" id="thumbnail" name="thumbnail" required><br>
+
+            <label for="release_year">Release Year:</label>
+            <input type="text" id="release_year" name="release_year" required><br>
+
+            <label for="video_url">Video URL:</label>
+            <input type="text" id="video_url" name="video_url" required><br>
+
+            <button type="submit">Submit</button>
+        </form>
     </div>
+
+    </div>
+
     <script>
         
     </script>

@@ -140,7 +140,8 @@
       <nav>
         <a href="/Home/genre/">Genre</a>
         <a href="/Home/history/">History</a>
-      </nav>
+        <a href="/Home/Favorite/">Favorite</a>
+    </nav>
       <form action="/Home/search/" method="get" class="search-box">
         <select name="searchType" id="searchType">
           <option value="genre">Genre</option>
