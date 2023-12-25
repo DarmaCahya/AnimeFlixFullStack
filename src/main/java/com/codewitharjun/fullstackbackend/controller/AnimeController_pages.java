@@ -295,7 +295,7 @@ public class AnimeController_pages {
                         return modelAndView;
                     } else {
                         // Handle case where subscription is required but user is not subscribed
-                        ModelAndView modelAndView = new ModelAndView("subscriptionError");
+                        ModelAndView modelAndView = new ModelAndView("ErorrPage");
                         modelAndView.addObject("errorMessage", "You need to be subscribed to watch this episode.");
                         return modelAndView;
                     }
