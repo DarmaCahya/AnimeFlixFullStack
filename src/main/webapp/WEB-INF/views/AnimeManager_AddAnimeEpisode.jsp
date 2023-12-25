@@ -22,6 +22,7 @@
             top: 0;
             background-color: rgb(37, 33, 33);
         }
+        
 
         h1 {
             font-size: 300%;
@@ -72,16 +73,15 @@
 
         /* Content Styling */
         .content {
-            margin-left: 17%;
-            position: fixed;
+            margin-left: 20%; /* Adjust the margin to match the sidebar width */
             padding: 1px 16px;
-            width: 100%;
-            height: 10000%;
-            overflow: auto; 
+            width: 80%;
+            overflow: auto;
             flex-grow: 1;
             box-sizing: content-box;
             background-color: #FFEFEF;
         }
+
 
         .button {
             position: fixed;
@@ -118,26 +118,6 @@
         td {
         text-align: center;
         }
-
-        .back-button {
-            cursor: pointer;
-            padding: 10px 15px;
-            background-color: #3498db;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        .back-button:hover {
-            background-color: #2980b9;
-        }
-
-        .back-button span {
-            margin-right: 5px;
-        }
-
     </style>
 </head>
 
@@ -152,9 +132,9 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <a href="../AnimeManager">Dashboard</a>
-            <a href="./AnimeManager/ListAnime">List Anime</a>
-            <a href="./AnimeManager/TambahAnime">TambahAnime</a>
-            <a href="./AnimeManager/TambahAnimeEpisode">TambahAnimeEpisode</a>
+            <a href="./ListAnime">List Anime</a>
+            <a href="./TambahAnime">TambahAnime</a>
+            <a href="./TambahAnimeEpisode">TambahAnimeEpisode</a>
             <div class="button">
                 <form method="post" action="/logout">
                     <button type="submit" class="logout-button">logout</button>
@@ -162,32 +142,40 @@
             </div>
         </div>
 
-        <!-- Content -->
-        <div class="content">
-            <h2>Main Content</h2>
-            <p>This is the main content area. You can add your page content here.</p>
-            <h2>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <td>Banyak Anime</td>
-                        <td>Banyak Like</td>
-                        <td>Banyak Komen</td>
-                        <td>Banyak Customer</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>${BanyakAnime}</td>
-                        <td>${BanyakLike}</td>
-                        <td>${BanyakComment}</td>
-                        <td>${BanyakCustomer}</td>
-                    </tr>
-                </tbody>
-            </table>  
-            </h2>  
-        </div>
+
+            
+    <!-- Content -->
+    <div class="content">
+        <h2>Main Content</h2>
+        <form method="post" action="./TambahAnimeEpisode"> <!-- Adjust the action attribute accordingly -->
+
+            <label for="episode_title">Episode Title:</label>
+            <input type="text" id="episode_title" name="episode_title" required><br>
+        
+            <label for="video_url">Video URL:</label>
+            <input type="text" id="video_url" name="video_url" required><br>
+        
+            <label for="anime_id">Anime ID:</label>
+            <select id="anime_id" name="anime_id" required>
+                <c:forEach var="anime" items="${animeList}">
+            <option value="${anime.animeId}">${anime.animeId} - ${anime.title}</option>
+        </c:forEach>
+            </select><br>
+        
+            <label for="requires_subscription">Requires Subscription:</label>
+            <input type="text" id="requires_subscription" name="requires_subscription" required><br>
+        
+            <label for="episode_number">Episode Number:</label>
+            <input type="text" id="episode_number" name="episode_number" required><br>
+        
+            <button type="submit">Submit</button>
+        </form>
+
+        
     </div>
+
+    </div>
+
     <script>
         
     </script>

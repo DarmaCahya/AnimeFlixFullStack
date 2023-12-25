@@ -105,5 +105,9 @@ public class CommentController {
         return subscription.isPresent();
     }
 
+    public Long count() {
+        return null;
+    }
+
 
 }

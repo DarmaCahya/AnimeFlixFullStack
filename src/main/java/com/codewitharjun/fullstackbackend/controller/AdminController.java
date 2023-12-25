@@ -72,8 +72,6 @@ public class AdminController extends UserController {
         return modelAndView;
     }
 
-    
-
     @GetMapping("/ListCustomer")
     public ModelAndView getAllCustomer() {
         List<User> allUsers = userRepository.findAll();

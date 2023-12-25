@@ -34,6 +34,18 @@ public class AnimeEpisode {
         return anime;
     }
 
+    public AnimeEpisode() {
+    }
+
+    public AnimeEpisode(Long id, String episodeTitle, String videoUrl, boolean requiresSubscription, int episodeNumber, Anime anime) {
+        this.id = id;
+        this.anime = anime;
+        this.episodeTitle = episodeTitle;
+        this.videoUrl = videoUrl;
+        this.requiresSubscription = requiresSubscription;
+        this.episodeNumber = episodeNumber;
+    }
+
     public void setAnime(Anime anime) {
         this.anime = anime;
     }

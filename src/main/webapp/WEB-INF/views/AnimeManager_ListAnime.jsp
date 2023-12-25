@@ -123,18 +123,24 @@
 
 <body>
     <div class="header1">
+        <form method="get" action="Home">
+            <button class="back-button">Back</button>
+        </form>
         <h1>AnimeFlix</h1>
-        
     </div>
-    <div class="sidebar">
-        <a href="../AnimeManager">Dashboard</a>
-        <a href="./AnimeManager/ListAnime">List Anime</a>
-        <div class="button">
-            <form method="post" action="/logout">
-                <button type="submit" class="logout-button">logout</button>
-            </form>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <a href="../AnimeManager">Dashboard</a>
+            <a href="./ListAnime">List Anime</a>
+            <a href="./TambahAnime">TambahAnime</a>
+            <a href="./TambahAnimeEpisode">TambahAnimeEpisode</a>
+            <div class="button">
+                <form method="post" action="/logout">
+                    <button type="submit" class="logout-button">logout</button>
+                </form>
+            </div>
         </div>
-    </div>
 
 
         <!-- Content -->

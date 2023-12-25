@@ -18,6 +18,18 @@ public class Anime {
     public Anime() {
     }
 
+    public Anime(Long animeId,String title, String genre, String description, int releaseYear, String thumbnail, String videoUrl, String publisher, int likes) {
+        this.animeId = animeId;
+        this.title = title;
+        this.genre = genre;
+        this.description = description;
+        this.releaseYear = releaseYear;
+        this.thumbnail = thumbnail;
+        this.videoUrl = videoUrl;
+        this.publisher = publisher;
+        this.likes = 0;
+    }
+
     public Long getAnimeId() {
         return animeId;
     }
