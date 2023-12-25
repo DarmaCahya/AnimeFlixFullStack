@@ -153,6 +153,7 @@
         }
 
         .button-container{
+            margin-top: 2%;
             margin-left: 3%;
             height: 50%;
         }
@@ -183,6 +184,20 @@
             width: 18.5%;
             height: 45px;
         }
+
+        #EditBtn{
+            margin: 0;
+            margin-top: 2%;
+            width: 18.5%;
+            height: 45px;
+        }
+
+        .textStatus{
+            font-size: 20px;
+            margin-left: 4%;
+            margin-bottom: 1%;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -196,8 +211,8 @@
         </nav>
         <form action="/Home/search/" method="get" class="search-box">
             <select name="searchType" id="searchType">
-                <option value="genre">Genre</option>
                 <option value="title">Title</option>
+                <option value="genre">Genre</option>
             </select>
             <input type="text" placeholder="Search..." id="searchInput" name="Cari" />
             <button type="submit" class="search-button">
@@ -236,7 +251,7 @@
 
             <div class="button-container">
                 <!-- Display Subscription Status -->
-                <div id="subscriptionStatus"></div>
+                <div class="textStatus" id="subscriptionStatus"></div>
 
                 <!-- Subscribe Button -->
                 <button id="subscribeBtn" onclick="subscribeUser()">Subscribe</button>

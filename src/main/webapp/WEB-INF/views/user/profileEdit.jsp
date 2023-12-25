@@ -196,8 +196,8 @@
         </nav>
         <form action="/Home/search/" method="get" class="search-box">
             <select name="searchType" id="searchType">
-                <option value="genre">Genre</option>
                 <option value="title">Title</option>
+                <option value="genre">Genre</option>
             </select>
             <input type="text" placeholder="Search..." id="searchInput" name="Cari" />
             <button type="submit" class="search-button">
@@ -214,6 +214,10 @@
         <div class="container">
             <div class="table-container">
                 <table>
+                    <tr>
+                        <td><strong>Nama Customer</strong></td>
+                        <td><input type="text" name="name" value="${fkCustomer.namaCustomer}"></td>
+                    </tr>
                     <tr>
                         <td><strong>Username</strong></td>
                         <td><input type="text" name="username" value="${user.username}"></td>

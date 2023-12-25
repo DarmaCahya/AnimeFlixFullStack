@@ -190,9 +190,11 @@ public class AnimeController_pages {
 
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         User user = userRepository.findByUsername(loggedInUser.getUsername());
+        FK_Customer fkCustomer = ((Customer) user).getCustomerCHMOD();
 
         ModelAndView modelAndView = new ModelAndView("/user/profileEdit");
         modelAndView.addObject("user",user);
+        modelAndView.addObject("fkCustomer", fkCustomer);
         return modelAndView;
     }
 

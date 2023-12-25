@@ -143,8 +143,8 @@
       </nav>
       <form action="/Home/search/" method="get" class="search-box">
         <select name="searchType" id="searchType">
-          <option value="genre">Genre</option>
           <option value="title">Title</option>
+          <option value="genre">Genre</option>
         </select>
 
         <div class="search-container">
