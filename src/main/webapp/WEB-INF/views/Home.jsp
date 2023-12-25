@@ -158,7 +158,7 @@
                 <img src="https://i.ibb.co/rb6kTcJ/Screenshot-1.png" alt="Search Icon" style="width: 20px; height: 23px;" />
             </button>
         </form>
-        <a href="Home/profile" class="Login-button">
+        <a href="Home/profile/" class="Login-button">
             <img src="https://i.ibb.co/275wkRK/sasuke.png" alt="Login Icon" style="width: 130px; height: 60px;" />
         </a>
     </header>
