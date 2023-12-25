@@ -19,7 +19,6 @@ import com.codewitharjun.fullstackbackend.repository.LikeRepository;
 import com.codewitharjun.fullstackbackend.repository.SubscribeRepository;
 import com.codewitharjun.fullstackbackend.repository.UserHistoryRepository;
 import com.codewitharjun.fullstackbackend.repository.UserRepository;
-import com.codewitharjun.fullstackbackend.repository.User_CustomerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,10 +52,6 @@ import javax.servlet.http.HttpSession;
 @CrossOrigin("http://localhost:3000")
 @RequestMapping("/Home")
 public class AnimeController_pages {
-
-    @Autowired
-    private User_CustomerRepository customerRepository;
-
     @Autowired
     private AnimeRepository animeRepository;
 
