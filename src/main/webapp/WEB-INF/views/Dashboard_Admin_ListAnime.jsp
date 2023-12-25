@@ -143,7 +143,6 @@
         <!-- Content -->
         <div class="content">
             <h2>Main Content</h2>
-            <p>This is the main content area. You can add your page content here.</p>
             <c:if test="${not empty banyakuser}">
                 <tr><h3>Banyak User</h3></tr>
                 <tr><h3>${banyakuser}</h3></tr>

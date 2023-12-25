@@ -134,12 +134,12 @@
   </head>
   <body>
     <header>
-      <a href="Home" class="logo">
+      <a href="/Home" class="logo">
         <img src="https://i.ibb.co/RzzSCg2/flix.png" alt="AnimeFlix Logo" style="width: 130px; height: 65px" />
       </a>
       <nav>
-        <a href="genre.html">Genre</a>
-        <a href="history.html">History</a>
+        <a href="/Home/genre/">Genre</a>
+        <a href="/Home/history/">History</a>
       </nav>
       <form action="/Home/search/" method="get" class="search-box">
         <select name="searchType" id="searchType">
