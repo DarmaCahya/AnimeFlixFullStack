@@ -41,7 +41,7 @@ public class UserController_pages {
 
     @GetMapping("/login")
     public ModelAndView loginPage() {
-        ModelAndView modelAndView = new ModelAndView("login");
+        ModelAndView modelAndView = new ModelAndView("/user/login");
         return modelAndView;
     }
 
@@ -56,7 +56,7 @@ public class UserController_pages {
                 session.setAttribute("loggedInUser", user);
 
                 // Return ModelAndView with success message and user type
-                ModelAndView modelAndView = new ModelAndView("loginSuccess");
+                ModelAndView modelAndView = new ModelAndView("/user/loginSuccess");
                 modelAndView.addObject("message", "Login successful");
                 modelAndView.addObject("username", user.getUsername());
                 if (user instanceof Admin) {
@@ -105,7 +105,7 @@ public class UserController_pages {
 
     @GetMapping("/register")
     public ModelAndView registerPage() {
-        ModelAndView modelAndView = new ModelAndView("register");
+        ModelAndView modelAndView = new ModelAndView("/user/register");
         return modelAndView;
     }
 
