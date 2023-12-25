@@ -315,8 +315,9 @@ public class AnimeController_pages {
                 }
             } else {
                 // Handle case where the episode is not found
-                ModelAndView modelAndView = new ModelAndView("/error Page/ErorrPage");
+                ModelAndView modelAndView = new ModelAndView("episodeNotFound");
                 modelAndView.addObject("errorMessage", "Episode not found");
+                modelAndView.addObject("erorrRoute", "../eps");
                 return modelAndView;
             }
         } else {
