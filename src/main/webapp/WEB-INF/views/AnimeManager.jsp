@@ -171,6 +171,7 @@
                 <thead>
                     <tr>
                         <td>Banyak Anime</td>
+                        <td>Banyak Animemu</td>
                         <td>Banyak Like</td>
                         <td>Banyak Komen</td>
                         <td>Banyak Customer</td>
@@ -179,6 +180,7 @@
                 <tbody>
                     <tr>
                         <td>${BanyakAnime}</td>
+                        <td>${BanyakAnimemu}</td>
                         <td>${BanyakLike}</td>
                         <td>${BanyakComment}</td>
                         <td>${BanyakCustomer}</td>

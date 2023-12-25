@@ -128,6 +128,7 @@ public class UserController_pages {
         } else {
             newUser = new Publisher();
             FK_Publisher newfkpublisher  = new FK_Publisher("PT. "+username);
+            newfkpublisher.setNama(username);
             user_PublisherRepository.save(newfkpublisher);
             ((Publisher) newUser).setPublisherCHMOD(newfkpublisher);
         }

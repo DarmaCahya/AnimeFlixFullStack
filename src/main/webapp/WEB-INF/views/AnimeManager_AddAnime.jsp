@@ -157,8 +157,8 @@
             <label for="description">Description:</label>
             <textarea id="description" name="description" rows="4" cols="50" required></textarea><br>
 
-            <label for="publisher">Publisher:</label>
-            <input type="text" id="publisher" name="publisher" required><br>
+            <label for="publisher">Publisher: ${publiser.username}</label>
+            <br>
 
             <label for="thumbnail">Thumbnail:</label>
             <input type="text" id="thumbnail" name="thumbnail" required><br>
@@ -168,9 +168,6 @@
 
             <label for="video_url">Video URL:</label>
             <input type="text" id="video_url" name="video_url" required><br>
-
-            <label for="likes">Likes:</label>
-            <input type="text" id="likes" name="likes" required><br>
 
             <button type="submit">Submit</button>
         </form>

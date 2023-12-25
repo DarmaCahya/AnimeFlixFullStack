@@ -12,6 +12,7 @@ public class FK_Publisher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String nama;
     private String namaPerusahaan;
     private String TahunDidirikan;
     private String Alamat;
@@ -92,6 +93,14 @@ public class FK_Publisher {
 
     public void setDeskripsi(String deskripsi) {
         Deskripsi = deskripsi;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
     }
     
 }

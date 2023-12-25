@@ -87,11 +87,11 @@ public class AnimeController {
         return ResponseEntity.ok(animeList);
     }
 
-    @GetMapping("/search/publisher/{nama_publisher}")
-    public ResponseEntity<List<Anime>> getAnimeByPublisher(@PathVariable String nama_publisher) {
-        List<Anime> animeList = animeRepository.findByPublisher(nama_publisher);
-        return ResponseEntity.ok(animeList);
-    }
+    // @GetMapping("/search/publisher/{nama_publisher}")
+    // public ResponseEntity<List<Anime>> getAnimeByPublisher(@PathVariable String nama_publisher) {
+    //     List<Anime> animeList = animeRepository.findByPublisher(nama_publisher);
+    //     return ResponseEntity.ok(animeList);
+    // }
     
     @GetMapping("/search/id/{animeId}")
     public ResponseEntity<Anime> getAnimeById(@PathVariable Long animeId) {

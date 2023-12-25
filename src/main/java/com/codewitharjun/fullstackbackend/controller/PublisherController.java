@@ -1,40 +1,28 @@
 package com.codewitharjun.fullstackbackend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.codewitharjun.fullstackbackend.exception.UserNotFoundException;
-import com.codewitharjun.fullstackbackend.model.Admin;
 import com.codewitharjun.fullstackbackend.model.Anime;
 import com.codewitharjun.fullstackbackend.model.AnimeEpisode;
 import com.codewitharjun.fullstackbackend.model.Customer;
 import com.codewitharjun.fullstackbackend.model.FK_Customer;
+import com.codewitharjun.fullstackbackend.model.FK_Publisher;
 import com.codewitharjun.fullstackbackend.model.Publisher;
 import com.codewitharjun.fullstackbackend.model.User;
-import com.codewitharjun.fullstackbackend.model.UserHistory;
 import com.codewitharjun.fullstackbackend.repository.AnimeEpisodeRepository;
 import com.codewitharjun.fullstackbackend.repository.AnimeRepository;
 import com.codewitharjun.fullstackbackend.repository.CommentRepository;
 import com.codewitharjun.fullstackbackend.repository.LikeRepository;
-import com.codewitharjun.fullstackbackend.repository.UserHistoryRepository;
 import com.codewitharjun.fullstackbackend.repository.UserRepository;
 import com.codewitharjun.fullstackbackend.repository.User_CustomerRepository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -64,7 +52,17 @@ public class PublisherController extends UserController {
     
 
     @GetMapping("")
-    public ModelAndView getAllUser() {
+    public ModelAndView getAllUser(HttpSession session) {
+        if (session == null || session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User user = userRepository.findByUsername(loggedInUser.getUsername());
+        FK_Publisher fkPublisher = ((Publisher) user).getPublisherCHMOD();
+        List<Anime> animePublisher = animeRepository.findByPublisher(fkPublisher);
+        
+
         Long animeCount = animeRepository.count();
         Long likeCount = likeRepository.count();
         Long commnetCount = commentRepository.count();
@@ -73,6 +71,7 @@ public class PublisherController extends UserController {
         ModelAndView modelAndView = new ModelAndView("AnimeManager");
 
         modelAndView.addObject("BanyakAnime", animeCount);
+        modelAndView.addObject("BanyakAnimemu", animePublisher.size());
         modelAndView.addObject("BanyakLike", likeCount);
         modelAndView.addObject("BanyakComment", commnetCount);
         modelAndView.addObject("BanyakCustomer", customerCount);
@@ -81,18 +80,33 @@ public class PublisherController extends UserController {
 
 
     @GetMapping("/ListAnime")
-    public ModelAndView getAllAnimeList() {
-        List<Anime> animeList = animeRepository.findAll();
+    public ModelAndView getAllAnimeList(HttpSession session) {
+        if (session == null || session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User user = userRepository.findByUsername(loggedInUser.getUsername());
+        FK_Publisher fkPublisher = ((Publisher) user).getPublisherCHMOD();
+        List<Anime> animePublisher = animeRepository.findByPublisher(fkPublisher);
 
         ModelAndView modelAndView = new ModelAndView("AnimeManager_ListAnime");
-        modelAndView.addObject("animeList", animeList);
+        modelAndView.addObject("animeList", animePublisher);
 
         return modelAndView;
     }
 
     @GetMapping("/TambahAnime")
-    public ModelAndView FromaddAnime() {
+    public ModelAndView FromaddAnime(HttpSession session) {
+        if (session == null || session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User user = userRepository.findByUsername(loggedInUser.getUsername());
+        
         ModelAndView modelAndView = new ModelAndView("AnimeManager_AddAnime");
+        modelAndView.addObject("publiser", user);
         return modelAndView;
     }
 
@@ -100,13 +114,18 @@ public class PublisherController extends UserController {
     public ModelAndView addAnime(@RequestParam String title,
                               @RequestParam String genre,
                               @RequestParam String description,
-                              @RequestParam String publisher,
                               @RequestParam String thumbnail,
                               @RequestParam String release_year,
                               @RequestParam String video_url,
-                              @RequestParam String likes) {
-        //ModelAndView modelAndView = new ModelAndView("AnimeManager_AddAnime");
-        Anime newAnime = new Anime((long) animeRepository.count() + 1,title, genre, description, Integer.parseInt(release_year), thumbnail, video_url, publisher, Integer.parseInt(likes));
+                              HttpSession session) {
+         if (session == null || session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User user = userRepository.findByUsername(loggedInUser.getUsername());
+        FK_Publisher fkPublisher = ((Publisher) user).getPublisherCHMOD();
+        Anime newAnime = new Anime((long) animeRepository.count() + 1,title, genre, description, Integer.parseInt(release_year), thumbnail, video_url,fkPublisher);
         animeRepository.save(newAnime);
 
         return new ModelAndView("redirect:./ListAnime");
@@ -114,10 +133,18 @@ public class PublisherController extends UserController {
 
 
     @GetMapping("/TambahAnimeEpisode")
-    public ModelAndView FromaddAnimeEpisode() {
+    public ModelAndView FromaddAnimeEpisode(HttpSession session) {
+        if (session == null || session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User user = userRepository.findByUsername(loggedInUser.getUsername());
+        FK_Publisher fkPublisher = ((Publisher) user).getPublisherCHMOD();
+
         ModelAndView modelAndView = new ModelAndView("AnimeManager_AddAnimeEpisode");
-        List<Anime> animeList = animeRepository.findAll();
-        modelAndView.addObject("animeList", animeList);
+        List<Anime> animePublisher = animeRepository.findByPublisher(fkPublisher);
+        modelAndView.addObject("animeList", animePublisher);
         return modelAndView;
     }
 
@@ -131,7 +158,7 @@ public class PublisherController extends UserController {
         Anime anime = animeRepository.findById(Long.parseLong(anime_id)).orElse(null);
         AnimeEpisode newAnimeEpisode = new AnimeEpisode((long) animeRepository.count() + 1,episode_title, video_url, Boolean.parseBoolean(requires_subscription), Integer.parseInt(episode_number), anime);
         animeEpisodeRepository.save(newAnimeEpisode);
-        return new ModelAndView("redirect:http://localhost:8080/Home/nonton/"+anime.getAnimeId()+"/eps/"+newAnimeEpisode.getEpisodeNumber());
+        return new ModelAndView("redirect:http://localhost:8080/Home/nonton/"+anime.getAnimeId()+"/eps");
     }
     
 }
