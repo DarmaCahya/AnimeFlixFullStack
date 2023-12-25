@@ -118,13 +118,35 @@
         td {
         text-align: center;
         }
+
+        .back-button {
+            cursor: pointer;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #2980b9;
+        }
+
+        .back-button span {
+            margin-right: 5px;
+        }
+
     </style>
 </head>
 
 <body>
     <div class="header1">
+        <form method="post" action="/login">
+            <button class="back-button">Back</button>
+        </form>
         <h1>AnimeFlix</h1>
-        
     </div>
     <div class="container">
         <!-- Sidebar -->

@@ -141,17 +141,17 @@
 <body>
 
     <header>
-        <a href="Home" class="logo">
+        <a href="/Home" class="logo">
             <img src="https://i.ibb.co/RzzSCg2/flix.png" alt="AnimeFlix Logo" style="width: 130px; height: 65px;" />
         </a>
         <nav>
-            <a href="Home/genre/">Genre</a>
-            <a href="Home/history/">History</a>
+            <a href="/Home/genre/">Genre</a>
+            <a href="/Home/history/">History</a>
         </nav>
         <form action="/Home/search/" method="get" class="search-box">
             <select name="searchType" id="searchType">
-                <option value="genre">Genre</option>
                 <option value="title">Title</option>
+                <option value="genre">Genre</option>
             </select>
             <input type="text" placeholder="Search..." id="searchInput" name="Cari" />
             <button type="submit" class="search-button">
