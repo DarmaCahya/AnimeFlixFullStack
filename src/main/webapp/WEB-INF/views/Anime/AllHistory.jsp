@@ -12,6 +12,7 @@
             <thead>
                 <tr>
                     <th>Anime Title</th>
+                    <th>Episode Number</th>
                     <th>Episode Title</th>
                     <th>Watched At</th>
                     <th>Link to Anime</th>
@@ -21,6 +22,7 @@
                 <c:forEach var="history" items="${userHistoryList}">
                     <tr>
                         <td>${history.animeEpisode.anime.title}</td>
+                        <td>${history.animeEpisode.episodeNumber}</td>
                         <td>${history.animeEpisode.episodeTitle}</td>
                         <td>${history.watchedAt}</td>
                         <td>
