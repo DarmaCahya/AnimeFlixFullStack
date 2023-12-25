@@ -143,7 +143,7 @@
 
 <body>
     <div class="header1">
-        <form method="post" action="./">
+        <form method="get" action="Home">
             <button class="back-button">Back</button>
         </form>
         <h1>AnimeFlix</h1>
