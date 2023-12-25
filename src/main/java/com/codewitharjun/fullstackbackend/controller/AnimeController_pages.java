@@ -15,6 +15,7 @@ import com.codewitharjun.fullstackbackend.repository.LikeRepository;
 import com.codewitharjun.fullstackbackend.repository.SubscribeRepository;
 import com.codewitharjun.fullstackbackend.repository.UserHistoryRepository;
 import com.codewitharjun.fullstackbackend.repository.UserRepository;
+import com.codewitharjun.fullstackbackend.repository.User_CustomerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.lang.Long;
+
 
 import javax.servlet.http.HttpSession;
 
@@ -46,6 +49,9 @@ import javax.servlet.http.HttpSession;
 @CrossOrigin("http://localhost:3000")
 @RequestMapping("/Home")
 public class AnimeController_pages {
+
+    @Autowired
+    private User_CustomerRepository customerRepository;
 
     @Autowired
     private AnimeRepository animeRepository;
@@ -176,6 +182,20 @@ public class AnimeController_pages {
         return modelAndView;
     }
 
+    @GetMapping("/profile/editProfile")
+    public ModelAndView editProfile(HttpSession session){
+        if (session == null || session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User user = userRepository.findByUsername(loggedInUser.getUsername());
+
+        ModelAndView modelAndView = new ModelAndView("/user/profileEdit");
+        modelAndView.addObject("user",user);
+        return modelAndView;
+    }
+
     @GetMapping("/profile")
     public ModelAndView getProfile(HttpSession session) {
         if (session == null || session.getAttribute("loggedInUser") == null) {
@@ -185,8 +205,10 @@ public class AnimeController_pages {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         User user = userRepository.findByUsername(loggedInUser.getUsername());
 
+        FK_Customer fkCustomer = ((Customer) user).getCustomerCHMOD();
         ModelAndView modelAndView = new ModelAndView("/user/profile");
         modelAndView.addObject("user", user);
+        modelAndView.addObject("fkCustomer", fkCustomer);
         return modelAndView;
     }
 

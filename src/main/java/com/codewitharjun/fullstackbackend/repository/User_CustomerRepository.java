@@ -1,7 +1,9 @@
 package com.codewitharjun.fullstackbackend.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.codewitharjun.fullstackbackend.model.FK_Customer;
 
-public interface User_CustomerRepository extends JpaRepository<FK_Customer, Integer> {
+public interface User_CustomerRepository extends JpaRepository<FK_Customer, Long> {
 }

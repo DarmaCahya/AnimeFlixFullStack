@@ -10,7 +10,7 @@ public class FK_Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String namaCustomer;
     private String jenisKelamin;
@@ -42,12 +42,12 @@ public class FK_Customer {
         this.payment_id = payment_id;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

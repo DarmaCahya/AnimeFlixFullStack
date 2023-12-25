@@ -209,32 +209,34 @@
         </a>
     </header>
 
-    <c:if test="${user ne null}">
+    <c:if test="${user != null}">
         <h1>User Profile</h1>
         <div class="container">
             <div class="table-container">
                 <table>
                     <tr>
-                        <td><strong>Nama Customer</strong></td>
-                        <td><strong>${fkCustomer.namaCustomer}</strong></td>
-                    </tr>
-                    <tr>
                         <td><strong>Username</strong></td>
-                        <td><strong>${user.username}</strong></td>
+                        <td><input type="text" name="username" value="${user.username}"></td>
                     </tr>
                     <tr>
-                        <td><strong>Email</strong></td>
-                        <td><strong>${user.email}</strong></td>
+                        <td><strong>Old Password </strong></td>
+                        <td><input type="password" name="password" value=""></td>
                     </tr>
-
                     <tr>
-                        <td><strong>Jenis Kelamin</strong></td>
-                        <td><strong>${fkCustomer.jenisKelamin}</strong></td>
+                        <td><strong>New Password</strong></td>
+                        <td><input type="password" name="newPassword" value=""></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Email:</strong></td>
+                        <td>${user.email}</td>
                     </tr>
                 </table>    
             </div>
 
             <div class="button-container">
+                <!-- Save Button -->
+                <button id="saveBtn" onclick="saveChanges()">Simpan</button>
+
                 <!-- Display Subscription Status -->
                 <div id="subscriptionStatus"></div>
 
@@ -243,10 +245,6 @@
         
                 <!-- Cancel Subscribe Button -->
                 <button id="cancelSubscribeBtn" onclick="cancelSubscribe()">Cancel Subscribe</button>
-
-                <form method="get" action="/Home/profile/editProfile">
-                    <button id="EditBtn">Edit Profile</button>
-                </form>
 
                 <form method="post" action="/logout">
                     <button id="logoutBtn" type="submit">logout</button>
