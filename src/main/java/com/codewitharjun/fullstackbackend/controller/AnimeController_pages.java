@@ -1,11 +1,15 @@
 package com.codewitharjun.fullstackbackend.controller;
 
+import com.codewitharjun.fullstackbackend.model.Admin;
 import com.codewitharjun.fullstackbackend.model.Anime;
 import com.codewitharjun.fullstackbackend.model.AnimeEpisode;
 import com.codewitharjun.fullstackbackend.model.Comment;
 import com.codewitharjun.fullstackbackend.model.Customer;
+import com.codewitharjun.fullstackbackend.model.FK_Admin;
 import com.codewitharjun.fullstackbackend.model.FK_Customer;
+import com.codewitharjun.fullstackbackend.model.FK_Publisher;
 import com.codewitharjun.fullstackbackend.model.Like;
+import com.codewitharjun.fullstackbackend.model.Publisher;
 import com.codewitharjun.fullstackbackend.model.Subscribe;
 import com.codewitharjun.fullstackbackend.model.User;
 import com.codewitharjun.fullstackbackend.model.UserHistory;
@@ -206,11 +210,19 @@ public class AnimeController_pages {
 
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         User user = userRepository.findByUsername(loggedInUser.getUsername());
-
-        FK_Customer fkCustomer = ((Customer) user).getCustomerCHMOD();
         ModelAndView modelAndView = new ModelAndView("/user/profile");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("fkCustomer", fkCustomer);
+        if(user instanceof Customer){
+            FK_Customer fkCustomer = ((Customer) user).getCustomerCHMOD();
+            modelAndView.addObject("fkCustomer", fkCustomer);
+        }else if (user instanceof Publisher){
+            FK_Publisher fkPublisher = ((Publisher) user).getPublisherCHMOD();
+            modelAndView.addObject("fkPublisher", fkPublisher);
+        }else{
+            FK_Admin fkAdmin = ((Admin) user).getAdminCHMOD();
+            modelAndView.addObject("fkAdmin", fkAdmin);
+        }
+        
         return modelAndView;
     }
 
