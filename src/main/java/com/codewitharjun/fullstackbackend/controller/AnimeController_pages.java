@@ -53,10 +53,6 @@ import javax.servlet.http.HttpSession;
 @CrossOrigin("http://localhost:3000")
 @RequestMapping("/Home")
 public class AnimeController_pages {
-
-    @Autowired
-    private User_CustomerRepository customerRepository;
-
     @Autowired
     private AnimeRepository animeRepository;
 

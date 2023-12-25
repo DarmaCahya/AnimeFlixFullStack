@@ -17,18 +17,12 @@ import com.codewitharjun.fullstackbackend.model.Customer;
 import com.codewitharjun.fullstackbackend.model.FK_Customer;
 import com.codewitharjun.fullstackbackend.model.Publisher;
 import com.codewitharjun.fullstackbackend.model.User;
-import com.codewitharjun.fullstackbackend.model.UserHistory;
 import com.codewitharjun.fullstackbackend.repository.AnimeRepository;
-import com.codewitharjun.fullstackbackend.repository.UserHistoryRepository;
 import com.codewitharjun.fullstackbackend.repository.UserRepository;
 import com.codewitharjun.fullstackbackend.repository.User_CustomerRepository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpSession;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -39,10 +33,6 @@ public class AdminController extends UserController {
 
     @Autowired
     private User_CustomerRepository user_CustomerRepository;
-
-    
-    @Autowired
-    private UserHistoryRepository userHistoryRepository;
 
     @Autowired
     private AnimeRepository animeRepository;

@@ -10,8 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.codewitharjun.fullstackbackend.model.Anime;
 import com.codewitharjun.fullstackbackend.model.AnimeEpisode;
-import com.codewitharjun.fullstackbackend.model.Customer;
-import com.codewitharjun.fullstackbackend.model.FK_Customer;
 import com.codewitharjun.fullstackbackend.model.FK_Publisher;
 import com.codewitharjun.fullstackbackend.model.Publisher;
 import com.codewitharjun.fullstackbackend.model.User;
