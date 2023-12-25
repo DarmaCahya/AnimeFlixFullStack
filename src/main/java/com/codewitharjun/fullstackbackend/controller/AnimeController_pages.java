@@ -71,12 +71,15 @@ public class AnimeController_pages {
             return new ModelAndView("redirect:/login");
         }
         ModelAndView modelAndView = new ModelAndView("Home");
-        
+
+
         User user = (User) session.getAttribute("loggedInUser");
-        FK_Customer fk_customer = ((Customer) user).getCustomerCHMOD();
 
-        modelAndView.addObject("PesanAlert", fk_customer.getPesan());
-
+        if(user instanceof Customer){
+            FK_Customer fk_customer = ((Customer) user).getCustomerCHMOD();
+            modelAndView.addObject("PesanAlert", fk_customer.getPesan());
+        }
+    
         List<Anime> animeList = animeRepository.findAll();
         modelAndView.addObject("animeList", animeList);
 
