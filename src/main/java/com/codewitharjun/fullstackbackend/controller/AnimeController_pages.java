@@ -296,6 +296,7 @@ public class AnimeController_pages {
                     } else {
                         // Handle case where subscription is required but user is not subscribed
                         ModelAndView modelAndView = new ModelAndView("ErorrPage");
+                        modelAndView.addObject("erorrcode", "403");
                         modelAndView.addObject("errorMessage", "You need to be subscribed to watch this episode.");
                         modelAndView.addObject("erorrRoute", "../eps");
                         return modelAndView;
@@ -315,8 +316,10 @@ public class AnimeController_pages {
                 }
             } else {
                 // Handle case where the episode is not found
-                ModelAndView modelAndView = new ModelAndView("episodeNotFound");
+                ModelAndView modelAndView = new ModelAndView("ErorrPage");
+                modelAndView.addObject("erorrcode", "404");
                 modelAndView.addObject("errorMessage", "Episode not found");
+                modelAndView.addObject("erorrRoute", "../eps");
                 return modelAndView;
             }
         } else {

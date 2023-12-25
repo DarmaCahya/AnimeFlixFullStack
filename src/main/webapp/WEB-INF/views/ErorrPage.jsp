@@ -160,7 +160,7 @@
     </header>
 
     <div class="container">
-        <h1>403</h1>
+        <h1>${erorrcode}</h1>
         <p>${errorMessage}</p>
         <p><a href=${erorrRoute}>Go back</a></p>
     </div>

@@ -54,20 +54,17 @@ public class PublisherController extends UserController {
 
     @GetMapping("")
     public ModelAndView getAllUser() {
-        List<User> users = userRepository.getAllUsers();
-        Long userCount = userRepository.countAllUsers();
+        ModelAndView modelAndView = new ModelAndView("AnimeManager");
+        return modelAndView;
+    }
 
-        // Count users for each role
-        long adminCount = users.stream().filter(user -> user instanceof Admin).count();
-        long customerCount = users.stream().filter(user -> user instanceof Customer).count();
-        long publisherCount = users.stream().filter(user -> user instanceof Publisher).count();
 
-        ModelAndView modelAndView = new ModelAndView("cantAccess");
+    @GetMapping("/ListAnime")
+    public ModelAndView getAllAnimeList() {
+        List<Anime> animeList = animeRepository.findAll();
 
-        modelAndView.addObject("banyakuser", userCount);
-        modelAndView.addObject("adminCount", adminCount);
-        modelAndView.addObject("customerCount", customerCount);
-        modelAndView.addObject("publisherCount", publisherCount);
+        ModelAndView modelAndView = new ModelAndView("AnimeManager_ListAnime");
+        modelAndView.addObject("animeList", animeList);
 
         return modelAndView;
     }
