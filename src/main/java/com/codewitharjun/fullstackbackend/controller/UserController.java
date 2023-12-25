@@ -1,6 +1,5 @@
 package com.codewitharjun.fullstackbackend.controller;
 
-import com.codewitharjun.fullstackbackend.exception.UserNotFoundException;
 import com.codewitharjun.fullstackbackend.model.User;
 import com.codewitharjun.fullstackbackend.model.UserHistory;
 import com.codewitharjun.fullstackbackend.repository.UserHistoryRepository;

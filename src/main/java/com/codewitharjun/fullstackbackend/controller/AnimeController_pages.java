@@ -70,7 +70,7 @@ public class AnimeController_pages {
         if (session == null || session.getAttribute("loggedInUser") == null) {
             return new ModelAndView("redirect:/login");
         }
-        ModelAndView modelAndView = new ModelAndView("Home");
+        ModelAndView modelAndView = new ModelAndView("/Anime/Home");
 
 
         User user = (User) session.getAttribute("loggedInUser");
@@ -118,7 +118,7 @@ public class AnimeController_pages {
 
     @GetMapping("/genre/")
     public ModelAndView getAllGenre() {
-        ModelAndView modelAndView = new ModelAndView("AllGenre");
+        ModelAndView modelAndView = new ModelAndView("Anime/AllGenre");
         List<String> allGenres = animeRepository.findAllGenres();
         modelAndView.addObject("allGenres", allGenres);
         return modelAndView;
@@ -127,7 +127,7 @@ public class AnimeController_pages {
     @GetMapping("/genre/{genre}")
     public ModelAndView getAnimeByGenre(@PathVariable String genre) {
         List<Anime> animeList = animeRepository.findByGenre(genre);
-        ModelAndView modelAndView = new ModelAndView("AnimebyGenre");
+        ModelAndView modelAndView = new ModelAndView("/Anime/AnimebyGenre");
         modelAndView.addObject("animeList", animeList);
         return modelAndView;
     }
@@ -155,7 +155,7 @@ public class AnimeController_pages {
             }
         }
 
-        ModelAndView modelAndView = new ModelAndView("HistoryLastWatched");
+        ModelAndView modelAndView = new ModelAndView("/Anime/HistoryLastWatched");
         modelAndView.addObject("userHistoryList", uniqueUserHistoryList);
         return modelAndView;
     }
@@ -171,7 +171,7 @@ public class AnimeController_pages {
         // Fetch all user history and order by watchedAt in descending order
         List<UserHistory> userHistoryList = userHistoryRepository.findByUserOrderByWatchedAtDesc(loggedInUser);
 
-        ModelAndView modelAndView = new ModelAndView("AllHistory");
+        ModelAndView modelAndView = new ModelAndView("/Anime/AllHistory");
         modelAndView.addObject("userHistoryList", userHistoryList);
         return modelAndView;
     }
@@ -185,7 +185,7 @@ public class AnimeController_pages {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         User user = userRepository.findByUsername(loggedInUser.getUsername());
 
-        ModelAndView modelAndView = new ModelAndView("profile");
+        ModelAndView modelAndView = new ModelAndView("/user/profile");
         modelAndView.addObject("user", user);
         return modelAndView;
     }
@@ -209,7 +209,7 @@ public class AnimeController_pages {
             animeList = Collections.emptyList();
         }
 
-        ModelAndView modelAndView = new ModelAndView("SearchAnime");
+        ModelAndView modelAndView = new ModelAndView("/Anime/SearchAnime");
         modelAndView.addObject("animeList", animeList);
         return modelAndView;
     }
@@ -230,7 +230,7 @@ public class AnimeController_pages {
         //if (anime != null) {
             // Jika ditemukan, ambil daftar episode untuk anime tersebut
             List<AnimeEpisode> episodeList = animeEpisodeRepository.findByAnime(anime);
-            ModelAndView modelAndView = new ModelAndView("watchAnime");
+            ModelAndView modelAndView = new ModelAndView("/Anime/watchAnime");
             modelAndView.addObject("AnimeDetail", anime);
             modelAndView.addObject("episodeList", episodeList);
             return modelAndView;
@@ -272,7 +272,7 @@ public class AnimeController_pages {
     
                         userHistoryRepository.save(userHistory);
     
-                        ModelAndView modelAndView = new ModelAndView("watchAnimeEps");
+                        ModelAndView modelAndView = new ModelAndView("/Anime/watchAnimeEps");
                         modelAndView.addObject("AnimeDetail", anime);
                         modelAndView.addObject("episode", episode);
                         
@@ -295,8 +295,7 @@ public class AnimeController_pages {
                         return modelAndView;
                     } else {
                         // Handle case where subscription is required but user is not subscribed
-                        ModelAndView modelAndView = new ModelAndView("ErorrPage");
-                        modelAndView.addObject("erorrcode", "403");
+                        ModelAndView modelAndView = new ModelAndView("/error Page/ErorrPage");
                         modelAndView.addObject("errorMessage", "You need to be subscribed to watch this episode.");
                         modelAndView.addObject("erorrRoute", "../eps");
                         return modelAndView;
@@ -309,22 +308,21 @@ public class AnimeController_pages {
                     userHistory.setWatchedAt(new Date());
     
                     userHistoryRepository.save(userHistory);
-                    ModelAndView modelAndView = new ModelAndView("watchAnimeEps");
+                    ModelAndView modelAndView = new ModelAndView("/Anime/watchAnimeEps");
                     modelAndView.addObject("animeDetail", anime);
                     modelAndView.addObject("episode", episode);
                     return modelAndView;
                 }
             } else {
                 // Handle case where the episode is not found
-                ModelAndView modelAndView = new ModelAndView("ErorrPage");
-                modelAndView.addObject("erorrcode", "404");
+                ModelAndView modelAndView = new ModelAndView("episodeNotFound");
                 modelAndView.addObject("errorMessage", "Episode not found");
                 modelAndView.addObject("erorrRoute", "../eps");
                 return modelAndView;
             }
         } else {
             // Handle case where the anime is not found
-            ModelAndView modelAndView = new ModelAndView("animeNotFound");
+            ModelAndView modelAndView = new ModelAndView("/error Page/ErorrPage");
             modelAndView.addObject("errorMessage", "Anime not found");
             return modelAndView;
         }
@@ -371,20 +369,20 @@ public class AnimeController_pages {
                     episode.getComments().add(newComment);
                     animeEpisodeRepository.save(episode);
 
-                    ModelAndView modelAndView = new ModelAndView("watchAnimeEps");
+                    ModelAndView modelAndView = new ModelAndView("/Anime/watchAnimeEps");
                     modelAndView.addObject("AnimeDetail", anime);
                     modelAndView.addObject("episode", episode);
                     modelAndView.addObject("errorMessage", "Komentar ditambahkan.");
                     return modelAndView;
                 } else {
                     // Handle case where the episode is not found
-                    ModelAndView modelAndView = new ModelAndView("episodeNotFound");
+                    ModelAndView modelAndView = new ModelAndView("/error Page/ErorrPage");
                     modelAndView.addObject("errorMessage", "Episode not found");
                     return modelAndView;
                 }
             } else {
                 // Handle case where the anime is not found
-                ModelAndView modelAndView = new ModelAndView("animeNotFound");
+                ModelAndView modelAndView = new ModelAndView("/error Page/ErorrPage");
                 modelAndView.addObject("errorMessage", "Anime not found");
                 return modelAndView;
             }

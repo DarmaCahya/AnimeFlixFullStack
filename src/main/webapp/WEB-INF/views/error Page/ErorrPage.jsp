@@ -154,7 +154,7 @@
           </button>
         </div>
       </form>
-      <a href="profile.html" class="Login-button">
+      <a href="/Home/profile/" class="Login-button">
         <img src="https://i.ibb.co/275wkRK/sasuke.png" alt="Login Icon" style="width: 130px; height: 60px" />
       </a>
     </header>
