@@ -147,6 +147,7 @@
         <nav>
             <a href="/Home/genre/">Genre</a>
             <a href="/Home/history/">History</a>
+            <a href="/Home/Favorite/">Favorite</a>
         </nav>
         <form action="/Home/search/" method="get" class="search-box">
             <select name="searchType" id="searchType">

@@ -2,31 +2,31 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-    <title>User Watch History</title>
+    <title>User Anime Like</title>
 </head>
 <body>
 
-    <h1>User Watch History</h1>
-    <c:if test="${not empty userHistoryList}">
+    <h1>User Anime Like</h1>
+    <c:if test="${not empty ListFav}">
         <table border="1">
             <thead>
                 <tr>
                     <th>Anime Title</th>
                     <th>Episode Number</th>
                     <th>Episode Title</th>
-                    <th>Watched At</th>
+                    
                     <th>Link to Anime</th>
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="history" items="${userHistoryList}">
+                <c:forEach var="List" items="${ListFav}">
                     <tr>
-                        <td>${history.animeEpisode.anime.title}</td>
-                        <td>${history.animeEpisode.episodeNumber}</td>
-                        <td>${history.animeEpisode.episodeTitle}</td>
-                        <td>${history.watchedAt}</td>
+                        <td>${List.animeEpisode.anime.title}</td>
+                        <td>${List.animeEpisode.episodeNumber}</td>
+                        <td>${List.animeEpisode.episodeTitle}</td>
+                        
                         <td>
-                            <form method="post" action="../nonton/${history.animeEpisode.anime.animeId}/eps/${history.animeEpisode.episodeNumber}">
+                            <form method="post" action="../nonton/${List.animeEpisode.anime.animeId}/eps/${List.animeEpisode.episodeNumber}">
                                 <button type="submit">Nonton</button>
                             </form> 
                         </td>

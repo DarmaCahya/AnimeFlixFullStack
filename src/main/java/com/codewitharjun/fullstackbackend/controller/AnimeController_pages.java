@@ -137,6 +137,22 @@ public class AnimeController_pages {
         return modelAndView;
     }
 
+    @GetMapping("/Favorite")
+    public ModelAndView getUserFav(HttpSession session){
+        if (session == null || session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        
+         // Assuming you have a method in likeRepository to find liked anime by user ID
+        List<Like> likedAnimeList = likeRepository.findByUserId(loggedInUser.getId());
+
+        ModelAndView modelAndView = new ModelAndView("/Anime/FavAnime");
+        modelAndView.addObject("ListFav", likedAnimeList);
+        return modelAndView;
+    }
+
     @GetMapping("/history")
     public ModelAndView getUserWatchHistory(HttpSession session) {
         if (session == null || session.getAttribute("loggedInUser") == null) {
