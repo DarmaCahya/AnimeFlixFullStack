@@ -22,6 +22,7 @@
             top: 0;
             background-color: rgb(37, 33, 33);
         }
+        
 
         h1 {
             font-size: 300%;
@@ -72,16 +73,15 @@
 
         /* Content Styling */
         .content {
-            margin-left: 17%;
-            position: fixed;
+            margin-left: 20%; /* Adjust the margin to match the sidebar width */
             padding: 1px 16px;
-            width: 100%;
-            height: 10000%;
-            overflow: auto; 
+            width: 80%;
+            overflow: auto;
             flex-grow: 1;
             box-sizing: content-box;
             background-color: #FFEFEF;
         }
+
 
         .button {
             position: fixed;
@@ -130,9 +130,9 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <a href="../Dashboard">Dashboard</a>
-            <a href="./Dashboard/ListCustomer">List Customer</a>
-            <a href="./Dashboard/ListPublisher">List Publisher</a>
-            <a href="./Dashboard/ListAnime">List Anime</a>
+            <a href="./ListCustomer">List Customer</a>
+            <a href="./ListPublisher">List Publisher</a>
+            <a href="./ListAnime">List Anime</a>
             <div class="button">
                 <form method="post" action="/logout">
                     <button type="submit" class="logout-button">logout</button>
@@ -144,28 +144,42 @@
         <div class="content">
             <h2>Main Content</h2>
             <p>This is the main content area. You can add your page content here.</p>
-            <h2>
+            <c:if test="${not empty banyakuser}">
+                <tr><h3>Banyak User</h3></tr>
+                <tr><h3>${banyakuser}</h3></tr>
+            </c:if>
             <table border="1">
                 <thead>
                     <tr>
-                        <td>Banyak User</td>
-                        <td>Banyak Admin</td>
-                        <td>Banyak Customer</td>
-                        <td>Banyak Publisher</td>
+                        <td>Id</td>
+                        <td>Judul</td>
+                        <td>genre</td>
+                        <td>Publisher</td>
+                        <td>thumbnail</td>
+                        <td>Episode</td>
+                        <td>Like</td>
+
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>${banyakuser}</td>
-                        <td>${adminCount}</td>
-                        <td>${customerCount}</td>
-                        <td>${publisherCount}</td>
-                    </tr>
+                    <c:forEach var="anime" items="${animeList}">
+                        <tr>
+                            <td>${anime.animeId}</td>
+                            <td>${anime.title}</td>  
+                            <td>${anime.genre}</td>
+                            <td>${anime.publisher}</td>
+                            <td><img src="${anime.thumbnail}" alt="Poster 1" class="poster-img" width="80"> </td>
+                            <td><a href="/Home/nonton/${anime.animeId}/eps">Link</a></td>
+                            <td>${anime.likes}</td>
+                        </tr>
+                    </c:forEach>
+                    
                 </tbody>
-            </table>  
-            </h2>  
+            </table>
+            
         </div>
     </div>
+
     <script>
         
     </script>

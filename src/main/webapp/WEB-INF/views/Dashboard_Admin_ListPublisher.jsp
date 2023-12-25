@@ -22,6 +22,7 @@
             top: 0;
             background-color: rgb(37, 33, 33);
         }
+        
 
         h1 {
             font-size: 300%;
@@ -115,9 +116,6 @@
             color: #fff;
 
         }
-        td {
-        text-align: center;
-        }
     </style>
 </head>
 
@@ -130,9 +128,9 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <a href="../Dashboard">Dashboard</a>
-            <a href="./Dashboard/ListCustomer">List Customer</a>
-            <a href="./Dashboard/ListPublisher">List Publisher</a>
-            <a href="./Dashboard/ListAnime">List Anime</a>
+            <a href="./ListCustomer">List Customer</a>
+            <a href="./ListPublisher">List Publisher</a>
+            <a href="./ListAnime">List Anime</a>
             <div class="button">
                 <form method="post" action="/logout">
                     <button type="submit" class="logout-button">logout</button>
@@ -144,28 +142,38 @@
         <div class="content">
             <h2>Main Content</h2>
             <p>This is the main content area. You can add your page content here.</p>
-            <h2>
+            <c:if test="${not empty banyakuser}">
+                <tr><h3>Banyak User</h3></tr>
+                <tr><h3>${banyakuser}</h3></tr>
+            </c:if>
             <table border="1">
                 <thead>
                     <tr>
-                        <td>Banyak User</td>
-                        <td>Banyak Admin</td>
-                        <td>Banyak Customer</td>
-                        <td>Banyak Publisher</td>
+                        <td>model</td>
+                        <td>id</td>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>password</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>${banyakuser}</td>
-                        <td>${adminCount}</td>
-                        <td>${customerCount}</td>
-                        <td>${publisherCount}</td>
-                    </tr>
+                    <c:forEach var="user" items="${users}">
+                        <tr>
+                            <td>${user}</td>
+                            <td>${user.id}</td>
+                            <td>${user.username}</td>
+                            <td>${user.email}</td>
+                            <td>${user.password}</td>   
+                        </tr>
+                    </c:forEach>
+                    
                 </tbody>
-            </table>  
-            </h2>  
+            </table>
+            
         </div>
     </div>
+
     <script>
         
     </script>

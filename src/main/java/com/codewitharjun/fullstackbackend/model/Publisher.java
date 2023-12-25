@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 @Entity
 @DiscriminatorValue("PUBLISHER")
 public class Publisher extends User {
-        @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
@@ -25,6 +25,14 @@ public class Publisher extends User {
 
     public void setPublisherCHMOD(FK_Publisher publisherCHMOD) {
         this.publisherCHMOD = publisherCHMOD;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     

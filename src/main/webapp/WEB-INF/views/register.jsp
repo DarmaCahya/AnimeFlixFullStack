@@ -208,6 +208,7 @@
             <div class="form-group">
                 <label for="usertype" style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 662px; left: 80px;">User Type</label>
                 <select id="usertype" name="usertype" style="opacity: 1; color: #000000; padding: 10px;">
+                    <option value="ADMIN">ADMIN</option>
                     <option value="CUSTOMER">CUSTOMER</option>
                     <option value="PUBLISHER">PUBLISHER</option>
                 </select>

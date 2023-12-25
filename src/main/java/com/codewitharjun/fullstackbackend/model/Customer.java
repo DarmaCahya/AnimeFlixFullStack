@@ -20,12 +20,22 @@ public class Customer extends User {
     @JoinColumn(name = "customerCHMOD_id", nullable = true)
     private FK_Customer customerCHMOD;
 
+    
+
     public FK_Customer getCustomerCHMOD() {
         return customerCHMOD;
     }
 
     public void setCustomerCHMOD(FK_Customer customerCHMOD) {
         this.customerCHMOD = customerCHMOD;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     

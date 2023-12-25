@@ -127,10 +127,10 @@
     <div class="container">
         <!-- Sidebar -->
         <div class="sidebar">
-            <a href="#">Dashboard</a>
-            <a href="/customer">List Customer</a>
-            <a href="#">List Publisher</a>
-            <a href="#">List Customer</a>
+            <a href="../Dashboard">Dashboard</a>
+            <a href="./ListCustomer">List Customer</a>
+            <a href="./ListPublisher">List Publisher</a>
+            <a href="./ListAnime">List Anime</a>
             <div class="button">
                 <form method="post" action="/logout">
                     <button type="submit" class="logout-button">logout</button>
@@ -142,6 +142,42 @@
         <div class="content">
             <h2>Main Content</h2>
             <p>This is the main content area. You can add your page content here.</p>
+            <c:if test="${not empty banyakuser}">
+                <tr><h3>Banyak User</h3></tr>
+                <tr><h3>${banyakuser}</h3></tr>
+            </c:if>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td>Code</td>
+                        <td>id</td>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>password</th>
+                        <th>Alert</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="user" items="${users}">
+                        <tr>
+                            <td>${user}</td>
+                            <td>${user.id}</td>
+                            <td>${user.username}</td>
+                            <td>${user.email}</td>
+                            <td>${user.password}</td>  
+                            <td>
+                                <form method="post" action="./ListCustomer/${user.id}">
+                                    <button type="submit">Kasih paham</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+
+                    
+                </tbody>
+            </table>
+            
         </div>
     </div>
 
