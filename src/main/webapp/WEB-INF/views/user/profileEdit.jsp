@@ -210,96 +210,57 @@
     </header>
 
     <c:if test="${user != null}">
-        <h1>User Profile</h1>
-        <div class="container">
-            <div class="table-container">
-                <table>
-                    <tr>
-                        <td><strong>Nama Customer</strong></td>
-                        <td><input type="text" name="name" value="${fkCustomer.namaCustomer}"></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Username</strong></td>
-                        <td><input type="text" name="username" value="${user.username}"></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Old Password </strong></td>
-                        <td><input type="password" name="password" value=""></td>
-                    </tr>
-                    <tr>
-                        <td><strong>New Password</strong></td>
-                        <td><input type="password" name="newPassword" value=""></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Email:</strong></td>
-                        <td>${user.email}</td>
-                    </tr>
-                </table>    
-            </div>
+        <form method="post" action="./editProfile">
+            <h1>User Profile</h1>
+            <div class="container">
+                <div class="table-container">
+                    <table>
+                        <!-- <tr>
+                            <td><strong>Nama Customer</strong></td>
+                            <td><input type="text" name="name" value="${fkCustomer.namaCustomer}"></td>
+                        </tr> -->
+                        <tr>
+                            <td><strong>Username</strong></td>
+                            <td><input type="text" name="username" value="${user.username}"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Old Password </strong></td>
+                            <td><input type="password" name="oldpassword" value=""></td>
+                        </tr>
+                        <tr>
+                            <td><strong>New Password</strong></td>
+                            <td><input type="password" name="newPassword" value=""></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email:</strong></td>
+                            <td>${user.email}</td>
+                        </tr>
+                    </table>    
+                </div>
+
+                <div class="button-container">
+                    <!-- Save Button -->
+                    
+                    <button id="saveBtn" type="submit">Simpan</button>
+                </div>
+        </form>
 
             <div class="button-container">
-                <!-- Save Button -->
-                <button id="saveBtn" onclick="saveChanges()">Simpan</button>
-
+                <br>
                 <c:if test="${userType == 'CUSTOMER'}">
                     <div class="textStatus" id="subscriptionStatus"></div>
                     <button id="subscribeBtn" onclick="subscribeUser()">Subscribe</button>
                     <button id="cancelSubscribeBtn" onclick="cancelSubscribe()">Cancel Subscribe</button>
                 </c:if>
-                <form method="post" action="/logout">
-                    <button id="logoutBtn" type="submit">logout</button>
-                </form>
+                <br>
+                    <form method="post" action="/logout">
+                        <button id="logoutBtn" type="submit">logout</button>
+                    </form>
             </div>
         </div>
     </c:if>
 
-    <!-- Subscribe/Cancel Subscribe JavaScript Functions -->
-    <!-- Fetch Subscription Status on Page Load -->
-    <script>
-         $(document).ready(function () {
-                // Make an AJAX request to fetch subscription status
-                $.get("/user/subscribe", function (data) {
-                    $("#subscriptionStatus").text(data.message);
-                });
-            });
-
-
-        function subscribeUser() {
-            $.ajax({
-                type: "POST",
-                url: "/user/subscribe",
-                contentType: "application/json",
-                data: JSON.stringify({ "duration": 1 }),
-                success: function (data) {
-                    $("#subscriptionStatus").text(data.message);
-                    // Show a pop-up with the success message
-                    alert(data.message);
-                },
-                error: function (error) {
-                    console.log(error);
-                    // Show a pop-up with the error message
-                    alert("Error: " + error.responseJSON.message);
-                }
-            });
-        }
     
-        function cancelSubscribe() {
-            $.ajax({
-                type: "DELETE",
-                url: "/user/subscribe",
-                success: function (data) {
-                    $("#subscriptionStatus").text(data.message);
-                    // Show a pop-up with the success message
-                    alert(data.message);
-                },
-                error: function (error) {
-                    console.log(error);
-                    // Show a pop-up with the error message
-                    alert("Error: " + error.responseJSON.message);
-                }
-            });
-        }
-    </script>
 
 </body>
 </html>

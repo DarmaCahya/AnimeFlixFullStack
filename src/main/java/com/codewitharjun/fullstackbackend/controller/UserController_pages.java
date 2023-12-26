@@ -1,6 +1,7 @@
 package com.codewitharjun.fullstackbackend.controller;
 
 import com.codewitharjun.fullstackbackend.model.User;
+import com.codewitharjun.fullstackbackend.repository.SubscribeRepository;
 import com.codewitharjun.fullstackbackend.repository.UserRepository;
 import com.codewitharjun.fullstackbackend.repository.User_AdminRepository;
 import com.codewitharjun.fullstackbackend.repository.User_CustomerRepository;
@@ -16,6 +17,9 @@ import com.codewitharjun.fullstackbackend.model.FK_Admin;
 import com.codewitharjun.fullstackbackend.model.FK_Customer;
 import com.codewitharjun.fullstackbackend.model.FK_Publisher;
 import com.codewitharjun.fullstackbackend.model.Publisher;
+import com.codewitharjun.fullstackbackend.model.Subscribe;
+
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
@@ -39,6 +43,9 @@ public class UserController_pages {
     @Autowired
     private User_PublisherRepository user_PublisherRepository;
 
+    @Autowired
+    private SubscribeRepository subscribeRepository;
+
     @GetMapping("/login")
     public ModelAndView loginPage() {
         ModelAndView modelAndView = new ModelAndView("/user/login");
@@ -55,15 +62,25 @@ public class UserController_pages {
                 // If password is correct, save user information in the session
                 session.setAttribute("loggedInUser", user);
 
+                Optional<Subscribe> optionalSubscribe = subscribeRepository.findByUser(user);
+
                 // Return ModelAndView with success message and user type
                 ModelAndView modelAndView = new ModelAndView("/user/loginSuccess");
                 modelAndView.addObject("message", "Login successful");
                 modelAndView.addObject("username", user.getUsername());
                 if (user instanceof Admin) {
                     modelAndView.addObject("userType", "ADMIN");
+                    if(!optionalSubscribe.isPresent()){
+                        Subscribe subscribe = new Subscribe(999999999, user);
+                    subscribeRepository.save(subscribe);
+                    }
                 } else if (user instanceof Customer) {
                     modelAndView.addObject("userType", "CUSTOMER");
                 } else if (user instanceof Publisher) {
+                    if(!optionalSubscribe.isPresent()){
+                        Subscribe subscribe = new Subscribe(999999999, user);
+                    subscribeRepository.save(subscribe);
+                    }
                     modelAndView.addObject("userType", "PUBLISHER");
                 }
 
@@ -117,13 +134,16 @@ public class UserController_pages {
             newUser = new Admin();
             FK_Admin newfkadmin  = new FK_Admin(username);
             user_AdminRepository.save(newfkadmin);
-            ((Admin) newUser).setAdminCHMOD(newfkadmin);
+            ((Admin) newUser).setAdminCHMOD(newfkadmin);      
 
         }else if (usertype.equals("CUSTOMER")) {
             newUser = new Customer();
             FK_Customer newfkcustomer  = new FK_Customer("Mr/Ms. "+ username);
             user_CustomerRepository.save(newfkcustomer);
             ((Customer) newUser).setCustomerCHMOD(newfkcustomer);
+
+            
+            
         } else {
             newUser = new Publisher();
             FK_Publisher newfkpublisher  = new FK_Publisher("PT. "+username);

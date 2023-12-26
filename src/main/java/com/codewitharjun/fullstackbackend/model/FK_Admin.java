@@ -14,8 +14,17 @@ public class FK_Admin {
 
     private String nama;
     private String log;
+    private String pesan;
 
     // Constructors, getters, and setters
+
+    public String getPesan() {
+        return pesan;
+    }
+
+    public void setPesan(String pesan) {
+        this.pesan = pesan;
+    }
 
     // Constructors
     public FK_Admin() {

@@ -193,7 +193,9 @@
             // JavaScript code to show a pop-up message
             window.onload = function() {
                 alert('Minimal sopan dek');
+                <c:set var="PesanAlert" value="${null}" />
             };
+            
         </script>
     </c:if>
     

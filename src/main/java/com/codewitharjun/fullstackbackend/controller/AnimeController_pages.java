@@ -19,6 +19,7 @@ import com.codewitharjun.fullstackbackend.repository.LikeRepository;
 import com.codewitharjun.fullstackbackend.repository.SubscribeRepository;
 import com.codewitharjun.fullstackbackend.repository.UserHistoryRepository;
 import com.codewitharjun.fullstackbackend.repository.UserRepository;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -226,6 +227,54 @@ public class AnimeController_pages {
         }
 
         return modelAndView;
+    }
+
+    @PostMapping("/profile/editProfile")
+    public ModelAndView patchProfile(HttpSession session, @RequestParam String username,@RequestParam String oldpassword,@RequestParam String newPassword){
+        if (session == null || session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User user = userRepository.findByUsername(loggedInUser.getUsername());
+
+        if(user.getPassword().equals(oldpassword)){
+            user.setUsername(username);
+            user.setPassword(newPassword);
+            userRepository.save(user);
+            ModelAndView modelAndView = new ModelAndView("/user/profile");
+            modelAndView.addObject("user", user);
+            if(user instanceof Customer){
+                FK_Customer fkCustomer = ((Customer) user).getCustomerCHMOD();
+                modelAndView.addObject("userType", "CUSTOMER");
+                modelAndView.addObject("fkCustomer", fkCustomer);
+            }else if (user instanceof Publisher){
+                FK_Publisher fkPublisher = ((Publisher) user).getPublisherCHMOD();
+                modelAndView.addObject("fkPublisher", fkPublisher);
+                modelAndView.addObject("userType", "PUBLISHER");
+            }else{
+                FK_Admin fkAdmin = ((Admin) user).getAdminCHMOD();
+                modelAndView.addObject("fkAdmin", fkAdmin);
+                modelAndView.addObject("userType", "ADMIN");
+            }
+            modelAndView.addObject("Message", "Profile telah di update");
+            return modelAndView;
+        }else{
+            ModelAndView modelAndView = new ModelAndView("/user/profile");
+            modelAndView.addObject("user",user);
+            if(loggedInUser instanceof Customer){
+                FK_Customer fkCustomer = ((Customer) user).getCustomerCHMOD();
+                modelAndView.addObject("fkCustomer", fkCustomer);
+            }else if(loggedInUser instanceof Admin){
+                FK_Admin fkAdmin = ((Admin) user).getAdminCHMOD();
+                modelAndView.addObject("fkAdmin", fkAdmin);
+            }else if(loggedInUser instanceof Publisher){
+                FK_Publisher fkPublisher = ((Publisher) user).getPublisherCHMOD();
+                modelAndView.addObject("fkPublisher", fkPublisher);
+            }
+            modelAndView.addObject("Message", "Password lama salah");
+            return modelAndView;
+        }
     }
 
     @GetMapping("/profile")
