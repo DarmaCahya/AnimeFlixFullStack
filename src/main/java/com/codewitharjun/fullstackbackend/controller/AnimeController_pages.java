@@ -36,6 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 //import java.util.Collections;
@@ -336,6 +337,9 @@ public class AnimeController_pages {
                         ModelAndView modelAndView = new ModelAndView("/Anime/watchAnimeEps");
                         modelAndView.addObject("AnimeDetail", anime);
                         modelAndView.addObject("episode", episode);
+                        List<Comment> comments = episode.getComments();
+                        comments.sort(Comparator.comparing(Comment::getCommentedAt).reversed());
+                        modelAndView.addObject("Komen", comments);
                         
 
                         // Get the user from the repository
@@ -372,6 +376,9 @@ public class AnimeController_pages {
                     ModelAndView modelAndView = new ModelAndView("/Anime/watchAnimeEps");
                     modelAndView.addObject("animeDetail", anime);
                     modelAndView.addObject("episode", episode);
+                    List<Comment> comments = episode.getComments();
+                    comments.sort(Comparator.comparing(Comment::getCommentedAt).reversed());
+                    modelAndView.addObject("Komen", comments);
                     return modelAndView;
                 }
             } else {

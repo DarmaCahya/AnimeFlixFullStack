@@ -282,24 +282,33 @@
             });
 
 
-        function subscribeUser() {
-            $.ajax({
-                type: "POST",
-                url: "/user/subscribe",
-                contentType: "application/json",
-                data: JSON.stringify({ "duration": 1 }),
-                success: function (data) {
-                    $("#subscriptionStatus").text(data.message);
-                    // Show a pop-up with the success message
-                    alert(data.message);
-                },
-                error: function (error) {
-                    console.log(error);
-                    // Show a pop-up with the error message
-                    alert("Error: " + error.responseJSON.message);
+            function subscribeUser() {
+                // Display a confirmation dialog
+                var isConfirmed = confirm("Apakah kamu pengen subscribe?");
+
+                if (isConfirmed) {
+                    // User clicked "Yes," proceed with the subscription
+                    $.ajax({
+                        type: "POST",
+                        url: "/user/subscribe",
+                        contentType: "application/json",
+                        data: JSON.stringify({ "duration": 1 }),
+                        success: function (data) {
+                            $("#subscriptionStatus").text(data.message);
+                            // Show a pop-up with the success message
+                            alert(data.message);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                            // Show a pop-up with the error message
+                            alert("Error: " + error.responseJSON.message);
+                        }
+                    });
+                } else {
+                    // User clicked "No," do nothing or provide feedback
+                    alert("Yahh gk jadi Subscribe");
                 }
-            });
-        }
+            }
     
         function cancelSubscribe() {
             $.ajax({

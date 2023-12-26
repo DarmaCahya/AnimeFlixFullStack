@@ -226,7 +226,7 @@
                 </h2>
                 <p>Judul Anime : ${AnimeDetail.title}</p>
                 <p>Genre : ${AnimeDetail.genre}</p>
-                <p>Publisher : ${AnimeDetail.publisher.namaPerusahaan}</p>
+                <p>Publisher : ${AnimeDetail.publisher.nama}</p>
                 <p>Release Year : ${AnimeDetail.releaseYear}</p>
                 <p>Description : ${AnimeDetail.description}</p>
             </div>
