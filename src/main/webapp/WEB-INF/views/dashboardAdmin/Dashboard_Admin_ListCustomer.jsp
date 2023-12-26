@@ -137,7 +137,14 @@
                 </form>
             </div>
         </div>
-
+        <c:if test="${not empty pesan}">
+            <script>
+                // JavaScript code to show a pop-up message
+                window.onload = function() {
+                    alert('${pesan}!');
+                };
+            </script>
+        </c:if>
         <!-- Content -->
         <div class="content">
             <h2>Main Content</h2>
