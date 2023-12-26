@@ -83,6 +83,11 @@ public class AnimeController_pages {
         if(user instanceof Customer){
             FK_Customer fk_customer = ((Customer) user).getCustomerCHMOD();
             modelAndView.addObject("PesanAlert", fk_customer.getPesan());
+            modelAndView.addObject("userType", "CUSTOMER");
+        }else if (user instanceof Admin) {
+            modelAndView.addObject("userType", "ADMIN");
+        } else if (user instanceof Publisher) {
+            modelAndView.addObject("userType", "PUBLISHER");
         }
     
         List<Anime> animeList = animeRepository.findAll();
@@ -205,11 +210,20 @@ public class AnimeController_pages {
 
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         User user = userRepository.findByUsername(loggedInUser.getUsername());
-        FK_Customer fkCustomer = ((Customer) user).getCustomerCHMOD();
 
         ModelAndView modelAndView = new ModelAndView("/user/profileEdit");
         modelAndView.addObject("user",user);
-        modelAndView.addObject("fkCustomer", fkCustomer);
+        if(loggedInUser instanceof Customer){
+            FK_Customer fkCustomer = ((Customer) user).getCustomerCHMOD();
+            modelAndView.addObject("fkCustomer", fkCustomer);
+        }else if(loggedInUser instanceof Admin){
+            FK_Admin fkAdmin = ((Admin) user).getAdminCHMOD();
+            modelAndView.addObject("fkAdmin", fkAdmin);
+        }else if(loggedInUser instanceof Publisher){
+            FK_Publisher fkPublisher = ((Publisher) user).getPublisherCHMOD();
+            modelAndView.addObject("fkPublisher", fkPublisher);
+        }
+
         return modelAndView;
     }
 
