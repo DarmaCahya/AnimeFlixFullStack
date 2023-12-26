@@ -124,7 +124,6 @@ public class UserController_pages {
             FK_Customer newfkcustomer  = new FK_Customer("Mr/Ms. "+ username);
             user_CustomerRepository.save(newfkcustomer);
             ((Customer) newUser).setCustomerCHMOD(newfkcustomer);
-
         } else {
             newUser = new Publisher();
             FK_Publisher newfkpublisher  = new FK_Publisher("PT. "+username);
