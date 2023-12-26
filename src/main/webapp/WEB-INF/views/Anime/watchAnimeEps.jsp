@@ -202,7 +202,7 @@
 
                         // Tambahkan logika lain sesuai kebutuhan
                     },
-                    error: function (error) {
+                    error: function (error) {   
                         // Tampilkan pesan error dalam popup jika diperlukan
                         alert("Refresh Halaman untuk melihat Komentar Terbaru");
 
@@ -210,6 +210,7 @@
                     }
                 });
             }
+
 
             $(".like-form").submit(function (event) {
                 event.preventDefault();
@@ -338,11 +339,12 @@
             <button type="submit">Tambah Komentar</button>
         </form>
 
-        <button id="refresh-comments">Refresh Komentar</button>
-
+        <form method="post" action="./${episode.episodeNumber}">
+            <button type="submit" class="watch-button">Refresh Komen</button>
+        </form>
         <h4>Daftar Komentar:</h4>
         <div id="comment-list">
-            <c:forEach var="comment" items="${episode.comments}">
+            <c:forEach var="comment" items="${Komen}">   
                 <p>${comment.user.username} - ${comment.comment} - ${comment.commentedAt}</p>
             </c:forEach>
         </div>
