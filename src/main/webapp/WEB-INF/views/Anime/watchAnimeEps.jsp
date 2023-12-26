@@ -338,8 +338,6 @@
             <button type="submit">Tambah Komentar</button>
         </form>
 
-        <button id="refresh-comments">Refresh Komentar</button>
-
         <h4>Daftar Komentar:</h4>
         <div id="comment-list">
             <c:forEach var="comment" items="${episode.comments}">
