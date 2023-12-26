@@ -180,16 +180,15 @@
 
         #logoutBtn{
             margin: 0;
-            margin-top: 2%;
             width: 18.5%;
             height: 45px;
         }
 
         #EditBtn{
             margin: 0;
-            margin-top: 2%;
             width: 18.5%;
             height: 45px;
+            margin-bottom: 2%;
         }
 
         .textStatus{
@@ -252,8 +251,8 @@
 
             <div class="button-container">
                 <c:if test="${userType == 'CUSTOMER'}">
-                    <div class="textStatus" id="subscriptionStatus"></div>
-                    <button id="subscribeBtn" onclick="subscribeUser()">Subscribe</button>
+                    <div class="textStatus" id="subscriptionStatus" style="margin-bottom: 0.5%;"></div>
+                    <button id="subscribeBtn" onclick="subscribeUser()" style="margin-bottom: 2%;">Subscribe</button>
                     <button id="cancelSubscribeBtn" onclick="cancelSubscribe()">Cancel Subscribe</button>
                 </c:if>
 

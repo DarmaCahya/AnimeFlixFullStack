@@ -179,7 +179,6 @@
 
         #logoutBtn{
             margin: 0;
-            margin-top: 2%;
             width: 18.5%;
             height: 45px;
         }

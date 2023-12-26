@@ -164,6 +164,9 @@
             flex-grow: 1;
             box-sizing: content-box;
             background-color: #FFEFEF;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+
         }
 
 
@@ -233,31 +236,45 @@
             
     <!-- Content -->
     <div class="content">
-        <form method="post" action="./TambahAnime"> <!-- Adjust the action attribute accordingly -->
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required><br>
-
-            <label for="genre">Genre:</label>
-            <input type="text" id="genre" name="genre" required><br>
-
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" rows="4" cols="50" required></textarea><br>
-
-            <label for="publisher">Publisher: ${publiser.username}</label>
-            <br>
-
-            <label for="thumbnail">Thumbnail:</label>
-            <input type="text" id="thumbnail" name="thumbnail" required><br>
-
-            <label for="release_year">Release Year:</label>
-            <input type="text" id="release_year" name="release_year" required><br>
-
-            <label for="video_url">Video URL:</label>
-            <input type="text" id="video_url" name="video_url" required><br>
-
+        <form method="post" action="./TambahAnime">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="genre">Genre:</label>
+                <input type="text" id="genre" name="genre" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" cols="50" required></textarea>
+            </div>
+    
+            <div class="form-group">
+                <label for="publisher">Publisher: ${publisher.username}</label>
+            </div>
+    
+            <div class="form-group">
+                <label for="thumbnail">Thumbnail:</label>
+                <input type="text" id="thumbnail" name="thumbnail" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="release_year">Release Year:</label>
+                <input type="text" id="release_year" name="release_year" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="video_url">Video URL:</label>
+                <input type="text" id="video_url" name="video_url" required>
+            </div>
+    
             <button type="submit">Submit</button>
         </form>
     </div>
+    
 
     </div>
 

@@ -4,23 +4,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ... (bagian head tetap sama) ... -->
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
+        body,html{
+            font-family: Arial, sans-serif;
             margin: 0;
-            background-color: rgb(37, 33, 33);
+            padding: 0;
+            background-color: #0d0c0c;
+            color: #fff;
+            height: 100%;
+            overflow: hidden;
         }
 
-        .header1 {
-            padding-top: 1%;
-            padding-left: 1%;
-            order: 1;
-            position: sticky;
-            top: 0;
-            background-color: rgb(37, 33, 33);
+        header {
+            background-color: #0d0c0c;
+            color: #fff;
+            padding: 10px;
+            border-bottom: 2px solid #333;
+        }
+
+        .logo {
+            display: inline-block;
+            margin-right: 20px;
+            color: #ffffff;
+            text-decoration: none;
+            position: relative;
+            left: 20px;
+        }
+
+        .Login-button {
+            display: inline-block;
+            width: 65px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: absolute;
+            top: 2%;
+            right: 3%;
+        }
+        
+        nav a:hover {
+        color: #504f4c;
         }
         
 
@@ -58,7 +81,7 @@
             padding: 0;
             width:20%;
             height: 100%;
-            background-color: rgb(37, 33, 33);
+            background-color: #0d0c0c;
         }
 
         .sidebar a {
@@ -116,14 +139,46 @@
             color: #fff;
 
         }
+
+        
+        .content {
+            margin-top: 0; 
+            padding: 20px;
+            overflow-y: auto; 
+            height: calc(100vh - 60px); 
+        }
+        table {
+            width:80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        th, td {
+            border: 2px solid #000000;
+            padding: 8px;
+            text-align: left;
+            color: black;
+            text-align: center;
+        }
+
+        th {
+            background-color: #fff8f8;
+        }
+
     </style>
 </head>
 
 <body>
-    <div class="header1">
-        <h1>AnimeFlix</h1>
-        
-    </div>
+    <header>
+        <a href="/Home" class="logo">
+            <img src="https://i.ibb.co/RzzSCg2/flix.png" alt="AnimeFlix Logo" style="width: 130px; height: 65px;" />
+        </a>
+        <a href="/Home/profile/" class="Login-button">
+            <img src="https://i.ibb.co/275wkRK/sasuke.png" alt="Login Icon" style="width: 130px; height: 60px;" />
+        </a>
+    </header>
+
     <div class="container">
         <!-- Sidebar -->
         <div class="sidebar">
@@ -138,9 +193,7 @@
             </div>
         </div>
 
-        <!-- Content -->
         <div class="content">
-            <h2>Main Content</h2>
             <p>This is the main content area. You can add your page content here.</p>
             <c:if test="${not empty banyakuser}">
                 <tr><h3>Banyak User</h3></tr>
@@ -152,8 +205,6 @@
                         <td>id</td>
                         <th>Nama</th>
                         <th>Email</th>
-                        <th>password</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -162,7 +213,6 @@
                             <td>${user.id}</td>
                             <td>${user.username}</td>
                             <td>${user.email}</td>
-                            <td>${user.password}</td>   
                         </tr>
                     </c:forEach>
                     
