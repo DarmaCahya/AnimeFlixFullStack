@@ -239,7 +239,7 @@
             <ul class="episode-list">
                 <c:forEach var="episode" items="${episodeList}">
                     <li class="episode-item">
-                        <p class="eps-anime">Episode ${episode.episodeNumber}</p>
+                        <p class="eps-anime">Episode ${episode.episodeNumber} - ${episode.episodeTitle}</p>
                         <form method="post" action="eps/${episode.episodeNumber}">
                             <button type="submit" class="watch-button">Nonton</button>
                         </form>
