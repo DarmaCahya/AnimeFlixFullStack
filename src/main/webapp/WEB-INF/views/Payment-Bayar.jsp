@@ -4,10 +4,11 @@
 <head>
     <title>Halaman Pembayaran</title>
     <style>
-        body {
+        body,html{
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 50px;
+            padding: 0;
         }
 
         h1 {
@@ -49,6 +50,7 @@
     <!-- Tambahkan link ke CSS atau styling lainnya jika diperlukan -->
 </head>
 <body>
+    
     <h1>Halaman Pembayaran</h1>
 
     <!-- Tampilkan formulir pembayaran -->

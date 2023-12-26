@@ -240,13 +240,16 @@ public class AnimeController_pages {
         modelAndView.addObject("user", user);
         if(user instanceof Customer){
             FK_Customer fkCustomer = ((Customer) user).getCustomerCHMOD();
+            modelAndView.addObject("userType", "CUSTOMER");
             modelAndView.addObject("fkCustomer", fkCustomer);
         }else if (user instanceof Publisher){
             FK_Publisher fkPublisher = ((Publisher) user).getPublisherCHMOD();
             modelAndView.addObject("fkPublisher", fkPublisher);
+            modelAndView.addObject("userType", "PUBLISHER");
         }else{
             FK_Admin fkAdmin = ((Admin) user).getAdminCHMOD();
             modelAndView.addObject("fkAdmin", fkAdmin);
+            modelAndView.addObject("userType", "ADMIN");
         }
         
         return modelAndView;

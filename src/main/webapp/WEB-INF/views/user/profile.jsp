@@ -251,22 +251,21 @@
             </div>
 
             <div class="button-container">
-                <!-- Display Subscription Status -->
-                <div class="textStatus" id="subscriptionStatus"></div>
-
-                <!-- Subscribe Button -->
-                <button id="subscribeBtn" onclick="subscribeUser()">Subscribe</button>
-        
-                <!-- Cancel Subscribe Button -->
-                <button id="cancelSubscribeBtn" onclick="cancelSubscribe()">Cancel Subscribe</button>
+                <c:if test="${userType == 'CUSTOMER'}">
+                    <div class="textStatus" id="subscriptionStatus"></div>
+                    <button id="subscribeBtn" onclick="subscribeUser()">Subscribe</button>
+                    <button id="cancelSubscribeBtn" onclick="cancelSubscribe()">Cancel Subscribe</button>
+                </c:if>
 
                 <form method="get" action="/Home/profile/editProfile">
                     <button id="EditBtn">Edit Profile</button>
                 </form>
 
-                <form method="get" action="/Home/profile/payment/riwayat">
-                    <button id="EditBtn" type="submit">Riwayat Payment</button>
-                </form>
+                <c:if test="${userType == 'CUSTOMER'}">
+                    <form method="get" action="/Home/profile/payment/riwayat">
+                        <button id="EditBtn" type="submit">Riwayat Payment</button>
+                    </form>    
+                </c:if>
 
                 <form method="post" action="/logout">
                     <button id="logoutBtn" type="submit">logout</button>
