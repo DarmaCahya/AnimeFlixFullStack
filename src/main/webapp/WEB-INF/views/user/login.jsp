@@ -176,11 +176,21 @@
 
         
         <c:if test="${not empty errorMessage}">
-            <p>Fuck you, ${errorMessage}!</p>
+            <script>
+                // JavaScript code to show a pop-up message
+                window.onload = function() {
+                    alert('Fuck you, ${errorMessage}!');
+                };
+            </script>
         </c:if>
 
         <c:if test="${not empty logoutMessage}">
-            <div class="alert alert-success">${logoutMessage}</div>
+            <script>
+                // JavaScript code to show a pop-up message
+                window.onload = function() {
+                    alert('${logoutMessage}');
+                };
+            </script>
         </c:if>
     </div>
     </form>

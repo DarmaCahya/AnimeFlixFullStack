@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import com.codewitharjun.fullstackbackend.exception.UserNotFoundException;
 import com.codewitharjun.fullstackbackend.model.Admin;
@@ -74,19 +75,25 @@ public class AdminController extends UserController {
     }
 
     @PostMapping("/ListCustomer/{id}")
-    public ResponseEntity<String> AlertCustomer(@PathVariable String id){
+    public ResponseEntity<String> AlertCustomer(@PathVariable String id, RedirectAttributesModelMap redirectAttributes){
         User user = userRepository.findById(Long.parseLong(id))
                 .orElseThrow(() -> new UserNotFoundException(Long.parseLong(id)));
         FK_Customer fk_customer = ((Customer) user).getCustomerCHMOD();
         if (fk_customer.getPesan() == null){
             fk_customer.setPesan("Minimal Bayar dek");
             user_CustomerRepository.save(fk_customer);
-            return ResponseEntity.status(HttpStatus.CREATED).body("User " + fk_customer.getId() + " has been Alert with Pesan:  " + fk_customer.getPesan()); 
+            redirectAttributes.addFlashAttribute("pesan", "User dengan inisial "+user.getUsername()+" dikasih paham");
+            return ResponseEntity.status(HttpStatus.FOUND)
+                    .header("Location", "../../Dashboard/ListCustomer")
+                    .build();
         }
         else {
             fk_customer.setPesan(null);
             user_CustomerRepository.save(fk_customer);
-            return ResponseEntity.status(HttpStatus.CREATED).body("User " + fk_customer.getId() + " Not Alerted with Pesan:  " + fk_customer.getPesan()); 
+            redirectAttributes.addFlashAttribute("pesan", "User inisial "+user.getUsername()+" dimaafkan");
+            return ResponseEntity.status(HttpStatus.FOUND)
+                    .header("Location", "../../Dashboard/ListCustomer")
+                    .build(); 
         }
             
 
