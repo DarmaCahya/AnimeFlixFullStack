@@ -140,12 +140,13 @@
         textarea {
             width: 100%;
             padding: 10px;
-            margin-top: 5px;
+            margin-top: 3%;
             margin-bottom: 10px;
         }
 
         button {
             padding: 8px 16px;
+            margin-left: 1%;
             margin-top: 5px;
             cursor: pointer;
             background-color: #4CAF50;
@@ -184,6 +185,12 @@
 
         .unlike {
             background-color: red; 
+        }
+
+        .list-comment{
+            margin-left: 3%;
+            margin-right: 3%;
+            margin-bottom: 5%;
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -342,11 +349,13 @@
         <form method="post" action="./${episode.episodeNumber}">
             <button type="submit" class="watch-button">Refresh Komen</button>
         </form>
-        <h4>Daftar Komentar:</h4>
-        <div id="comment-list">
-            <c:forEach var="comment" items="${Komen}">   
-                <p>${comment.user.username} - ${comment.comment} - ${comment.commentedAt}</p>
-            </c:forEach>
+        <div class="list-comment">
+            <h4>Komentar Episode ${episode.episodeNumber}  :</h4>
+            <div id="comment-list">
+                <c:forEach var="comment" items="${Komen}">   
+                    <p>${comment.user.username} - ${comment.comment} - ${comment.commentedAt}</p>
+                </c:forEach>
+            </div>
         </div>
     </c:if>
 </body>
