@@ -319,7 +319,7 @@
     
     <c:if test="${not empty episode}">
         <ul>
-            <li>Episode ${episode.episodeNumber}</li>
+            <li>Episode ${episode.episodeNumber} - ${episode.episodeTitle}</li>
             <iframe width="800" height="600" src=${episode.videoUrl} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </ul>
 
