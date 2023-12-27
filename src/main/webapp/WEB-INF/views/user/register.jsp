@@ -130,8 +130,13 @@
             margin-bottom: 0;
             margin-left: -137px;
         }
-        
-        
+
+        .error-message {
+            color: #FF0000;
+            font-size: 80%;
+            margin-top: 5px;
+            font-family: 'Inria Serif',serif;
+        }
 
         .signup-button,
         .login-button {
@@ -182,6 +187,7 @@
             <div class="form-group">
                 <label for="username", style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 110px; left: 80px;">Username</label>
                 <input type="text" id="username" name="username" placeholder="Enter your username", style="opacity: 1;color: #FFEFEF; ">
+                <span id="usernameError" class="error-message"></span>
             </div>
             <div class="form-group">
                 <label for="email", style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 220px; left: 80px;">Email</label>
@@ -197,6 +203,7 @@
                 <div class="checkbox-group">
                     <input type="checkbox" id="showPassword" name="showPassword">
                 </div>
+                <span id="passwordError" class="error-message"></span>
             </div>
             <div class="form-group">
                 <label for="confirmPassword", style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 550px; left: 80px;">Confirm Password</label>
@@ -204,6 +211,7 @@
                 <div class="checkbox-group">
                     <input type="checkbox" id="showConfirmPassword" name="showConfirmPassword">
                 </div>
+                <span id="passwordError" class="error-message"></span>
             </div>
             <div class="form-group">
                 <label for="usertype" style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 662px; left: 80px;">User Type</label>
@@ -213,14 +221,10 @@
                     <option value="PUBLISHER">PUBLISHER</option>
                 </select>
             </div>
-            <button class="signup-button" onclick="signup()">Signup</button>
+            <button class="signup-button" onclick="validateForm()">Signup</button>
         </div>
     </form>
     <script>
-        function signup() {
-            window.location.href = "/login";
-
-        }
         
         document.getElementById('showPassword').addEventListener('change', function () {
             var passwordInput = document.getElementById('password');
@@ -231,6 +235,41 @@
             var passwordInput = document.getElementById('confirmPassword');
             passwordInput.type = this.checked ? 'text' : 'password';
         });
+
+        function validateForm() {
+            var username = document.getElementById('username').value;
+            var email = document.getElementById('email').value;
+            var phone = document.getElementById('phone').value;
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (!/^[a-zA-Z]/.test(username)) {
+                alert('Username harus diawali dengan huruf');
+                return false;
+            }
+
+            if (password.length < 8) {
+                alert('Password harus memiliki minimal 8 karakter');
+                return false;
+            }
+
+            if (!/\d/.test(password)) {
+                alert('Password harus mengandung angka');
+                return false;
+            }
+
+            if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+                alert('Password harus mengandung setidaknya satu simbol');
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Konfirmasi password tidak cocok');
+                return false;
+            }
+            window.location.href = "/login";
+            return true;
+        }
     </script>
 </body>
 </html>

@@ -177,6 +177,7 @@
             <img src="https://i.ibb.co/275wkRK/sasuke.png" alt="Login Icon" style="width: 130px; height: 60px;" />
         </a>
     </header>
+
     <div class="container">
         <!-- Sidebar -->
         <div class="sidebar">
@@ -198,7 +199,7 @@
                 };
             </script>
         </c:if>
-        <!-- Content -->
+
         <div class="content">
             <p>This is the main content area. You can add your page content here.</p>
             <c:if test="${not empty banyakuser}">

@@ -152,13 +152,23 @@
         #showPassword {
             margin-top: 5px;
         }
+
+        p{
+            color: white;
+        }
+        .register-button{
+            color: white;
+        }
+        .register-button:hover{
+            color: #342879;
+        }
     </style>
 </head>
 <body>
     <form method="post" action="/login">
     <div class="login-container">
         <h2>Login</h2>
-        <p>Dont't have an account?<a href="register"> Register</a></p>
+        <p>Dont't have an account?<a class="register-button" href="register"> Register</a></p>
         <div class="form-group">
             <label for="username1", style="color: #FFEFEF; font-size: 200%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 190px; left: 80px;">Username</label>
             
