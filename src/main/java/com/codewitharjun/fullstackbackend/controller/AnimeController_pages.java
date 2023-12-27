@@ -412,7 +412,7 @@ public class AnimeController_pages {
                     } else {
                         // Handle case where subscription is required but user is not subscribed
                         ModelAndView modelAndView = new ModelAndView("/error Page/ErorrPage");
-                        modelAndView.addObject("errorMessage", "You need to be subscribed to watch this episode.");
+                        modelAndView.addObject("errorMessage", "403 Forbidden You need to be subscribed to watch this episode.");
                         modelAndView.addObject("erorrRoute", "../eps");
                         return modelAndView;
                     }
