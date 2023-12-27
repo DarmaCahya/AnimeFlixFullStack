@@ -19,7 +19,6 @@ import com.codewitharjun.fullstackbackend.repository.LikeRepository;
 import com.codewitharjun.fullstackbackend.repository.SubscribeRepository;
 import com.codewitharjun.fullstackbackend.repository.UserHistoryRepository;
 import com.codewitharjun.fullstackbackend.repository.UserRepository;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -37,7 +37,7 @@
 
             setTimeout(function() {
                 window.location.href = "/Home";
-            }, 5000);
+            }, 200);
         </script>
     </c:if>
 
