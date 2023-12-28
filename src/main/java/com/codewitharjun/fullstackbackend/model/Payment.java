@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/* Created by Arjun Gautam */
 @Entity
 public class Payment {
     @Id
