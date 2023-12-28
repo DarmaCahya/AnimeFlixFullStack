@@ -170,7 +170,7 @@
     </style>
 </head>
 <body>
-    <form method="post" action="/register">
+    
         <div class="signup-container">
             <h2>Signup</h2>
             <style>
@@ -223,7 +223,7 @@
             </div>
             <button class="signup-button" onclick="validateForm()">Signup</button>
         </div>
-    </form>
+    
     <script>
         
         document.getElementById('showPassword').addEventListener('change', function () {

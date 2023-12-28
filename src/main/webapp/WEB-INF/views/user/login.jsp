@@ -189,7 +189,7 @@
             <script>
                 // JavaScript code to show a pop-up message
                 window.onload = function() {
-                    alert('Stop, ${errorMessage}!');
+                    alert('Tunggu Sebentar, ${errorMessage}!');
                 };
             </script>
         </c:if>
