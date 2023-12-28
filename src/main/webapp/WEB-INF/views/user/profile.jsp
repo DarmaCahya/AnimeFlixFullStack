@@ -200,16 +200,7 @@
     </style>
 </head>
 <body>
-    <c:if test="${Message != null}">
-        <script>
-            // JavaScript code to show a pop-up message
-            window.onload = function() {
-                alert('${Message}');
-                
-            };
-            <c:set var="Message" value="${null}" />
-        </script>
-    </c:if>
+   
     <header>
         <a href="/Home" class="logo">
             <img src="https://i.ibb.co/RzzSCg2/flix.png" alt="AnimeFlix Logo" style="width: 130px; height: 65px;" />
