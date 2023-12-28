@@ -170,7 +170,6 @@
     </style>
 </head>
 <body>
-    
         <div class="signup-container">
             <h2>Signup</h2>
             <style>
@@ -184,6 +183,7 @@
                 top: 1%;
                 left: 36%; }
             </style>
+            <form method="post" action="/register">
             <div class="form-group">
                 <label for="username", style="color: #FFEFEF; font-size: 150%; opacity: 0.8;font-family: 'Inria Serif',serif; font-weight: 300; position: absolute; top: 110px; left: 80px;">Username</label>
                 <input type="text" id="username" name="username" placeholder="Enter your username", style="opacity: 1;color: #FFEFEF; ">
@@ -221,7 +221,9 @@
                     <option value="PUBLISHER">PUBLISHER</option>
                 </select>
             </div>
-            <button class="signup-button" onclick="validateForm()">Signup</button>
+            
+                <button class="signup-button">Signup</button>
+            </form> 
         </div>
     
     <script>
