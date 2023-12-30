@@ -1,5 +1,4 @@
 # AnimeFlixFullStack
-# Nama Proyek
 
 [![Status Build](https://travis-ci.org/AkbarMuh/AnimeFlixFullStack.svg?branch=master)](https://travis-ci.org/AkbarMuh/AnimeFlixFullStack)
 [![Lisensi](https://img.shields.io/badge/lisensi-MIT-biru.svg)](https://opensource.org/licenses/MIT)
