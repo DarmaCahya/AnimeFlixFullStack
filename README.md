@@ -1,37 +1,51 @@
 # AnimeFlixFullStack
-# Project Name
+# Nama Proyek
 
-[![Build Status](https://travis-ci.org/username/repository.svg?branch=master)](https://travis-ci.org/username/repository)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Status Build](https://travis-ci.org/nama_pengguna/repositori.svg?branch=master)](https://travis-ci.org/nama_pengguna/repositori)
+[![Lisensi](https://img.shields.io/badge/lisensi-MIT-biru.svg)](https://opensource.org/licenses/MIT)
 
-Short description of your project.
+Deskripsi singkat proyek Anda.
 
-## Table of Contents
+## Daftar Isi
 
-- [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-  - [Installation](#installation)
-  - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
+- [Prasyarat](#prasyarat)
+- [Mulai](#mulai)
+  - [Instalasi](#instalasi)
+  - [Penggunaan](#penggunaan)
+- [Berkontribusi](#berkontribusi)
+- [Lisensi](#lisensi)
+- [Ucapan Terima Kasih](#ucapan-terima-kasih)
 
-## Prerequisites
+## Prasyarat
 
-List any prerequisites that are needed before getting started.
+Daftar prasyarat yang diperlukan sebelum memulai.
 
-## Getting Started
+## Mulai
 
-Provide instructions on how to install and use your project.
+Berikan petunjuk tentang cara menginstal dan menggunakan proyek Anda.
 
-### Installation
+### Instalasi
 
+Sebelum memulai, pastikan Anda telah menginstal Maven. Berikut adalah panduan instalasi Maven:
+
+#### Windows
+
+1. Unduh [Apache Maven](https://maven.apache.org/download.cgi).
+2. Ekstrak arsip zip ke direktori yang diinginkan.
+3. Tambahkan path ke direktori bin Maven ke dalam variabel lingkungan `PATH`.
+
+   ```bash
+   set PATH=%PATH%;C:\path\ke\bin\maven
+
+
+##### Tes instalasi dengan menjalankan perintah:
 ```bash
-mvn clean install
+mvn -v 
 ```
 
 
-### Run Project
-
+Penggunaan
+Untuk menjalankan aplikasi Spring Boot, gunakan perintah berikut:
 ```bash
 mvn spring-boot:run
+```
