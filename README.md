@@ -1,7 +1,7 @@
 # AnimeFlixFullStack
 # Nama Proyek
 
-[![Status Build](https://travis-ci.org/nama_pengguna/repositori.svg?branch=master)](https://travis-ci.org/nama_pengguna/repositori)
+[![Status Build](https://travis-ci.org/AkbarMuh/AnimeFlixFullStack.svg?branch=master)](https://travis-ci.org/AkbarMuh/AnimeFlixFullStack)
 [![Lisensi](https://img.shields.io/badge/lisensi-MIT-biru.svg)](https://opensource.org/licenses/MIT)
 
 Deskripsi singkat proyek Anda.
@@ -49,3 +49,19 @@ Untuk menjalankan aplikasi Spring Boot, gunakan perintah berikut:
 ```bash
 mvn spring-boot:run
 ```
+
+Ini akan menjalankan aplikasi secara lokal.
+
+Berkontribusi
+Anda dapat berkontribusi pada proyek ini dengan mengikuti langkah-langkah berikut:
+
+Fork repositori.
+Buat cabang baru.
+Lakukan perubahan dan commit.
+Dorong ke cabang Anda.
+Buat pull request.
+Lisensi
+Proyek ini dilisensikan di bawah Lisensi MIT - lihat berkas LISENSI untuk detailnya.
+
+Ucapan Terima Kasih
+Terima kasih kepada semua kontributor yang telah membantu dalam pengembangan proyek ini.
