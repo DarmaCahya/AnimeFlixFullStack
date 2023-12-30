@@ -1,4 +1,5 @@
 # AnimeFlixFullStack
+# Project Name
 
 [![Build Status](https://travis-ci.org/username/repository.svg?branch=master)](https://travis-ci.org/username/repository)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -27,4 +28,10 @@ Provide instructions on how to install and use your project.
 
 ```bash
 mvn clean install
+```
+
+
+### Run Project
+
+```bash
 mvn spring-boot:run
