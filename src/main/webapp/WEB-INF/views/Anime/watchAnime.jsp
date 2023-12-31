@@ -128,6 +128,8 @@
             height: 90%;
             margin-top: 10%; 
             margin-left: 3%;
+            object-fit: cover;
+            width: 100%;
         }
 
         .bagian-kiri{
