@@ -192,7 +192,7 @@
         <script>
             // JavaScript code to show a pop-up message
             window.onload = function() {
-                alert('Minimal sopan dek');
+                alert('Jangan Toxic ya adik-adik!');
                 <c:set var="PesanAlert" value="${null}" />
             };
             

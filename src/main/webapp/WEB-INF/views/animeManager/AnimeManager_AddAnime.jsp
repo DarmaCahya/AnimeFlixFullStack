@@ -253,7 +253,7 @@
             </div>
     
             <div class="form-group">
-                <label for="publisher">Publisher: ${publisher.username}</label>
+                <label for="publisher">Publisher: ${publiser.username}</label>
             </div>
     
             <div class="form-group">
