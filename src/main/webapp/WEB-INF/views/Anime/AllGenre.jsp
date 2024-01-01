@@ -152,11 +152,24 @@
         <a href="/Home" class="logo">
             <img src="https://i.ibb.co/RzzSCg2/flix.png" alt="AnimeFlix Logo" style="width: 130px; height: 65px;" />
         </a>
+        
+        <c:if test="${userType == 'ADMIN'}">
+            <form class="form-button" method="get" action="/Dashboard">
+                <button class="button-tambahan"  type="submit">Dashboard</button>
+            </form>
+        </c:if>
+
+        <c:if test="${userType == 'PUBLISHER'}">
+            <form class="form-button" method="get" action="/AnimeManager">
+                <button class="button-tambahan" type="submit">Anime Manager</button>
+            </form>
+        </c:if>
         <nav>
             <a href="/Home/genre/">Genre</a>
             <a href="/Home/history/">History</a>
             <a href="/Home/Favorite/">Favorite</a>
         </nav>
+    
         <form action="/Home/search/" method="get" class="search-box">
             <select name="searchType" id="searchType">
                 <option value="title">Title</option>
@@ -167,7 +180,7 @@
                 <img src="https://i.ibb.co/rb6kTcJ/Screenshot-1.png" alt="Search Icon" style="width: 20px; height: 23px;" />
             </button>
         </form>
-        <a href="/Home/profile/" class="Login-button">            
+        <a href="/Home/profile/" class="Login-button">
             <img src="https://i.ibb.co/275wkRK/sasuke.png" alt="Login Icon" style="width: 130px; height: 60px;" />
         </a>
     </header>
