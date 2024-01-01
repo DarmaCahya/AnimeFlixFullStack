@@ -269,8 +269,27 @@
                         <td>${BanyakCustomer}</td>
                     </tr>
                 </tbody>
-            </table>  
-            </h2>  
+            </table>
+            </h2> 
+            <c:if test="${not empty episodeList}">
+                <ul class="episode-list">
+                    <c:forEach var="episode" items="${episodeList}">
+                            <p color="black" class="eps-anime">Episode ${episode.episodeNumber} - ${episode.episodeTitle}</p>
+                    </c:forEach>
+                </ul>
+            </c:if>
+            <c:forEach var="anime" items="${animeList}">
+                        <tr>
+                            <td>${anime.animeId}</td>
+                            <td>${anime.title}</td>  
+                            <td>${anime.genre}</td>
+                            <td>${anime.publisher.nama}</td>
+                            <td><img src="${anime.thumbnail}" alt="Poster 1" class="poster-img" width="80"> </td>
+                            <td><a href="/Home/nonton/${anime.animeId}/eps">Link</a></td>
+                            <td>${anime.likes}</td>
+                        </tr>
+                    </c:forEach>
+             
         </div>
     </div>
     <script>

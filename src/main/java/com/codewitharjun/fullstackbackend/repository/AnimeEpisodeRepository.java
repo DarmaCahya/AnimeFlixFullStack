@@ -18,6 +18,5 @@ public interface AnimeEpisodeRepository extends JpaRepository<AnimeEpisode, Long
 
     @Query(value = "SELECT * FROM anime_episode WHERE episode_number = :episodeNumber AND anime_id = :animeId", nativeQuery = true)
     Optional<AnimeEpisode> findByEpisodeNumberAndAnime_Id(@Param("episodeNumber") Integer episodeNumber, @Param("animeId") Long animeId);
-
 }
 

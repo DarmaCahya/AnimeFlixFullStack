@@ -20,6 +20,7 @@ import com.codewitharjun.fullstackbackend.repository.LikeRepository;
 import com.codewitharjun.fullstackbackend.repository.UserRepository;
 import com.codewitharjun.fullstackbackend.repository.User_CustomerRepository;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -66,8 +67,12 @@ public class PublisherController extends UserController {
         Long commnetCount = commentRepository.count();
         Long customerCount = user_CustomerRepository.count();
 
-        ModelAndView modelAndView = new ModelAndView("/animeManager/AnimeManager");
+        List<Anime> allAnime = animeRepository.findAll();
+        List<AnimeEpisode> allAnimeEpisodes = animeEpisodeRepository.findAll();
 
+        ModelAndView modelAndView = new ModelAndView("/animeManager/AnimeManager");
+        modelAndView.addObject("animeList", allAnime);
+        modelAndView.addObject("episodeList", allAnimeEpisodes);
         modelAndView.addObject("BanyakAnime", animeCount);
         modelAndView.addObject("BanyakAnimemu", animePublisher.size());
         modelAndView.addObject("BanyakLike", likeCount);
@@ -110,7 +115,7 @@ public class PublisherController extends UserController {
 
     @PostMapping("/TambahAnime")
     public ModelAndView addAnime(@RequestParam String title,
-                              @RequestParam String genre,
+                              @RequestParam Collection<? extends String> genre,
                               @RequestParam String description,
                               @RequestParam String thumbnail,
                               @RequestParam String release_year,
@@ -123,7 +128,12 @@ public class PublisherController extends UserController {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         User user = userRepository.findByUsername(loggedInUser.getUsername());
         FK_Publisher fkPublisher = ((Publisher) user).getPublisherCHMOD();
-        Anime newAnime = new Anime((long) animeRepository.count() + 1,title, genre, description, Integer.parseInt(release_year), thumbnail, video_url,fkPublisher);
+
+        List<Anime> allAnime = animeRepository.findAll();
+
+        long lastId = allAnime.get(allAnime.size() - 1).getAnimeId();
+
+        Anime newAnime = new Anime(lastId + 1,title, genre, description, Integer.parseInt(release_year), thumbnail, video_url,fkPublisher);
         animeRepository.save(newAnime);
 
         return new ModelAndView("redirect:./ListAnime");
@@ -148,32 +158,18 @@ public class PublisherController extends UserController {
 
     @PostMapping("/TambahAnimeEpisode")
     public ModelAndView addAnimeEpisode(@RequestParam String episode_title,
-                                        @RequestParam String episode_number,
-                                        @RequestParam String video_url,
-                                        @RequestParam String requires_subscription,
-                                        @RequestParam String anime_id) {
-    
+                              @RequestParam String episode_number,
+                              @RequestParam String video_url,
+                              @RequestParam String requires_subscription,
+                              @RequestParam String anime_id) {
+        
         Anime anime = animeRepository.findById(Long.parseLong(anime_id)).orElse(null);
-    
-        if (anime != null) {
-            // Mengganti cara mendapatkan ID tertinggi menggunakan AnimeEpisodeRepository
-            Long highestAnimeEpisodeId = animeEpisodeRepository.findTopByOrderByEpisodeNumberDesc().map(AnimeEpisode::getEpisodeNumber).orElse(0);
-    
-            AnimeEpisode newAnimeEpisode = new AnimeEpisode();
-            newAnimeEpisode.setAnime(anime);
-            newAnimeEpisode.setEpisodeTitle(episode_title);
-            newAnimeEpisode.setVideoUrl(video_url);
-            newAnimeEpisode.setRequiresSubscription(Boolean.parseBoolean(requires_subscription));
-            newAnimeEpisode.setEpisodeNumber(highestAnimeEpisodeId + 1);
-    
-            animeEpisodeRepository.save(newAnimeEpisode);
-    
-            return new ModelAndView("redirect:http://localhost:8080/Home/nonton/" + anime.getAnimeId() + "/eps");
-        } else {
-            // Handle jika anime dengan ID tertentu tidak ditemukan
-            // (misalnya, tampilkan pesan error atau redirect ke halaman error)
-            return new ModelAndView("redirect:/error");
-        }
+        List<AnimeEpisode> allAnimeEpisodes = animeEpisodeRepository.findAll();
+
+        long lastId = allAnimeEpisodes.get(allAnimeEpisodes.size() - 1).getId();
+        AnimeEpisode newAnimeEpisode = new AnimeEpisode(lastId + 1,episode_title, video_url, Boolean.parseBoolean(requires_subscription), Integer.parseInt(episode_number), anime);
+        animeEpisodeRepository.save(newAnimeEpisode);
+        return new ModelAndView("redirect:http://localhost:8080/Home/nonton/"+anime.getAnimeId()+"/eps");
     }
     
 

@@ -19,6 +19,7 @@ import com.codewitharjun.fullstackbackend.repository.LikeRepository;
 import com.codewitharjun.fullstackbackend.repository.SubscribeRepository;
 import com.codewitharjun.fullstackbackend.repository.UserHistoryRepository;
 import com.codewitharjun.fullstackbackend.repository.UserRepository;
+import com.codewitharjun.fullstackbackend.service.AnimeRecommendationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -121,6 +122,7 @@ public class AnimeController_pages {
         modelAndView.addObject("animeListgenre3", animeListByRandomGenre3);
         return modelAndView;
     }
+
 
     private String getRandomGenre(List<String> genres) {
         int randomIndex = (int) (Math.random() * genres.size());
