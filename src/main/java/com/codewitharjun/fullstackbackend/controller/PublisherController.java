@@ -20,7 +20,6 @@ import com.codewitharjun.fullstackbackend.repository.LikeRepository;
 import com.codewitharjun.fullstackbackend.repository.UserRepository;
 import com.codewitharjun.fullstackbackend.repository.User_CustomerRepository;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -115,7 +114,7 @@ public class PublisherController extends UserController {
 
     @PostMapping("/TambahAnime")
     public ModelAndView addAnime(@RequestParam String title,
-                              @RequestParam Collection<? extends String> genre,
+                              @RequestParam String genre,
                               @RequestParam String description,
                               @RequestParam String thumbnail,
                               @RequestParam String release_year,
