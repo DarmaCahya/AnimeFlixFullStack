@@ -247,23 +247,25 @@
                 </div>
             </c:forEach>
         </div>
-    
+
+        
     <c:if test="${not empty animeListgenre3}">
         <h3>${animeListgenre3[0].genre}</h3><br>
     </c:if>
     <div class="scroll-buttons">
-        <button onclick="scrollPosters('poster3', 'right')" style="position: absolute; margin-top: 7%; margin-left: 95%; width: 2%; height: 5%;">></button>
+        <button onclick="scrollPosters('poster2', 'right')" style="position: absolute; margin-top: 7%; margin-left: 95%; width: 2%; height: 5%;">></button>
     </div>
-    <div class="posters-container" id="poster3" style="width: 100%; overflow-x: auto; overflow: hidden;">
-            <c:forEach var="anime" items="${animeListgenre3}">
+    <div class="posters-container" id="poster2" style="width: 100%; overflow-x: auto; overflow: hidden;">
+        <c:forEach var="anime" items="${animeListgenre3}">
                 <div class="poster">
-                    <a href="/Home/nonton/${anime.animeId}/eps"></a>
+                    <a href="/Home/nonton/${anime.animeId}/eps">
                         <img src= ${anime.thumbnail} alt="Poster 1" class="poster-img">
                     </a>
                     <p class="poster-text">${anime.title}</p>
                 </div>
             </c:forEach>
         </div>
+    
 
  <script>
     function scrollPosters(containerId, direction) {
