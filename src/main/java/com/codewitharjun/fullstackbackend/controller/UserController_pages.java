@@ -1,18 +1,30 @@
 package com.codewitharjun.fullstackbackend.controller;
 
 import com.codewitharjun.fullstackbackend.model.User;
+import com.codewitharjun.fullstackbackend.repository.SubscribeRepository;
 import com.codewitharjun.fullstackbackend.repository.UserRepository;
+import com.codewitharjun.fullstackbackend.repository.User_AdminRepository;
+import com.codewitharjun.fullstackbackend.repository.User_CustomerRepository;
+import com.codewitharjun.fullstackbackend.repository.User_PublisherRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.codewitharjun.fullstackbackend.model.Admin;
+import com.codewitharjun.fullstackbackend.model.Customer;
+import com.codewitharjun.fullstackbackend.model.FK_Admin;
+import com.codewitharjun.fullstackbackend.model.FK_Customer;
+import com.codewitharjun.fullstackbackend.model.FK_Publisher;
+import com.codewitharjun.fullstackbackend.model.Publisher;
+import com.codewitharjun.fullstackbackend.model.Subscribe;
 
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 /* Created by Arjun Gautam */
 @RestController
@@ -22,9 +34,21 @@ public class UserController_pages {
     @Autowired
     private UserRepository userRepository;
 
+     @Autowired
+    private User_AdminRepository user_AdminRepository;
+
+    @Autowired
+    private User_CustomerRepository user_CustomerRepository;
+
+    @Autowired
+    private User_PublisherRepository user_PublisherRepository;
+
+    @Autowired
+    private SubscribeRepository subscribeRepository;
+
     @GetMapping("/login")
     public ModelAndView loginPage() {
-        ModelAndView modelAndView = new ModelAndView("login");
+        ModelAndView modelAndView = new ModelAndView("/user/login");
         return modelAndView;
     }
 
@@ -38,40 +62,114 @@ public class UserController_pages {
                 // If password is correct, save user information in the session
                 session.setAttribute("loggedInUser", user);
 
+                Optional<Subscribe> optionalSubscribe = subscribeRepository.findByUser(user);
+
                 // Return ModelAndView with success message and user type
-                ModelAndView modelAndView = new ModelAndView("loginSuccess");
+                ModelAndView modelAndView = new ModelAndView("/user/loginSuccess");
                 modelAndView.addObject("message", "Login successful");
                 modelAndView.addObject("username", user.getUsername());
-                modelAndView.addObject("userType", user instanceof Admin ? "ADMIN" : "REGULAR");
+                if (user instanceof Admin) {
+                    modelAndView.addObject("userType", "ADMIN");
+                    if(!optionalSubscribe.isPresent()){
+                        Subscribe subscribe = new Subscribe(999999999, user);
+                    subscribeRepository.save(subscribe);
+                    }
+                } else if (user instanceof Customer) {
+                    modelAndView.addObject("userType", "CUSTOMER");
+                } else if (user instanceof Publisher) {
+                    if(!optionalSubscribe.isPresent()){
+                        Subscribe subscribe = new Subscribe(999999999, user);
+                    subscribeRepository.save(subscribe);
+                    }
+                    modelAndView.addObject("userType", "PUBLISHER");
+                }
 
                 return modelAndView;
             } else {
                 // If password is incorrect, return ModelAndView with error message
-                ModelAndView modelAndView = new ModelAndView("login");
+                ModelAndView modelAndView = new ModelAndView("user/login");
                 modelAndView.addObject("errorMessage", "Incorrect password");
                 return modelAndView;
             }
         } else {
             // If username is not found, return ModelAndView with error message
-            ModelAndView modelAndView = new ModelAndView("login");
+            ModelAndView modelAndView = new ModelAndView("user/login");
             modelAndView.addObject("errorMessage", "Username not found");
             return modelAndView;
         }
     }
 
     @PostMapping("/logout")
-    public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
-        // Dapatkan informasi pengguna dari sesi
+    public ResponseEntity<String> logout(HttpSession session, RedirectAttributesModelMap redirectAttributes) {
+        // Get user information from the session
         User loggedInUser = (User) session.getAttribute("loggedInUser");
 
         if (loggedInUser != null) {
-            // Hapus informasi pengguna dari sesi untuk logout
+            // Remove user information from the session for logout
             session.removeAttribute("loggedInUser");
             redirectAttributes.addFlashAttribute("logoutMessage", "Logout successful");
-            return "redirect:http://localhost:8080/login";
+            return ResponseEntity.status(HttpStatus.FOUND)
+                    .header("Location", "http://localhost:8080/login")
+                    .build();
         } else {
-            // Jika tidak ada pengguna yang login, kembalikan respons JSON dengan status UNAUTHORIZED
-            return "redirect:http://localhost:8080/login?error=User not logged in";
+            // If no user is logged in, return JSON response with UNAUTHORIZED status
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .header("Location", "http://localhost:8080/login?error=User not logged in")
+                    .build();
         }
+    }
+
+
+    @GetMapping("/register")
+    public ModelAndView registerPage() {
+        ModelAndView modelAndView = new ModelAndView("/user/register");
+        return modelAndView;
+    }
+
+    @PostMapping("/register")
+    public ModelAndView register(@RequestParam String username, @RequestParam String email, @RequestParam String password, @RequestParam String usertype, HttpSession session) {
+        
+        User newUser;
+        if (usertype.equals("ADMIN")) {
+            newUser = new Admin();
+            FK_Admin newfkadmin  = new FK_Admin(username);
+            user_AdminRepository.save(newfkadmin);
+            ((Admin) newUser).setAdminCHMOD(newfkadmin);      
+
+        }else if (usertype.equals("CUSTOMER")) {
+            newUser = new Customer();
+            FK_Customer newfkcustomer  = new FK_Customer("Mr/Ms. "+ username);
+            user_CustomerRepository.save(newfkcustomer);
+            ((Customer) newUser).setCustomerCHMOD(newfkcustomer);
+
+            
+            
+        } else {
+            newUser = new Publisher();
+            FK_Publisher newfkpublisher  = new FK_Publisher("PT. "+username);
+            newfkpublisher.setNama(username);
+            user_PublisherRepository.save(newfkpublisher);
+            ((Publisher) newUser).setPublisherCHMOD(newfkpublisher);
+        }
+        newUser.setEmail(email);
+        newUser.setUsername(username);
+        newUser.setPassword(password);
+
+        ModelAndView modelAndView = new ModelAndView("user/register");
+        if (userRepository.findByUsername(newUser.getUsername()) != null) {
+            modelAndView.addObject("Error Message", "Username already exists");
+            return modelAndView;
+        }
+
+        // Cek apakah email sudah digunakan
+        if (userRepository.findByEmail(newUser.getEmail()) != null) {
+            modelAndView.addObject("Error Message", "Email already exists");
+            return modelAndView;
+        }
+
+        // Simpan pengguna baru ke basis data
+        userRepository.save(newUser);
+
+        return new ModelAndView("redirect:/login");
     }
 }

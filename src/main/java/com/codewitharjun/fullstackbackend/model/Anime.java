@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /* Created by Arjun Gautam */
 @Entity
@@ -11,11 +12,25 @@ public class Anime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long animeId;
-    private String title,genre,description,publisher;
+    private String title,genre,description;
+    @ManyToOne
+    private FK_Publisher publisher;
     private int releaseYear;
     private String thumbnail,videoUrl;
 
     public Anime() {
+    }
+
+    public Anime(Long animeId,String title, String genre, String description, int releaseYear, String thumbnail, String videoUrl, FK_Publisher publisher) {
+        this.animeId = animeId;
+        this.title = title;
+        this.genre = genre;
+        this.description = description;
+        this.releaseYear = releaseYear;
+        this.thumbnail = thumbnail;
+        this.videoUrl = videoUrl;
+        this.publisher = publisher;
+        this.likes = 0;
     }
 
     public Long getAnimeId() {
@@ -74,11 +89,11 @@ public class Anime {
         this.videoUrl = videoUrl;
     }
 
-    public String getPublisher() {
+    public FK_Publisher getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(String publisher) {
+    public void setPublisher(FK_Publisher publisher) {
         this.publisher = publisher;
     }
 

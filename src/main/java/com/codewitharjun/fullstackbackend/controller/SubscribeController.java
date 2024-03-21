@@ -71,23 +71,24 @@ public class SubscribeController {
             User loggedInUser = (User) session.getAttribute("loggedInUser");
 
             if (loggedInUser != null) {
-                // Check if the user is already subscribed
-                Optional<Subscribe> existingSubscription = subscribeRepository.findByUser(loggedInUser);
-
                 int duration = requestPayload.getOrDefault("duration", 0);
 
+                Optional<Subscribe> existingSubscription = subscribeRepository.findByUser(loggedInUser);
+
+                Subscribe subscribe;
+        
                 if (existingSubscription.isPresent()) {
                     // If the user is already subscribed, update the subscription duration
-                    Subscribe subscribe = existingSubscription.get();
+                    subscribe = existingSubscription.get();
                     subscribe.setDuration(subscribe.getDuration() + duration);
-                    subscribeRepository.save(subscribe);
                 } else {
-                    // If the user is not subscribed, create a new subscription
-                    Subscribe subscribe = new Subscribe();
-                    subscribe.setUser(loggedInUser);
+                    // If the user is not subscribed, create a new subscription with the given duration
+                    subscribe = new Subscribe(loggedInUser);
                     subscribe.setDuration(duration);
-                    subscribeRepository.save(subscribe);
                 }
+        
+                // Save or update the subscription
+                subscribeRepository.save(subscribe);
 
                 Map<String, String> response = new HashMap<>();
                 response.put("message", "Add User subscribed successfully for " + duration + " months.");

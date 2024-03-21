@@ -1,6 +1,8 @@
 package com.codewitharjun.fullstackbackend.repository;
 
 import com.codewitharjun.fullstackbackend.model.Anime;
+import com.codewitharjun.fullstackbackend.model.FK_Publisher;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,7 +23,7 @@ public interface AnimeRepository extends JpaRepository<Anime, Long> {
     @Query("SELECT a FROM Anime a WHERE a.title LIKE :judulAnime%")
     List<Anime> findByTitleCustomQuery(@Param("judulAnime") String judulAnime);
 
-    List<Anime> findByPublisher(String publisher);
+    List<Anime> findByPublisher(FK_Publisher fkPublisher);
     
     // Method to find anime by ID
     Anime findByAnimeId(Long animeId);
